@@ -76,7 +76,7 @@ int ArrayCount1 = 0;
 int ArrayCount2 = 0;
 float OpenTime;
 
-int solenoidOpenTime() {  /// function to determine the solenoid open time
+void solenoidOpenTime() {  /// function to determine the solenoid open time
   if (currentIndex < 10) {    // if there aren't 10 integers in the array, add to it
     if (mouse_failed == 0) {  // if a mouse did a push add a 1 to the array
       OpenTimeArray[currentIndex] = 1;
