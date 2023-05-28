@@ -6,14 +6,14 @@
 /// Behavioral Testing Configuration ///
 int totalTrials = 1000000;  // DO NOT TOUCH THIS
 int isiDelayLowerRange = 1000; // Enter ISI delay lower Value in ms
-int isiDelayUpperRange = 2000; // Enter ISI delay upper Value in ms
+int isiDelayUpperRange = 3000; // Enter ISI delay upper Value in ms
 int timeOutTime = 540000000000;     // Enter the time out time
-int LowerBoundRestX = 500; // Enter the lower bound for the rest position
-int UpperBoundRestX = 510; // Enter the upper bound for the rest position
+int LowerBoundRestX = 525; // Enter the lower bound for the rest position
+int UpperBoundRestX = 535; // Enter the upper bound for the rest position
 
 // Push and Pull Parameters //
-int Push = 513;  // X position to be considered a push (You can change this)
-int Pull = 497;  // Y position to be considered a pull (You can change this value)
+int Push = 540;  // X position to be considered a push (You can change this)
+int Pull = 515;  // Y position to be considered a pull (You can change this value)
 
 // Pin Set-Ups //
 #define VRX_PIN A0  // Arduino pin connected to VRX pin (aka Analog Pin A0), this is the blue cable
@@ -154,7 +154,7 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
 }
 
 void setup() {
-  unsigned char Serial2Buffer[5000];
+  unsigned char Serial2Buffer[10000];
 
   Serial.begin(115200);
   Serial1.begin(9600);
