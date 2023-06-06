@@ -7,19 +7,19 @@
 #define Y_COORD A1
 
 //Threshold values
-#define PUSH 570
-#define PULL 515
+#define PUSH 570 // Set the push threshold value to a value greater than the REST_UPPERBOUND value
+#define PULL 515 // Set the pull threshold value to a value less than the REST_LOWERBOUND value
 #define REST_LOWERBOUND 525
 #define REST_UPPERBOUND 535
 
 
-unsigned int x;
-unsigned int y;
-unsigned long timestamp = micros();
+unsigned int x; // Variable to store the value read from the X axis of the Joystick
+unsigned int y; // Variable to store the value read from the Y axis of the Joystick
+unsigned long timestamp = micros(); // Variable to store the time at which the values were read
 
 
 //
-void writePins(int pin)
+void writePins(int pin) // Function to set all pins to low at the beginning of each loop
 {
   for(int i=REST_PIN; i<=PULL_PIN; i++)
   {
@@ -37,22 +37,22 @@ void writePins(int pin)
 void setup() {
 
   Serial.begin(115200);
-  pinMode(REST_PIN, OUTPUT);
-  pinMode(PUSH_PIN, OUTPUT);
-  pinMode(PULL_PIN, OUTPUT);
-  pinMode(LED_PIN, OUTPUT);
+  pinMode(REST_PIN, OUTPUT); // Sets the Rest pin as an output, tells the Behavior Teensy that when the arm is in the rest position
+  pinMode(PUSH_PIN, OUTPUT); // Sets the Push pin as an output, tells the Behavior Teensy that when the arm is in the push position
+  pinMode(PULL_PIN, OUTPUT); // Sets the Pull pin as an output, tells the Behavior Teensy that when the arm is in the pull position
+  pinMode(LED_PIN, OUTPUT); // Sets the LED pin as an output is lit when the mouse is in the rest position
 }
 
 void loop() {
-  timestamp = micros();
+  timestamp = micros(); // Stores the time at which the values were read
   x = analogRead(A0); // Replace with the pin connected to the joystick X axis
   y = map(analogRead(A1), 0, 1023, 1023, 0); // Replace with the pin connected to the joystick Y axis
 
-  Serial.print(x);
+  Serial.print(x); // Prints the X value
   Serial.print(" , ");
-  Serial.print(y);
+  Serial.print(y); // Prints the Y value
   Serial.print(" , ");
-  Serial.print(timestamp);
+  Serial.print(timestamp); // Prints the time at which the values were read in microseconds
   Serial.print(" , ");
 
   if(x >= REST_LOWERBOUND && x <= REST_UPPERBOUND)
