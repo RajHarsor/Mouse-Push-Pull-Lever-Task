@@ -51,6 +51,7 @@ int ArrayCount1 = 0; // initialize the number of 1's in the array to 0
 int ArrayCount2 = 0; // initialize the number of 2's in the array to 0
 float OpenTime; // variable to store the solenoid open time
 
+//TODO Make this into a global variable in the configuration where people can edit how big the array is
 void solenoidOpenTime() {  /// function to determine the solenoid open time
   if (currentIndex < 10) {    // if there aren't 10 integers in the array, add to it until there are 10
     if (mouse_failed == 0) {  // if a mouse did a push add a 1 to the array
