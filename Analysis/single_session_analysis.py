@@ -1,3 +1,4 @@
+#%%
 #Import pandas
 import pandas as pd
 
@@ -12,12 +13,14 @@ pathTrial= input("Enter the path of the file containing the trial information: "
 pathCoords=pathCoords.replace('"','')
 pathTrial=pathTrial.replace('"','')
 
+#%%
 #Input the value of the upper and lower X bounds and what is considered a push and pull
 upperXBound= int(input("Enter the upper X bound: "))
 LowerXBound= int(input("Enter the lower X bound: "))
 Push= int(input("Enter the value of a push: "))
 Pull= int(input("Enter the value of a pull: "))
 
+#%%
 #Read the files
 dfCoords = pd.read_csv(pathCoords, sep=',', header=None, on_bad_lines="warn")
 dfTrial = pd.read_csv(pathTrial, sep=',', header=None, names=['Trial Number', 'Reaction Time', 'Current Array', 'Current Array Push/Pull Ratio', 'Total Push/Pull Ratio', 'Solenoid Open Time', 'Push/Pull', 'ISI Delay'], on_bad_lines="warn")
@@ -26,7 +29,7 @@ dfTrial = pd.read_csv(pathTrial, sep=',', header=None, names=['Trial Number', 'R
 
 ## Clean up the Coordinate Code
 """
-
+#%%
 #Edit index 0, row 0 to delete the values before the t including the t
 dfCoords.at[0, 0] = dfCoords.at[0, 0].split('\t')[1]
 
@@ -57,7 +60,7 @@ dfCoords
 
 ### Line Graph - Coordinates over Time
 """
-
+#%%
 #Import plotly go
 import plotly.graph_objects as go
 
@@ -73,7 +76,7 @@ fig1.update_layout(title='Coordinates vs Time', xaxis_title='Time (min)', yaxis_
 fig1.show()
 
 """#### Matplotlib Graph (for exporting purposes)"""
-
+#%%
 #Make matplotlib graph with Time (min) on the x axis and X and Y coordinates on the Y axis
 import matplotlib.pyplot as plt
 
@@ -103,7 +106,7 @@ ax.legend()
 plt.show()
 
 """### Line Graph - Coordinates over Time Smoothed"""
-
+#%%
 # Apply some smoothing to the X and Y coordinates using the Savitzky-Golay filter
 from scipy.signal import savgol_filter
 
@@ -125,7 +128,7 @@ fig3.update_layout(title='Smoothed Coordinates vs Time', xaxis_title='Time (min)
 fig3.show()
 
 """#### Matplotlib Graph (for exporting purposes)"""
-
+#%%
 #Make matplotlib graph with Time (min) on the x axis and X and Y coordinates smoothed on the Y axis
 import matplotlib.pyplot as plt
 
@@ -156,6 +159,7 @@ plt.show()
 
 # FIXME This 3D plot is not working for some reason, test again later
 """### 3D Plot of Coordinates over Time"""
+#%%
 #Make 3D plot using plotly where the X axis is the X Coordinate, the Y axis is the Y Coordinate, and the Z axis is the Time (min)
 fig5 = go.Figure(data=[go.Scatter3d(x=dfCoords['X Coordinate'], y=dfCoords['Y Coordinate'], z=dfCoords['Time (min)'], mode='markers')])
 fig5.update_layout(title='Coordinates vs Time', scene=dict(xaxis_title='X Coordinate', yaxis_title='Y Coordinate', zaxis_title='Time (min)'))
@@ -163,6 +167,7 @@ fig5.update_layout(title='Coordinates vs Time', scene=dict(xaxis_title='X Coordi
 #Show the graph
 fig5.show()
 
+#%%
 '''### 3D Plot of Coordinates over Time '''
 #Import plotly express
 import plotly.express as px
@@ -175,7 +180,7 @@ fig6.update_layout(title='Coordinates vs Time', scene=dict(xaxis_title='X Coordi
 fig6.show()
 
 """### X Coordinates with Rewards Over Time"""
-
+#%%
 #Find the values where it goes from Stage 2 to Stage 3
 x_values = []
 Time = []
@@ -231,7 +236,7 @@ plt.title('X Coordinate vs Time (min)')
 plt.show()
 
 """## Pie Graphs of Time Spent in Each Phase"""
-
+#%%
 #Calculate the difference in time in us between each subsequent row in the dataframe
 dfCoords['Time (us) Difference'] = dfCoords['Time (us)'].diff()
 
@@ -249,7 +254,7 @@ fig5.show()
 
 ## Cleanup the Trial Code
 """
-
+#%%
 #Drop the rows that have NaN values
 dfTrial = dfTrial.dropna()
 
