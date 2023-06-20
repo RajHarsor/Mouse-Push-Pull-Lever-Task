@@ -1,4 +1,4 @@
-#%%
+#%% Import the necessary packages and files
 #Import pandas
 import pandas as pd
 
@@ -13,23 +13,19 @@ pathTrial= input("Enter the path of the file containing the trial information: "
 pathCoords=pathCoords.replace('"','')
 pathTrial=pathTrial.replace('"','')
 
-#%%
-#Input the value of the upper and lower X bounds and what is considered a push and pull
+#%% Input the values of the upper and lower X bounds and what is considered a push and pull
+
 upperXBound= int(input("Enter the upper X bound: "))
 LowerXBound= int(input("Enter the lower X bound: "))
 Push= int(input("Enter the value of a push: "))
 Pull= int(input("Enter the value of a pull: "))
 
-#%%
+#%% Read the files
 #Read the files
 dfCoords = pd.read_csv(pathCoords, sep=',', header=None, on_bad_lines="warn")
 dfTrial = pd.read_csv(pathTrial, sep=',', header=None, names=['Trial Number', 'Reaction Time', 'Current Array', 'Current Array Push/Pull Ratio', 'Total Push/Pull Ratio', 'Solenoid Open Time', 'Push/Pull', 'ISI Delay'], on_bad_lines="warn")
 
-"""# Coordinates Code
-
-## Clean up the Coordinate Code
-"""
-#%%
+#%% Clean up the Coordinates Code
 #Edit index 0, row 0 to delete the values before the t including the t
 dfCoords.at[0, 0] = dfCoords.at[0, 0].split('\t')[1]
 
@@ -54,13 +50,7 @@ dfCoords['Y Coordinate'] = dfCoords['Y Coordinate'].astype(float)
 dfCoords['Time (us)'] = dfCoords['Time (us)'].astype(float)
 dfCoords['Time (min)'] = dfCoords['Time (min)'].astype(float)
 
-dfCoords
-
-"""## Graphs for Coordinate Code
-
-### Line Graph - Coordinates over Time
-"""
-#%%
+#%% Line Graph - Coordinates over Time
 #Import plotly go
 import plotly.graph_objects as go
 
@@ -75,8 +65,7 @@ fig1.update_layout(title='Coordinates vs Time', xaxis_title='Time (min)', yaxis_
 #Show the graph
 fig1.show()
 
-"""#### Matplotlib Graph (for exporting purposes)"""
-#%%
+#%% Matplotlib Graph (for exporting purposes)
 #Make matplotlib graph with Time (min) on the x axis and X and Y coordinates on the Y axis
 import matplotlib.pyplot as plt
 
@@ -105,8 +94,7 @@ ax.legend()
 #Show the graph
 plt.show()
 
-"""### Line Graph - Coordinates over Time Smoothed"""
-#%%
+#%% Line Graph - Coordinates over Time Smoothed
 # Apply some smoothing to the X and Y coordinates using the Savitzky-Golay filter
 from scipy.signal import savgol_filter
 
@@ -127,8 +115,7 @@ fig3.update_layout(title='Smoothed Coordinates vs Time', xaxis_title='Time (min)
 #Show the graph
 fig3.show()
 
-"""#### Matplotlib Graph (for exporting purposes)"""
-#%%
+#%% Matplotlib Graph (for exporting purposes)
 #Make matplotlib graph with Time (min) on the x axis and X and Y coordinates smoothed on the Y axis
 import matplotlib.pyplot as plt
 
@@ -157,30 +144,21 @@ ax.legend()
 #Show the graph
 plt.show()
 
+#%% 3D Plot of Coordinates over Time
 # FIXME This 3D plot is not working for some reason, test again later
-"""### 3D Plot of Coordinates over Time"""
-#%%
-#Make 3D plot using plotly where the X axis is the X Coordinate, the Y axis is the Y Coordinate, and the Z axis is the Time (min)
-fig5 = go.Figure(data=[go.Scatter3d(x=dfCoords['X Coordinate'], y=dfCoords['Y Coordinate'], z=dfCoords['Time (min)'], mode='markers')])
-fig5.update_layout(title='Coordinates vs Time', scene=dict(xaxis_title='X Coordinate', yaxis_title='Y Coordinate', zaxis_title='Time (min)'))
+#Import plotly express
+import plotly.express as px
+
+#Make 3D graph with the X axis as the X Coordinate, the Y axis as the Y Coordinate, and the Z axis as the Time (min)
+fig5 = px.scatter_3d(dfCoords, x='X Coordinate', y='Y Coordinate', z='Time (min)')
 
 #Show the graph
 fig5.show()
 
-#%%
-'''### 3D Plot of Coordinates over Time '''
-#Import plotly express
-import plotly.express as px
+#%% X Coordinates with Rewards Over Time
+#Import matplotlib
+import matplotlib.pyplot as plt
 
-#Make 3D Plot with the X axis as the X Coordinate, the Y axis as the Y Coordinate, and the Z axis as the Time (min)
-fig6 = px.scatter_3d(dfCoords, x='X Coordinate', y='Y Coordinate', z='Time (min)')
-fig6.update_layout(title='Coordinates vs Time', scene=dict(xaxis_title='X Coordinate', yaxis_title='Y Coordinate', zaxis_title='Time (min)'))
-
-#Show the graph
-fig6.show()
-
-"""### X Coordinates with Rewards Over Time"""
-#%%
 #Find the values where it goes from Stage 2 to Stage 3
 x_values = []
 Time = []
@@ -235,8 +213,10 @@ plt.title('X Coordinate vs Time (min)')
 #Show the plot
 plt.show()
 
-"""## Pie Graphs of Time Spent in Each Phase"""
-#%%
+#%% Pie Graph of Time Spent in Each Phase
+#Import plotly go
+import plotly.graph_objects as go
+
 #Calculate the difference in time in us between each subsequent row in the dataframe
 dfCoords['Time (us) Difference'] = dfCoords['Time (us)'].diff()
 
@@ -249,44 +229,3 @@ fig5.update_layout(title='Time Spent in Each Phase')
 
 # Show the plot
 fig5.show()
-
-"""# Trial Code
-
-## Cleanup the Trial Code
-"""
-#%%
-#Drop the rows that have NaN values
-dfTrial = dfTrial.dropna()
-
-#Reset the index
-dfTrial = dfTrial.reset_index(drop=True)
-
-#Change the Reaction Time, Trial Number, and ISI Delay column to a float
-dfTrial['Reaction Time'] = dfTrial['Reaction Time'].astype(float)
-#dfTrial['Trial Number'] = dfTrial['Trial Number'].astype(float)
-dfTrial['ISI Delay'] = dfTrial['ISI Delay'].astype(float)
-
-
-#TODO Take out this section since its in another document
-"""## Information to put on the Spreadsheet"""
-
-#Count the number of "Push" in the Push/Pull column
-PushCount = dfTrial['Push/Pull'].str.count('Push').sum()
-
-#Count the number of "Pull" in the Push/Pull column
-PullCount = dfTrial['Push/Pull'].str.count('Pull').sum()
-
-#Add PushCount and PullCount together
-TotalPushPullCount = PushCount + PullCount
-
-#Calculate average reaction time
-AverageReactionTime = dfTrial['Reaction Time'].mean()
-
-# Put information above into a dataframe
-dfTrialInfo = pd.DataFrame({'Total Push Count': [PushCount], 'Total Pull Count': [PullCount], 'Total Push/Pull Count': [TotalPushPullCount], 'Average Reaction Time (ms)': [AverageReactionTime]})
-
-#Make sure we can see all the dataframes in the table below
-pd.set_option('display.max_columns', None)
-pd.set_option('display.max_rows', None)
-
-print(dfTrialInfo)
