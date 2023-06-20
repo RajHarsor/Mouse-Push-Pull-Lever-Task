@@ -158,6 +158,7 @@ void loop() {
     currentMillis = millis();     // starts timer
     digitalWrite(29, HIGH); // Tells the coordinate teensy the current state is the rest state
     while (timerMillis <= 50) { // mouse needs to hold at start position for 50 ms to go forward and for the sound to play
+    //TODO Make the holdTime a global variable so it can be edited in the testing configuration section (currently 50 ms)
       if (digitalRead(REST_PIN) == HIGH) {
         continue;
       } else {
