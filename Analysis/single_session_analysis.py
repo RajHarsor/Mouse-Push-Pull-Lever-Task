@@ -33,7 +33,7 @@ dfCoords.at[0, 0] = dfCoords.at[0, 0].split('\t')[1]
 dfCoords.columns = ['X Coordinate', 'Y Coordinate', 'Time (us)', 'Phase']
 
 #Get rid of the even numbered rows
-dfCoords = dfCoords.iloc[::2, :]
+#dfCoords = dfCoords.iloc[::2, :]
 
 #Reset the index
 dfCoords = dfCoords.reset_index(drop=True)
