@@ -73,7 +73,7 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
       OpenTimeArray[0] = 2;
     }
   }
-  Serial.print("Current Array: [");  // print the current array of pushes and pulls
+  Serial.print("[");  // print the current array of pushes and pulls
   for (int i = 0; i < 10; i++) {
     Serial.print(OpenTimeArray[i]);
     Serial.print(" ");
@@ -89,14 +89,14 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
       ArrayCount2 = ArrayCount2 + 1;
     }
   }
-  Serial.print("Current F/R Ratio = ");  // Print the current F/R ratio (pushes/pulls)
+  // Serial.print("Current F/R Ratio = ");  // Print the current F/R ratio (pushes/pulls)
   Serial.print(ArrayCount1);
   Serial.print(" / ");
   Serial.print(ArrayCount2);
   Serial.print(",");
 
 
-  Serial.print("Total F/R Ratio = "); // Print the total F/R ratio (pushes/pulls)
+  // Serial.print("Total F/R Ratio = "); // Print the total F/R ratio (pushes/pulls)
   Serial.print(positionA);
   Serial.print(" / ");
   Serial.print(positionB);
@@ -105,7 +105,7 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
   if (mouse_failed == 0) {  // Push Equation
     // OpenTime = -7.83 * (ArrayCount1 + 1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2 + 1), 2) - 18.44 * (ArrayCount1 + 1 - ArrayCount2)/(ArrayCount1 + ArrayCount2 + 1) + 48.28;
     OpenTime = -7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2), 2) - 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2) + 48.28;
-    Serial.print("Solenoid Open Time = ");
+    // Serial.print("Solenoid Open Time = ");
     Serial.print(OpenTime);
     Serial.print(",");
     currentMillis = millis();
@@ -117,7 +117,7 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
   if (mouse_failed == 2) {  // Pull Equation
     // OpenTime = -7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2 + 1),2) + 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2 + 1) + 48.28;
     OpenTime = -7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2), 2) + 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2) + 48.28;
-    Serial.print("Solenoid Open Time = ");
+    // Serial.print("Solenoid Open Time = ");
     Serial.print(OpenTime);
     Serial.print(",");
     currentMillis = millis();
@@ -152,7 +152,7 @@ void loop() {
 //     coordinates();
 // }
   for (int trialNumber = 1; trialNumber < totalTrials; trialNumber++) {  // Initializes the trial number at 1, goes until we hit the total number of trials (totalTrials) in the testing configuration section, and increases trial number by 1 every cycle
-    Serial.print("Trial Number = ");
+    //Serial.print("Trial Number = ");
     Serial.print(trialNumber);  // prints the trial number
     Serial.print(" ,");
     currentMillis = millis();     // starts timer
@@ -175,7 +175,7 @@ void loop() {
       if (digitalRead(PUSH_PIN) == HIGH) { // if the mouse pushes the lever
         reactionTime = millis() - startTime; // calculate reaction time
         Serial.print(reactionTime); // print reaction time
-        Serial.print(" ms,");
+        Serial.print(", ");
         mouse_failed = 0; // set mouse_failed to 0, which means the mouse pushed the lever
         positionA++; // increase the counter of the number of times the mouse pushed the lever
         digitalWrite(30, LOW); // Tells the coordinate teensy the push/pull state is ended
@@ -190,7 +190,7 @@ void loop() {
       if (digitalRead(PULL_PIN) == HIGH) { // if the mouse pulls the lever
         reactionTime = millis() - startTime; // calculate reaction time
         Serial.print(reactionTime); // print reaction time
-        Serial.print(" ms,");
+        Serial.print(", ");
         mouse_failed = 2; // set mouse_failed to 2, which means the mouse pulled the lever
         positionB++; // increase the counter of the number of times the mouse pulled the lever
         digitalWrite(30, LOW); // Tells the coordinate teensy the push/pull state is ended
@@ -209,7 +209,7 @@ void loop() {
     if (mouse_failed == 1) { // if the mouse did not push or pull the lever
       reactionTime = millis() - startTime;
       Serial.print(reactionTime);
-      Serial.print(" ms,");
+      //Serial.print(", ");
       Serial.print("Failed ,");
       digitalWrite(Puff, HIGH); // Puff is turned on
       currentMillis = millis();
@@ -228,7 +228,7 @@ void loop() {
     while (timerMillis <= isiDelay) {  //ISI delay
       continue;
     }
-    Serial.print("ISI Delay = "); // Prints the ISI delay
+    // Serial.print("ISI Delay = "); // Prints the ISI delay
     Serial.print(isiDelay);
     Serial.println(";");
     digitalWrite(32, LOW); // Tells the coordinate teensy the ISI delay state is ended
