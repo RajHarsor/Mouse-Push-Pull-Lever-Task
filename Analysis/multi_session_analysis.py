@@ -158,8 +158,55 @@ statsPpush=pd.DataFrame({'Mean':meanPpush['P(push)'], 'Standard Deviation':stdPp
 
 #Print the statistics
 print(statsPpush)
-#%%
+#%% Average Reaction Time per Day
 
-#TODO - Add graph for reaction time 
+#Import plotly go
+import plotly.express as px
 
+#Convert reaction time to seconds
+df['Avg Rxn Time (sec)']=df['Avg Rxn Time (ms)']/1000
 
+#Make a line graph where Avg Rxn Time (sec) is the y axis, Days on Rig is the x axis, and color by Animal   
+fig5 = px.line(df, x="Days on Rig", y="Avg Rxn Time (sec)", color="Animal", title='Average Reaction Time per Day')
+
+#Calculate mean Avg Rxn Time (sec) per day
+meanRxnTime=df.groupby(['Days on Rig']).mean()
+
+#Plot a line graph of mean Avg Rxn Time (sec) per day
+fig5.add_scatter(x=meanRxnTime.index, y=meanRxnTime['Avg Rxn Time (sec)'], mode='lines', name='Mean')
+
+#Add a title to the graph
+fig5.update_layout(title='Average Reaction Time per Day')
+
+#Add a label to the X axis
+fig5.update_xaxes(title_text='Days on Rig')
+
+#Add a label to the Y axis
+fig5.update_yaxes(title_text='Avg Rxn Time (sec)')
+
+#Adjust the X scale to go up by increments of 1
+fig5.update_xaxes(dtick=1)
+
+#Show the graph
+fig5.show()
+#%% Total Trials as a function of Time on Rig
+
+#Import plotly go
+import plotly.express as px
+
+#Make a new column that divides the total trials by Time on Rig
+df['Total Trials/Time on Rig (min)']=df['Total Trials']/df['Time on Rig (min)']
+
+#Make a line graph where Total Trials/Time on Rig is the y axis, Days on Rig is the x axis, and color by Animal
+fig6 = px.line(df, x="Days on Rig", y="Total Trials/Time on Rig", color="Animal", title='Total Trials as a function of Time on Rig')
+
+#Calculate mean Total Trials/Time on Rig per day
+meanTrialsTime=df.groupby(['Days on Rig']).mean()
+
+#Plot a line graph of mean Total Trials/Time on Rig per day
+fig6.add_scatter(x=meanTrialsTime.index, y=meanTrialsTime['Total Trials/Time on Rig (min)'], mode='lines', name='Mean')
+
+#Show the figure
+fig6.show()
+
+# %%
