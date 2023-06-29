@@ -198,7 +198,7 @@ import plotly.express as px
 df['Total Trials/Time on Rig (min)']=df['Total Trials']/df['Time on Rig (min)']
 
 #Make a line graph where Total Trials/Time on Rig is the y axis, Days on Rig is the x axis, and color by Animal
-fig6 = px.line(df, x="Days on Rig", y="Total Trials/Time on Rig", color="Animal", title='Total Trials as a function of Time on Rig')
+fig6 = px.line(df, x="Days on Rig", y="Total Trials/Time on Rig (min)", color="Animal", title='Total Trials as a function of Time on Rig')
 
 #Calculate mean Total Trials/Time on Rig per day
 meanTrialsTime=df.groupby(['Days on Rig']).mean()
