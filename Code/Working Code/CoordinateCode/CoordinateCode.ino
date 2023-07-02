@@ -8,7 +8,7 @@
 
 //Threshold values
 #define PUSH 570 // Set the push threshold value to a value greater than the REST_UPPERBOUND value
-#define PULL 515 // Set the pull threshold value to a value less than the REST_LOWERBOUND value
+#define DOWN 515 // Set the pull threshold value to a value less than the REST_LOWERBOUND value
 #define REST_LOWERBOUND 525
 #define REST_UPPERBOUND 535
 
@@ -66,7 +66,7 @@ void loop() {
     digitalWrite(LED_PIN, LOW);
 
   }
-  else if(x <= PULL)
+  else if(y <= DOWN)
   {
     writePins(PULL_PIN);
     digitalWrite(LED_PIN, LOW);
@@ -78,7 +78,7 @@ void loop() {
   }
   else if(digitalRead(30) == HIGH)
   {
-    Serial.println("Stage 2: Push/Pull ;");
+    Serial.println("Stage 2: Push/Down ;");
   }
   else if (digitalRead(31) == HIGH) {
     Serial.println("Stage 3: Water Retrival ;");
