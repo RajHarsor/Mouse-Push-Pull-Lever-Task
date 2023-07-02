@@ -103,7 +103,7 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
   Serial.print(",");
 
   if (mouse_failed == 0) {  // Push Equation
-    if (ArrayCount1 == 10 || ArrayCount2 == 10) {
+    if (ArrayCount1 == 10 or ArrayCount2 == 10) {
       OpenTime = 0;
     } else {
     // OpenTime = -7.83 * (ArrayCount1 + 1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2 + 1), 2) - 18.44 * (ArrayCount1 + 1 - ArrayCount2)/(ArrayCount1 + ArrayCount2 + 1) + 48.28;
@@ -119,7 +119,7 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
   }
 
   if (mouse_failed == 2) {  // Pull Equation
-    if (ArrayCount1 == 10 || ArrayCount2 == 10) {
+    if (ArrayCount1 == 10 or ArrayCount2 == 10) {
       OpenTime = 0;
     } else {
     // OpenTime = -7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2 + 1),2) + 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2 + 1) + 48.28;
