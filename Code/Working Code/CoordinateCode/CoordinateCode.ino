@@ -1,7 +1,7 @@
 //Pins
 #define REST_PIN 33
 #define PUSH_PIN 34
-#define PULL_PIN 35
+#define DOWN_PIN 35
 #define LED_PIN 0
 #define X_COORD A0
 #define Y_COORD A1
@@ -21,7 +21,7 @@ unsigned long timestamp = micros(); // Variable to store the time at which the v
 //
 void writePins(int pin) // Function to set all pins to low at the beginning of each loop
 {
-  for(int i=REST_PIN; i<=PULL_PIN; i++)
+  for(int i=REST_PIN; i<=DOWN_PIN; i++)
   {
     if(i == pin)
     {
@@ -39,7 +39,7 @@ void setup() {
   Serial.begin(115200);
   pinMode(REST_PIN, OUTPUT); // Sets the Rest pin as an output, tells the Behavior Teensy that when the arm is in the rest position
   pinMode(PUSH_PIN, OUTPUT); // Sets the Push pin as an output, tells the Behavior Teensy that when the arm is in the push position
-  pinMode(PULL_PIN, OUTPUT); // Sets the Pull pin as an output, tells the Behavior Teensy that when the arm is in the pull position
+  pinMode(DOWN_PIN, OUTPUT); // Sets the Down pin as an output, tells the Behavior Teensy that when the arm is in the down position
   pinMode(LED_PIN, OUTPUT); // Sets the LED pin as an output is lit when the mouse is in the rest position
 }
 
@@ -68,7 +68,7 @@ void loop() {
   }
   else if(y <= DOWN)
   {
-    writePins(PULL_PIN);
+    writePins(DOWN_PIN);
     digitalWrite(LED_PIN, LOW);
   }
 
@@ -86,7 +86,7 @@ void loop() {
   else if (digitalRead(32) == HIGH) {
     Serial.println("Stage 4: ISI ;");
   }
-  else 
+  else
   {
     Serial.println("None ;");
   }

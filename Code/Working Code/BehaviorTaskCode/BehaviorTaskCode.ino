@@ -228,7 +228,7 @@ void loop() {
     } else if (mouse_failed == 0) {
       Serial.print("Push ,");
     } else {
-      Serial.print("Pull ,");
+      Serial.print("Down ,");
     }
     digitalWrite(32, HIGH); // Tells the coordinate teensy the current state is that the ISI delay is occurring
     currentMillis = millis();
