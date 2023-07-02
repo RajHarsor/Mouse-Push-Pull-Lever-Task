@@ -28,10 +28,8 @@
             ],
             "intelliSenseMode": "gcc-x64",
             "includePath": [
-                "/private/var/folders/_9/bcsw8t693hgcmq4vq9xkqkb40000gn/T/arduino/sketches/0DCD4DCED69AA4C6C960643CD3A86FDD/pch",
+                "/private/var/folders/_9/bcsw8t693hgcmq4vq9xkqkb40000gn/T/arduino/sketches/2CFF64F801452F1A8B59E7F17B85B12D/pch",
                 "/Users/rajharsora/Library/Arduino15/packages/teensy/hardware/avr/1.58.1/cores/teensy4",
-                "/Users/rajharsora/Library/Arduino15/packages/teensy/hardware/avr/1.58.1/libraries/Entropy",
-                "/Users/rajharsora/Documents/Arduino/libraries/Adafruit_Soundboard_library",
                 "/Users/rajharsora/Library/Arduino15/packages/teensy/tools/teensy-compile/11.3.1/arm/arm-none-eabi/include/c++/11.3.1",
                 "/Users/rajharsora/Library/Arduino15/packages/teensy/tools/teensy-compile/11.3.1/arm/arm-none-eabi/include/c++/11.3.1/arm-none-eabi",
                 "/Users/rajharsora/Library/Arduino15/packages/teensy/tools/teensy-compile/11.3.1/arm/arm-none-eabi/include/c++/11.3.1/backward",
@@ -40,7 +38,7 @@
                 "/Users/rajharsora/Library/Arduino15/packages/teensy/tools/teensy-compile/11.3.1/arm/arm-none-eabi/include"
             ],
             "forcedInclude": [
-                "/private/var/folders/_9/bcsw8t693hgcmq4vq9xkqkb40000gn/T/arduino/sketches/0DCD4DCED69AA4C6C960643CD3A86FDD/pch/Arduino.h"
+                "/private/var/folders/_9/bcsw8t693hgcmq4vq9xkqkb40000gn/T/arduino/sketches/2CFF64F801452F1A8B59E7F17B85B12D/pch/Arduino.h"
             ],
             "cStandard": "c11",
             "cppStandard": "c++14",
