@@ -28,6 +28,7 @@ To create the behavior box, there are some structural components that you will n
 |Aluminum Male-Female Hex Thread Adapter 1/4"-20 to M5 X 0.8 mm Thread Size | 91646A216 | McMaster-Carr | 1 | https://www.mcmaster.com/91646A216/ |
 | FANOOL Soldering Helping Hands Third Hand Tools Vise Table Clamp PCB Holder - 4 Soft and Flexible Arms with Adjustable Clips for Electronics Repair Assembly Painting Jewelry DIY Arts Craft Hobby | B0BVFNB1S8 | Amazon | 1 | https://www.amazon.com/gp/product/B07Q2ZQX2L/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1 |
 | TK84857337T Arm Only Arm Type Articulating Base Height 7.4 mm Base Size 7.4 mm H Base Type Non-Magnetic Compatible Indicator Mounts 6 mm Fine Adjustment Position Fine Adjust Top FAT Holding Power 0 lbf Maximum Reach 178 mm Working Length of Post/Lower Arm | 56LA99 | Grainger | 1 | https://www.grainger.com/product/TRIMOS-Arm-Only-56LA99 |
+| 
 
 #### Electronics
 
@@ -41,5 +42,28 @@ To create the behavior box, there are some electronic components that you will n
 | Joystick TSAT1S02A | 679-3657-ND | Digikey | 1 | https://www.digikey.com/en/products/detail/c-tsats1s02a/679-3657-ND/11223311 |
 | Speaker - 3" Diameter - 8 Ohm 1 Watt | 1314 | Adafruit | 1 | https://www.adafruit.com/product/1314 |
 | FAYLEZ TIP120 NPN 5 A 60 V Silicon Epitaxial Power Transistor 5 amp 60 Volt Darlington Transistors TO-220 20 PCS | B08B3QZQZ1 | Amazon | 1 | https://www.amazon.com/gp/product/B08B3QZQZ1/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1 |
+| MIKEDE Neodymium Bar Magnets 25 Pack, Strong Permanent Rare Earth Magnets with Double-Sided Adhesive, Powerful Metal Neodymium Magnet for Craft, Fridge, Kitchen, Office - 60x10x3mm | B08B3QZQZ1 | Amazon | 2 (Project comes in a pack of 25) | https://www.amazon.com/gp/product/B08B3QZQZ1/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1 |
+| Custom Circuit Board | N/A | Aisler | 1 | N/A |
+
+#### 3D Printed Parts (STL Files)
+
+To create the behavior box, there are some 3D printed parts that you will need. These include:
+
+[comment]: <> (#TODO: Add STL Files)
+
+| Part | STL File |
+|---|---|
+| Mouse Holder | |
+| Joystick Holder| |
+| Joystick Reel | |
+| Joystick Reel Holder | |
+
+### Assembly
+
+1. Print the 3D printed parts (STL files) using a 3D printer
+2. Put all the ThorLabs components on the board (see image below)
+3. Solder the Teensy, soundboard, joystick, and solenoid to the circuit board
+
+
 
 
