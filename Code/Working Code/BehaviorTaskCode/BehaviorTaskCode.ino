@@ -8,6 +8,7 @@ int totalTrials = 1000000;  // DO NOT TOUCH THIS
 int isiDelayLowerRange = 0; // Enter ISI delay lower Value in ms
 int isiDelayUpperRange = 0; // Enter ISI delay upper Value in ms
 int timeOutTime = 540000000000;     // Enter the time out time
+int trialNumber = 0;  // DO NOT TOUCH THIS
 
 
 // Pin Set-Ups //
@@ -151,7 +152,7 @@ void loop() {
 //   readSensors();
 //     coordinates();
 // }
-  for (int trialNumber = 1; trialNumber < totalTrials; trialNumber++) {  // Initializes the trial number at 1, goes until we hit the total number of trials (totalTrials) in the testing configuration section, and increases trial number by 1 every cycle
+  for (trialNumber = 1; trialNumber < totalTrials; trialNumber++) {  // Initializes the trial number at 1, goes until we hit the total number of trials (totalTrials) in the testing configuration section, and increases trial number by 1 every cycle
     //Serial.print("Trial Number = ");
     Serial.print(trialNumber);  // prints the trial number
     Serial.print(" ,");
