@@ -58,11 +58,26 @@ To create the behavior box, there are some 3D printed parts that you will need. 
 | Joystick Reel | |
 | Joystick Reel Holder | |
 
+### Prerequisite Software Downloads
+
+| Software Name  | Download Link  | Steps
+|---|---|---|
+| Arduino IDE  | https://www.arduino.cc/en/software#future-version-of-the-arduino-ide  | 1. Go to the link and download the IDE using the correct installer <br> 2. Follow the steps given in the installer (please note to fully install this software you will need Administrator privileges or have someone put in their Administrator password)|
+| Teensyduino | https://www.pjrc.com/teensy/td_download.html | Teensyduino is downloaded in the Arduino IDE <br> <br>
+| CoolTerm | https://freeware.the-meiers.org/  | 1. Go to the link and scroll down to download the software using the correct installer <br> 2. Once downloaded, open the program <br> 3. Open the .stc files [here] to open up the correct settings configuration
+
 ### Assembly
 
 1. Print the 3D printed parts (STL files) using a 3D printer
 2. Put all the ThorLabs components on the board (see image below)
-3. Solder the Teensy, soundboard, joystick, and solenoid to the circuit board
+3. Put the 3D printed parts on the board (see the same image below)
+4. Upload the sound files onto the Audio FX sound board which can be found here (this should be done before soldering the electronic components onto the custom circuit board)
+5. Solder the electronic components onto the custom circuit board (Reference the circuit diagram here)
+    5.1. Before soldering the joystick onto the custom circuit board, make sure to thread the wires through the Joystick holder (trust me this will make your life easier)
+6. Plug both of the Teensy's into the computer
+7. Upload the coordinate code onto the Teensy that is connected to the joystick (this will be the bottom Teensy if you're holding the circuit board upright)
+    7.1. To do this step, you can either clone the respository, open the code in the Arduino IDE, and upload it to the Teensy or you can upload it straight from VSCode if you have Intellisense configured and get the Arduino extension working 
+
 
 
 
