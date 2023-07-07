@@ -9,8 +9,10 @@
 //Threshold values
 #define PUSH 570 // Set the push threshold value to a value greater than the REST_UPPERBOUND value
 #define DOWN 515 // Set the pull threshold value to a value less than the REST_LOWERBOUND value
-#define REST_LOWERBOUND 525
-#define REST_UPPERBOUND 535
+#define REST_LOWERBOUND_X 525
+#define REST_UPPERBOUND_X 535
+#define REST_LOWERBOUND_Y 515
+#define REST_UPPERBOUND_Y 525
 
 
 unsigned int x; // Variable to store the value read from the X axis of the Joystick
@@ -55,7 +57,7 @@ void loop() {
   Serial.print(timestamp); // Prints the time at which the values were read in microseconds
   Serial.print(" , ");
 
-  if(x >= REST_LOWERBOUND && x <= REST_UPPERBOUND)
+  if(x >= REST_LOWERBOUND_X && x <= REST_UPPERBOUND_X && y >= REST_LOWERBOUND_Y && y <= REST_UPPERBOUND_Y)
   {
     writePins(REST_PIN);
     digitalWrite(LED_PIN, HIGH);
