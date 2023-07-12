@@ -77,7 +77,8 @@ To create the behavior box, there are some 3D printed parts that you will need. 
 |---|---|---|
 | Arduino IDE  | https://www.arduino.cc/en/software#future-version-of-the-arduino-ide  | 1. Go to the link and download the IDE using the correct installer <br> 2. Follow the steps given in the installer (please note to fully install this software you will need Administrator privileges or have someone put in their Administrator password)|
 | Teensyduino | https://www.pjrc.com/teensy/td_download.html | Teensyduino is downloaded in the Arduino IDE <br> <br>
-| CoolTerm | https://freeware.the-meiers.org/  | 1. Go to the link and scroll down to download the software using the correct installer <br> 2. Once downloaded, open the program <br> 3. Open the .stc files [here] to open up the correct settings configuration 
+| CoolTerm | https://freeware.the-meiers.org/  | 1. Go to the link and scroll down to download the software using the correct installer <br> 2. Once downloaded, open the program <br> 3. Open the .stc files [here] to open up the correct settings configuration |
+|PrusaSlicer|https://www.prusa3d.com/prusaslicer/|1. Go to the link and download the software using the correct installer <br> 2. Once downloaded, open the program <br> 3. Open up your STL files here to slice them and export them as GCODE files for 3D printing|
 
 ### 1.2.3. Structure Assembly
 
