@@ -1,16 +1,27 @@
-# Mouse-Push-Pull-Lever-Task
+# 1. Mouse-Push-Pull-Lever-Task
 
-## Task Design
+- [1. Mouse-Push-Pull-Lever-Task](#1-mouse-push-pull-lever-task)
+  - [1.1. Task Design](#11-task-design)
+  - [1.2. Creating a Behavior Box](#12-creating-a-behavior-box)
+    - [1.2.1. Materials](#121-materials)
+      - [1.2.1.1. Structure](#1211-structure)
+      - [1.2.1.2. Electronics](#1212-electronics)
+      - [1.2.1.3. 3D Printed Parts (STL Files)](#1213-3d-printed-parts-stl-files)
+    - [1.2.2. Prerequisite Software Downloads](#122-prerequisite-software-downloads)
+    - [1.2.3. Assembly](#123-assembly)
+
+
+## 1.1. Task Design
 
 The task design is as follows in the diagram below:
 
 ![Task Design](https://github.com/RajHarsor/Mouse-Push-Pull-Lever-Task/blob/main/Instructions%20+%20README/TaskDesign.png)
 
-## Creating a Behavior Box
+## 1.2. Creating a Behavior Box
 
-### Materials
+### 1.2.1. Materials
 
-#### Structure
+#### 1.2.1.1. Structure
 
 To create the behavior box, there are some structural components that you will need. These include:
 
@@ -30,7 +41,7 @@ To create the behavior box, there are some structural components that you will n
 | TK84857337T Arm Only Arm Type Articulating Base Height 7.4 mm Base Size 7.4 mm H Base Type Non-Magnetic Compatible Indicator Mounts 6 mm Fine Adjustment Position Fine Adjust Top FAT Holding Power 0 lbf Maximum Reach 178 mm Working Length of Post/Lower Arm | 56LA99 | Grainger | 1 | https://www.grainger.com/product/TRIMOS-Arm-Only-56LA99 |
 | 
 
-#### Electronics
+#### 1.2.1.2. Electronics
 
 To create the behavior box, there are some electronic components that you will need. These include:
 
@@ -45,7 +56,7 @@ To create the behavior box, there are some electronic components that you will n
 | MIKEDE Neodymium Bar Magnets 25 Pack, Strong Permanent Rare Earth Magnets with Double-Sided Adhesive, Powerful Metal Neodymium Magnet for Craft, Fridge, Kitchen, Office - 60x10x3mm | B08B3QZQZ1 | Amazon | 2 (Project comes in a pack of 25) | https://www.amazon.com/gp/product/B08B3QZQZ1/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1 |
 | Custom Circuit Board | N/A | Aisler | 1 | N/A |
 
-#### 3D Printed Parts (STL Files)
+#### 1.2.1.3. 3D Printed Parts (STL Files)
 
 To create the behavior box, there are some 3D printed parts that you will need. These include:
 
@@ -58,7 +69,7 @@ To create the behavior box, there are some 3D printed parts that you will need. 
 | Joystick Reel | |
 | Joystick Reel Holder | |
 
-### Prerequisite Software Downloads
+### 1.2.2. Prerequisite Software Downloads
 
 | Software Name  | Download Link  | Steps
 |---|---|---|
@@ -66,7 +77,7 @@ To create the behavior box, there are some 3D printed parts that you will need. 
 | Teensyduino | https://www.pjrc.com/teensy/td_download.html | Teensyduino is downloaded in the Arduino IDE <br> <br>
 | CoolTerm | https://freeware.the-meiers.org/  | 1. Go to the link and scroll down to download the software using the correct installer <br> 2. Once downloaded, open the program <br> 3. Open the .stc files [here] to open up the correct settings configuration 
 
-### Assembly
+### 1.2.3. Assembly
 
 1. Print the 3D printed parts (STL files) using a 3D printer
 2. Put all the ThorLabs components on the board (see image below)
