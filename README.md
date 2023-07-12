@@ -8,7 +8,7 @@
       - [1.2.1.2. Electronics](#1212-electronics)
       - [1.2.1.3. 3D Printed Parts (STL Files)](#1213-3d-printed-parts-stl-files)
     - [1.2.2. Prerequisite Software Downloads](#122-prerequisite-software-downloads)
-    - [1.2.3. Assembly](#123-assembly)
+    - [1.2.3. Structure Assembly](#123-structure-assembly)
 
 
 ## 1.1. Task Design
@@ -39,7 +39,7 @@ To create the behavior box, there are some structural components that you will n
 |Aluminum Male-Female Hex Thread Adapter 1/4"-20 to M5 X 0.8 mm Thread Size | 91646A216 | McMaster-Carr | 1 | https://www.mcmaster.com/91646A216/ |
 | FANOOL Soldering Helping Hands Third Hand Tools Vise Table Clamp PCB Holder - 4 Soft and Flexible Arms with Adjustable Clips for Electronics Repair Assembly Painting Jewelry DIY Arts Craft Hobby | B0BVFNB1S8 | Amazon | 1 | https://www.amazon.com/gp/product/B07Q2ZQX2L/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1 |
 | TK84857337T Arm Only Arm Type Articulating Base Height 7.4 mm Base Size 7.4 mm H Base Type Non-Magnetic Compatible Indicator Mounts 6 mm Fine Adjustment Position Fine Adjust Top FAT Holding Power 0 lbf Maximum Reach 178 mm Working Length of Post/Lower Arm | 56LA99 | Grainger | 1 | https://www.grainger.com/product/TRIMOS-Arm-Only-56LA99 |
-| 
+| 5 mL Serological Pipette | N/A | Stole from Masayori's Lab | 1 | N/A |
 
 #### 1.2.1.2. Electronics
 
@@ -77,17 +77,18 @@ To create the behavior box, there are some 3D printed parts that you will need. 
 | Teensyduino | https://www.pjrc.com/teensy/td_download.html | Teensyduino is downloaded in the Arduino IDE <br> <br>
 | CoolTerm | https://freeware.the-meiers.org/  | 1. Go to the link and scroll down to download the software using the correct installer <br> 2. Once downloaded, open the program <br> 3. Open the .stc files [here] to open up the correct settings configuration 
 
-### 1.2.3. Assembly
+### 1.2.3. Structure Assembly
 
 1. Print the 3D printed parts (STL files) using a 3D printer
-2. Put all the ThorLabs components on the board (see image below)
+   1. If you do not know how to use the 3D printer, please ask someone in the lab that does
+2. Put all the ThorLabs components on the board (Fig 1)
 3. Put the 3D printed parts on the board (see the same image below)
-4. Upload the sound files onto the Audio FX sound board which can be found here (this should be done before soldering the electronic components onto the custom circuit board)
-5. Solder the electronic components onto the custom circuit board (Reference the circuit diagram here)
-    5.1. Before soldering the joystick onto the custom circuit board, make sure to thread the wires through the Joystick holder (trust me this will make your life easier)
-6. Plug both of the Teensy's into the computer
-7. Upload the coordinate code onto the Teensy that is connected to the joystick (this will be the bottom Teensy if you're holding the circuit board upright)
-    7.1. To do this step, you can either clone the repository, open the code in the Arduino IDE, and upload it to the Teensy or you can upload it straight from VSCode if you have Intellisense configured and get the Arduino extension working 
+
+<ins> Fig 1 </ins>
+
+
+
+
 
 
 
