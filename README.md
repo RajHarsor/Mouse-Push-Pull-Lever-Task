@@ -58,6 +58,8 @@ To create the behavior box, there are some electronic components that you will n
 | MIKEDE Neodymium Bar Magnets 25 Pack, Strong Permanent Rare Earth Magnets with Double-Sided Adhesive, Powerful Metal Neodymium Magnet for Craft, Fridge, Kitchen, Office - 60x10x3mm | B08B3QZQZ1 | Amazon | 2 (Project comes in a pack of 25) | https://www.amazon.com/gp/product/B08B3QZQZ1/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1 |
 | Custom Circuit Board | N/A | Aisler | 1 | N/A |
 
+[comment]: <> (Add possible header pins you will need to buy from Teensy specially for the circuit board)
+
 #### 1.2.1.3. 3D Printed Parts (STL Files)
 
 To create the behavior box, there are some 3D printed parts that you will need. These include:
@@ -86,6 +88,12 @@ To create the behavior box, there are some 3D printed parts that you will need. 
    1. If you do not know how to use the 3D printer, please ask someone in the lab that does
 2. Put all the ThorLabs components on the board (Fig 1)
 3. Put the 3D printed parts on the board (Fig 2)
+4. Cut the top of the serological pipette off so we can add water to the pipette in between mice
+5. Attach the serological pipette to long post (ThorLabs Part T10)
+6. Attach the gooseneck arm to hold the water spout for the mouse to drink from (In the future we might want to come up with a better way to do this since the gooseneck arm is not very flexible)
+   1. To do this you can use any adhesives you think are necessary (most likely a combination of epoxy and tape)
+
+<br>
 
 <ins> Fig 1 </ins>
 
