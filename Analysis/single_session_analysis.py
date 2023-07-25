@@ -36,16 +36,7 @@ SheetName = answers['sheet']
 
 #pathCoords = r'C:\Users\rdh92-adm\Downloads\CoordinatesExample.txt'
 #pathTrial = r"C:\Users\rdh92-adm\Box\Oldenburg-Shared\Cohort 3 Behavioral Testing\F3.4-39\6.13.23\F3.4-39_6.13.23_Trials"
-
-#%% Input the values of the upper and lower X bounds and what is considered a push and pull
-
-upperXBound= int(input("Enter the upper X bound: "))
-LowerXBound= int(input("Enter the lower X bound: "))
-PushValue= int(input("Enter the value of a push: "))
-PullValue= int(input("Enter the value of a pull: "))
-
 #%% Read the files and clean up the files
-SheetName = "Cohort 3"
 #Read the files
 dfCoords = pd.read_csv(pathCoords, sep=',', header=None, on_bad_lines="warn")
 dfTrial = pd.read_csv(pathTrial, sep=',', header=None, names=['Trial Number', 'Reaction Time', 'Current Array', 'Current Array Push/Pull Ratio', 'Total Push/Pull Ratio', 'Solenoid Open Time', 'Push/Pull', 'ISI Delay'], on_bad_lines="warn")
@@ -311,8 +302,8 @@ plt.title('X Coordinate vs Time (min)')
 plt.show()
 
 #%% Pie Graph of Time Spent in Each Phase
-#Import plotly go
-import plotly.graph_objects as go
+#Import matplotlib
+import matplotlib.pyplot as plt
 
 #Calculate the difference in time in us between each subsequent row in the dataframe
 dfCoords['Time (us) Difference'] = dfCoords['Time (us)'].diff()
@@ -320,9 +311,12 @@ dfCoords['Time (us) Difference'] = dfCoords['Time (us)'].diff()
 #Make new dataframe with information
 phase_times = dfCoords.groupby("Phase")["Time (us) Difference"].sum().reset_index()
 
-#Make the Pie Graph
-fig5 = go.Figure(data=[go.Pie(labels=phase_times['Phase'], values=phase_times['Time (us) Difference'])])
-fig5.update_layout(title='Time Spent in Each Phase')
+#Initialize the figure
+fig5, ax = plt.subplots()
+
+#Make the pie graph
+ax.pie(phase_times['Time (us) Difference'], labels=phase_times['Phase'], autopct='%1.1f%%', pctdistance= 1.1, labeldistance= 1.3, startangle=90, counterclock=False)
 
 # Show the plot
 fig5.show()
+# %%
