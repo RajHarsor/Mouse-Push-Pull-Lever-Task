@@ -1,5 +1,5 @@
 #%% Initialize the program
-%matplotlib widget
+%matplotlib qt
 #%% Import the necessary packages and files
 #Import pandas
 import pandas as pd
@@ -25,7 +25,7 @@ Pull= int(input("Enter the value of a pull: "))
 #%% Read the files
 #Read the files
 dfCoords = pd.read_csv(pathCoords, sep=',', header=None, on_bad_lines="warn")
-dfTrial = pd.read_csv(pathTrial, sep=',', header=None, names=['Trial Number', 'Reaction Time', 'Current Array', 'Current Array Push/Pull Ratio', 'Total Push/Pull Ratio', 'Solenoid Open Time', 'Push/Pull', 'ISI Delay'], on_bad_lines="warn")
+#dfTrial = pd.read_csv(pathTrial, sep=',', header=None, names=['Trial Number', 'Reaction Time', 'Current Array', 'Current Array Push/Pull Ratio', 'Total Push/Pull Ratio', 'Solenoid Open Time', 'Push/Pull', 'ISI Delay'], on_bad_lines="warn")
 
 #%% Clean up the Coordinates Code
 #Edit index 0, row 0 to delete the values before the t including the t
@@ -57,7 +57,13 @@ dfCoords['Y Coordinate'] = dfCoords['Y Coordinate'].astype(int)
 dfCoords['Time (us)'] = dfCoords['Time (us)'].astype(float)
 dfCoords['Time (min)'] = dfCoords['Time (min)'].astype(float)
 
+#Delete any rows in the X or Y Coordinate columns that are over 1000
+dfCoords = dfCoords[dfCoords['X Coordinate'] < 1000]
+dfCoords = dfCoords[dfCoords['Y Coordinate'] < 1000]
+
 #%% Line Graph - Coordinates over Time
+#Please note that while this section can be uncommented, the following section is the same graph
+"""""
 #Import plotly go
 import plotly.graph_objects as go
 
@@ -71,8 +77,8 @@ fig1.update_layout(title='Coordinates vs Time', xaxis_title='Time (min)', yaxis_
 
 #Show the graph
 fig1.show()
-
-#%% Matplotlib Graph (for exporting purposes)
+""""
+#%% Matplotlib Graph 
 #Make matplotlib graph with Time (min) on the x axis and X and Y coordinates on the Y axis
 import matplotlib.pyplot as plt
 
@@ -94,7 +100,6 @@ ax.spines['top'].set_visible(False)
 
 #Zoom in to a certain area if you want
 #ax.set_xlim(23.5, 24.5)
-
 #Add a legend
 ax.legend()
 
