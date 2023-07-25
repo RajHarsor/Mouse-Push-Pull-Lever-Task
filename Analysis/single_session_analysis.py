@@ -1,3 +1,5 @@
+#%% Initialize the program
+%matplotlib widget
 #%% Import the necessary packages and files
 #Import pandas
 import pandas as pd
@@ -27,7 +29,7 @@ dfTrial = pd.read_csv(pathTrial, sep=',', header=None, names=['Trial Number', 'R
 
 #%% Clean up the Coordinates Code
 #Edit index 0, row 0 to delete the values before the t including the t
-dfCoords.at[0, 0] = dfCoords.at[0, 0].split('\t')[1]
+#dfCoords.at[0, 0] = dfCoords.at[0, 0].split('\t')[1]
 
 # Rename the columns
 dfCoords.columns = ['X Coordinate', 'Y Coordinate', 'Time (us)', 'Phase']
@@ -44,9 +46,14 @@ dfCoords['Time (min)'] = dfCoords['Time (us)']/60000000
 #Reorder the columns
 dfCoords = dfCoords[['X Coordinate', 'Y Coordinate', 'Phase', 'Time (us)', 'Time (min)']]
 
+#Filter rows where the specific column does not contain a numerical value
+dfCoords = dfCoords[pd.to_numeric(dfCoords['X Coordinate'], errors='coerce').notnull()]
+dfCoords = dfCoords[pd.to_numeric(dfCoords['Y Coordinate'], errors='coerce').notnull()]
+dfCoords = dfCoords[pd.to_numeric(dfCoords['Time (min)'], errors='coerce').notnull()]
+
 #Make thew columns X and Y coordinates and Time(us) and Time(min) into floats
-dfCoords['X Coordinate'] = dfCoords['X Coordinate'].astype(float)
-dfCoords['Y Coordinate'] = dfCoords['Y Coordinate'].astype(float)
+dfCoords['X Coordinate'] = dfCoords['X Coordinate'].astype(int)
+dfCoords['Y Coordinate'] = dfCoords['Y Coordinate'].astype(int)
 dfCoords['Time (us)'] = dfCoords['Time (us)'].astype(float)
 dfCoords['Time (min)'] = dfCoords['Time (min)'].astype(float)
 
@@ -146,14 +153,17 @@ plt.show()
 
 #%% 3D Plot of Coordinates over Time
 # FIXME This 3D plot is not working for some reason, test again later
-#Import plotly express
-import plotly.express as px
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
 
-#Make 3D graph with the X axis as the X Coordinate, the Y axis as the Y Coordinate, and the Z axis as the Time (min)
-fig5 = px.scatter_3d(dfCoords, x='X Coordinate', y='Y Coordinate', z='Time (min)')
+#Create Figure
+fig = plt.figure()
+ax = Axes3D(fig)
 
-#Show the graph
-fig5.show()
+#Create Plot
+dfig = ax.scatter(dfCoords['X Coordinate'], dfCoords['Y Coordinate'], dfCoords['Time (min)'], color = 'green', cmap='viridis', linewidth=0.5)
+
+plt.show()
 
 #%% X Coordinates with Rewards Over Time
 #Import matplotlib
