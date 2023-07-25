@@ -8,18 +8,34 @@ import pandas as pd
 pathCoords= input("Enter the path of the file containing the coordinates information: ")
 pathTrial= input("Enter the path of the file containing the trial information: ")
 pathGraphValues= input("Enter the path of the water log file: ")
-SheetName= input("Enter the name of the sheet in the water log file where the information is present: ")
+
+#Take out the quotes from the path and don't replace them with anything
+pathGraphValues=pathGraphValues.replace('"','')
+pathCoords=pathCoords.replace('"','')
+pathTrial=pathTrial.replace('"','')
+
+#%% Select the sheet name
+#Select the name of the sheet where the information is located in the water log file
+import openpyxl as xl
+wb = xl.load_workbook(pathGraphValues)
+
+SheetNames = []
+sheet_names = wb.sheetnames
+
+import inquirer
+
+questions = [
+    inquirer.List('sheet',
+                  message="What sheet is your mouse located in?",
+                  choices = sheet_names,
+    ),
+]
+
+answers = inquirer.prompt(questions)
+SheetName = answers['sheet']
 
 #pathCoords = r'C:\Users\rdh92-adm\Downloads\CoordinatesExample.txt'
 #pathTrial = r"C:\Users\rdh92-adm\Box\Oldenburg-Shared\Cohort 3 Behavioral Testing\F3.4-39\6.13.23\F3.4-39_6.13.23_Trials"
-
-#Take out the quotes from the path and don't replace them with anything
-pathCoords=pathCoords.replace('"','')
-pathTrial=pathTrial.replace('"','')
-pathGraphValues=pathGraphValues.replace('"','')
-
-xls = pd.ExcelFile(pathGraphValues)
-dfGraphValues = pd.read_excel(xls, SheetName)
 
 #%% Input the values of the upper and lower X bounds and what is considered a push and pull
 
@@ -29,9 +45,38 @@ PushValue= int(input("Enter the value of a push: "))
 PullValue= int(input("Enter the value of a pull: "))
 
 #%% Read the files and clean up the files
+SheetName = "Cohort 3"
 #Read the files
 dfCoords = pd.read_csv(pathCoords, sep=',', header=None, on_bad_lines="warn")
 dfTrial = pd.read_csv(pathTrial, sep=',', header=None, names=['Trial Number', 'Reaction Time', 'Current Array', 'Current Array Push/Pull Ratio', 'Total Push/Pull Ratio', 'Solenoid Open Time', 'Push/Pull', 'ISI Delay'], on_bad_lines="warn")
+xls = pd.ExcelFile(pathGraphValues)
+dfGraphValues = pd.read_excel(xls, SheetName)
+
+#Drop the rows that we don't need in the dfGraphValues dataframe
+dfGraphValues = dfGraphValues.drop(['Start Weight (g)', 'Current Weight (g)', 'Percent', 'Water to 85%', '25mg/kg', '50mg/kg', '10mg/kg', 'Recommend (ml)', 'Give (ml)', 'Earned (ml)', 'Program', 'Time Started', 'ISI Upper Range (ms)', 'ISI Upper Range (ms)', 'ISI Lower Range (ms)'], axis=1)
+
+#Get the Animal Name and date from the path
+import re
+
+animalNamePattern = r'\\(F\d+\.\d+-\d+)\\'
+match1 = re.search(animalNamePattern, pathTrial)
+animalName = match1.group(1)
+
+datePattern = r'\\(\d{6})\\'
+match2 = re.search(datePattern, pathTrial)
+date = int(match2.group(1))
+
+#Filter the dfGraphValues dataframe by the Animal Name
+dfGraphValues = dfGraphValues[dfGraphValues['Animal'] == animalName]
+
+#Find the row where the date is the same as the date in the path
+dfGraphValues = dfGraphValues[dfGraphValues['Date'] == date]
+
+#Get information from the water log file
+XUpperBound = dfGraphValues['Rest Upper Value (X Coordinate)'].iloc[0]
+XLowerBound = dfGraphValues['Rest Lower Value (X Coordinate)'].iloc[0]
+PushValue = dfGraphValues['Push Value (X Coordinate)'].iloc[0]
+PullValue = dfGraphValues['Pull Value (X Coordinate)'].iloc[0]
 
 #Edit index 0, row 0 to delete the values before the t including the t
 #dfCoords.at[0, 0] = dfCoords.at[0, 0].split('\t')[1]
@@ -88,7 +133,7 @@ fig1.update_layout(title='Coordinates vs Time', xaxis_title='Time (min)', yaxis_
 
 #Show the graph
 fig1.show()
-""""
+"""
 #%% Coordinates over Time
 #Make matplotlib graph with Time (min) on the x axis and X and Y coordinates on the Y axis
 import matplotlib.pyplot as plt
