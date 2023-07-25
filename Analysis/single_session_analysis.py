@@ -7,6 +7,8 @@ import pandas as pd
 #Paths for the files we are going to use
 pathCoords= input("Enter the path of the file containing the coordinates information: ")
 pathTrial= input("Enter the path of the file containing the trial information: ")
+pathGraphValues= input("Enter the path of the water log file: ")
+SheetName= input("Enter the name of the sheet in the water log file where the information is present: ")
 
 #pathCoords = r'C:\Users\rdh92-adm\Downloads\CoordinatesExample.txt'
 #pathTrial = r"C:\Users\rdh92-adm\Box\Oldenburg-Shared\Cohort 3 Behavioral Testing\F3.4-39\6.13.23\F3.4-39_6.13.23_Trials"
@@ -14,6 +16,10 @@ pathTrial= input("Enter the path of the file containing the trial information: "
 #Take out the quotes from the path and don't replace them with anything
 pathCoords=pathCoords.replace('"','')
 pathTrial=pathTrial.replace('"','')
+pathGraphValues=pathGraphValues.replace('"','')
+
+xls = pd.ExcelFile(pathGraphValues)
+dfGraphValues = pd.read_excel(xls, SheetName)
 
 #%% Input the values of the upper and lower X bounds and what is considered a push and pull
 
