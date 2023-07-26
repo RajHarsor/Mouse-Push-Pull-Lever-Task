@@ -1,5 +1,5 @@
 #%% Initialize the program
-%matplotlib qt
+#%matplotlib qt
 #%% Import the necessary packages and files
 #Import pandas
 import pandas as pd
@@ -318,5 +318,5 @@ fig5, ax = plt.subplots()
 ax.pie(phase_times['Time (us) Difference'], labels=phase_times['Phase'], autopct='%1.1f%%', pctdistance= 1.1, labeldistance= 1.3, startangle=90, counterclock=False)
 
 # Show the plot
-fig5.show()
+plt.show()
 # %%
