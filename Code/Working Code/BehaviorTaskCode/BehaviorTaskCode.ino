@@ -75,7 +75,7 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
     }
   }
   Serial.print("[");  // print the current array of pushes and pulls
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < ArraySize; i++) {
     Serial.print(OpenTimeArray[i]);
     Serial.print(" ");
   }
