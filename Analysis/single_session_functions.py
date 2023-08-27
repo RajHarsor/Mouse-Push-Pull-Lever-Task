@@ -1,5 +1,10 @@
 # File Cleanup + Import
 def importandclean():
+    #import packages
+    import openpyxl as xl
+    import re
+    import inquirer
+    import pandas as pd
     #Paths for the files we are going to use
     pathCoords= input("Enter the path of the file containing the coordinates information: ")
     pathTrial= input("Enter the path of the file containing the trial information: ")
