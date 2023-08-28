@@ -47,7 +47,7 @@ int mouse_failed; // Different conditions the mouse can go into, might want to r
 int positionA = 0.0;  // Push Counter;
 int positionB = 0.0;  // Pull Counter;
 
-int OpenTimeArray[10];  // initialize a blank array with 10 slots
+int OpenTimeArray[ArraySize];  // initialize a blank array with 10 slots
 int currentIndex = 0;  // initialize the current index of the array to 0
 int ArrayCount1 = 0; // initialize the number of 1's in the array to 0
 int ArrayCount2 = 0; // initialize the number of 2's in the array to 0
