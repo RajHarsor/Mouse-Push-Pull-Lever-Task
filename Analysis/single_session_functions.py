@@ -3,7 +3,9 @@ def importandclean_Push_Down():
     #import packages
     import pandas as pd
     #Paths for the files we are going to use
+    global pathCoords
     pathCoords= input("Enter the path of the file containing the coordinates information: ")
+    global pathTrial
     pathTrial= input("Enter the path of the file containing the trial information: ")
 
     #Take out the quotes from the path and don't replace them with anything
@@ -11,7 +13,9 @@ def importandclean_Push_Down():
     pathTrial=pathTrial.replace('"','')
     
     #Read the files
+    global dfCoords
     dfCoords = pd.read_csv(pathCoords, sep=',', header=None, on_bad_lines="warn")
+    global dfTrial
     dfTrial = pd.read_csv(pathTrial, sep=',', header=None, names=['Trial Number', 'Reaction Time', 'Current Array', 'Current Array Push/Pull Ratio', 'Total Push/Pull Ratio', 'Solenoid Open Time', 'Push/Down', 'ISI Delay'], on_bad_lines="warn")
     # Rename the columns
     dfCoords.columns = ['X Coordinate', 'Y Coordinate', 'Time (us)', 'Phase']
@@ -51,7 +55,9 @@ def importandclean_Push_Pull():
     #import packages
     import pandas as pd
     #Paths for the files we are going to use
+    global pathCoords
     pathCoords= input("Enter the path of the file containing the coordinates information: ")
+    global pathTrial
     pathTrial= input("Enter the path of the file containing the trial information: ")
 
     #Take out the quotes from the path and don't replace them with anything
@@ -59,7 +65,9 @@ def importandclean_Push_Pull():
     pathTrial=pathTrial.replace('"','')
     
     #Read the files
+    global dfCoords
     dfCoords = pd.read_csv(pathCoords, sep=',', header=None, on_bad_lines="warn")
+    global dfTrial
     dfTrial = pd.read_csv(pathTrial, sep=',', header=None, names=['Trial Number', 'Reaction Time', 'Current Array', 'Current Array Push/Pull Ratio', 'Total Push/Pull Ratio', 'Solenoid Open Time', 'Push/Pull', 'ISI Delay'], on_bad_lines="warn")
     # Rename the columns
     dfCoords.columns = ['X Coordinate', 'Y Coordinate', 'Time (us)', 'Phase']
@@ -93,3 +101,96 @@ def importandclean_Push_Pull():
     #Delete any rows in the X or Y Coordinate columns that are over 1000
     dfCoords = dfCoords[dfCoords['X Coordinate'] < 1000]
     dfCoords = dfCoords[dfCoords['Y Coordinate'] < 1000]
+
+def CoordsOverTime():
+    #Make matplotlib graph with Time (min) on the x axis and X and Y coordinates on the Y axis
+    import matplotlib.pyplot as plt
+
+    #Create a figure
+    fig2, ax = plt.subplots()
+
+    #Plot the X and Y coordinates on the same graph
+    ax.plot(dfCoords['Time (min)'], dfCoords['X Coordinate'], label='X Coordinate')
+    ax.plot(dfCoords['Time (min)'], dfCoords['Y Coordinate'], label='Y Coordinate')
+
+    #Add a title and axis labels
+    ax.set_title('Coordinates vs Time')
+    ax.set_xlabel('Time (min)')
+    ax.set_ylabel('Coordinates')
+
+    #Despine the graph
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+
+    #Zoom in to a certain area if you want
+    #ax.set_xlim(23.5, 24.5)
+    #Add a legend
+    ax.legend()
+
+    #Show the graph
+    plt.show()
+
+    import inquirer
+    questions = [
+        inquirer.List('Save',
+                        message = "Would you like to save this graph? (saves as a .svg file)",
+                        choices = ['Yes', 'No'],
+        ),
+    ]
+    answers = inquirer.prompt(questions)
+    if answers['Save'] == 'Yes':
+        fig2.savefig('Coordinates vs Time.svg', format='svg', dpi=1200)
+    else:
+        pass
+
+def CoordsOverTime_Smoothed():
+    #Apply some smoothing to the X and Y coordinates using the Savitzky-Golay filter
+    from scipy.signal import savgol_filter
+
+    #Create a new column for the smoothed X Coordinate
+    dfCoords['X Coordinate Smoothed'] = savgol_filter(dfCoords['X Coordinate'], 51, 3)
+
+    #Create a new column for the smoothed Y Coordinate
+    dfCoords['Y Coordinate Smoothed'] = savgol_filter(dfCoords['Y Coordinate'], 51, 3)
+
+    #Make matplotlib graph with Time (min) on the x axis and X and Y coordinates smoothed on the Y axis
+    import matplotlib.pyplot as plt
+
+    #Create a figure
+    fig4, ax = plt.subplots()
+
+    #Plot the X and Y coordinates smoothed on the same graph
+    ax.plot(dfCoords['Time (min)'], dfCoords['X Coordinate Smoothed'], label='X Coordinate Smoothed')
+    ax.plot(dfCoords['Time (min)'], dfCoords['Y Coordinate Smoothed'], label='Y Coordinate Smoothed')
+
+    #Add a title and axis labels
+    ax.set_title('Smoothed Coordinates vs Time')
+    ax.set_xlabel('Time (min)')
+    ax.set_ylabel('Coordinates')
+
+    #Despine the graph
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+
+    #Zoom in to a certain area if you want
+    #ax.set_xlim(23.5, 24.5)
+
+    #Add a legend
+    ax.legend()
+
+    #Show the graph
+    plt.show()
+    
+    import inquirer
+    questions = [
+        inquirer.List('Save',
+                        message = "Would you like to save this graph? (saves as a .svg file)",
+                        choices = ['Yes', 'No'],
+        ),
+    ]
+    answers = inquirer.prompt(questions)
+    if answers['Save'] == 'Yes':
+        fig4.savefig('Smoothed Coordinates vs Time.svg', format='svg', dpi=1200)
+    else:
+        pass
+    

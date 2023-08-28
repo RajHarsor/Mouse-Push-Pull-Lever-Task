@@ -1,11 +1,10 @@
 #%%
-
 #Import Packages
 import pandas as pd
 import numpy as np
 import inquirer
 import single_session_functions as ssaf
-
+#%%
 #Ask the user if they want to do the single session analysis or the multi session analysis
 questions = [
     inquirer.List('Analysis',
@@ -31,3 +30,27 @@ if answers['Analysis'] == 'Push/Down':
     
 if answers['Analysis'] == 'Push/Pull':
     ssaf.importandclean_Push_Pull()
+#%%
+if answers['Analysis'] == 'Push/Pull':
+    questions = [
+        inquirer.List('GraphType',
+                        message = "What graph would you like to make?",
+                        choices = ['Line Plot (Coordinates over Time)', 'Line Plot (Coordinates over Time) Smoothed)'],
+        ),
+    ]
+    answers = inquirer.prompt(questions)
+
+if answers['Analysis'] == 'Push/Down':
+    questions = [
+        inquirer.List('GraphType',
+                        message = "What graph would you like to make?",
+                        choices = ['Line Plot (Coordinates over Time)', 'Line Plot (Coordinates over Time) Smoothed '],
+        ),
+    ]
+    answers = inquirer.prompt(questions)
+#%% Single Session Analysis Options
+if answers['GraphType'] == 'Line Plot (Coordinates over Time)':
+    ssaf.CoordsOverTime()
+
+if answers['GraphType'] == 'Line Plot (Coordinates over Time) Smoothed':
+    ssaf.CoordsOverTime_Smoothed()
