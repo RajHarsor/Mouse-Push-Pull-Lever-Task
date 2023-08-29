@@ -11,7 +11,7 @@ def importandclean_Push_Down():
     #Take out the quotes from the path and don't replace them with anything
     pathCoords=pathCoords.replace('"','')
     pathTrial=pathTrial.replace('"','')
-    
+
     #Read the files
     global dfCoords
     dfCoords = pd.read_csv(pathCoords, sep=',', header=None, on_bad_lines="warn")
@@ -37,6 +37,12 @@ def importandclean_Push_Down():
     dfCoords = dfCoords[pd.to_numeric(dfCoords['Y Coordinate'], errors='coerce').notnull()]
     dfCoords = dfCoords[pd.to_numeric(dfCoords['Time (min)'], errors='coerce').notnull()]
 
+    #Drop rows in dfTrial that have NaN values
+    dfTrial = dfTrial.dropna()
+
+    #Reset the index
+    dfTrial = dfTrial.reset_index(drop=True)
+
     #Any rows in the column dfTrials['Push/Pull'] that do not contain the string 'Push' or 'Pull' will be deleted
     dfTrial = dfTrial[dfTrial['Push/Down'].str.contains('Push|Down')]
 
@@ -49,7 +55,7 @@ def importandclean_Push_Down():
     #Delete any rows in the X or Y Coordinate columns that are over 1000
     dfCoords = dfCoords[dfCoords['X Coordinate'] < 1000]
     dfCoords = dfCoords[dfCoords['Y Coordinate'] < 1000]
-    
+
 
 def importandclean_Push_Pull():
     #import packages
@@ -89,6 +95,12 @@ def importandclean_Push_Pull():
     dfCoords = dfCoords[pd.to_numeric(dfCoords['Y Coordinate'], errors='coerce').notnull()]
     dfCoords = dfCoords[pd.to_numeric(dfCoords['Time (min)'], errors='coerce').notnull()]
 
+    #Drop rows in dfTrial that have NaN values
+    dfTrial = dfTrial.dropna()
+    
+    #Reset the index
+    dfTrial = dfTrial.reset_index(drop=True)
+    
     #Any rows in the column dfTrials['Push/Pull'] that do not contain the string 'Push' or 'Pull' will be deleted
     dfTrial = dfTrial[dfTrial['Push/Pull'].str.contains('Push|Pull')]
 
@@ -230,3 +242,95 @@ def spreadsheetInformation_Single():
     pd.set_option('display.max_rows', None)
 
     print(dfTrialInfo)
+    
+def XCoordsWithRewardsOverTime():
+    #Import matplotlib
+    import matplotlib.pyplot as plt
+    #Input the value of the pull and push coordinates
+    PullValue = int(input("Enter the value of the pull coordinate: "))
+    PushValue = int(input("Enter the value of the push coordinate: "))
+
+    #Find the values where it goes from Stage 2 to Stage 3
+    x_values = []
+    Time = []
+
+    previous_stage = None
+
+    global dfCoords
+    for index, row in dfCoords.iterrows():
+        current_stage = row['Phase']
+
+        if previous_stage == ' Stage 2: Push/Pull ' and current_stage == ' Stage 3: Water Retrival ':
+            x_values.append(row['X Coordinate'])
+            Time.append(row['Time (min)'])
+
+        previous_stage = current_stage
+
+    #Drop columns that are duplicates in the Time (min) column
+    dfCoords = dfCoords.drop_duplicates(subset='Time (min)', keep='first')
+
+    #Plot X Coordinate vs Time (min)
+    plt.plot(dfCoords['Time (min)'], dfCoords['X Coordinate'], color='black')
+
+    #Draw dotted red lines at the pull and push coordinate values
+    plt.axhline(y=PullValue, color='red', linestyle='--', alpha = 0.5)
+    plt.axhline(y=PushValue, color='red', linestyle='--', alpha = 0.5)
+
+    #Make the image longer
+    plt.gcf().set_size_inches(20, 5)
+
+    #Set labels
+    plt.xlabel('Time (min)')
+    plt.ylabel('X Coordinate')
+
+    #Remove top and right spines
+    plt.gca().spines['top'].set_visible(False)
+    plt.gca().spines['right'].set_visible(False)
+
+
+    #Make a list with just the int 550 in it that is the same length as the length of Time
+    y = [dfCoords['X Coordinate'].max() + 5] * len(Time)
+
+    global dfTrial
+    #Make dfTrial['Phase'] into a list
+    phase = dfTrial['Push/Pull'].tolist()
+
+    phase_colors = []
+    #For the values in Phase, if it is a push, make it orange, if it is a pull, make it blue
+    for x in phase:
+        if x == ' Push ':
+            phase_colors.append('orange')
+        elif x == ' Pull ':
+            phase_colors.append('blue')
+        else:
+            phase_colors.append('black')
+
+    #Make sure phase_colors is the same length as Time, if it isn't add 'black' until it is
+    while len(phase_colors) < len(Time):
+        phase_colors.append('black')
+
+    #Make a scatter plot of the X and Y coordinates where it goes from Stage 2 to Stage 3 ands change the color based on phase list
+    plt.scatter(Time, y, color=phase_colors, marker='|', alpha = 0.5)
+
+    #Add Title
+    plt.title('X Coordinate vs Time (min)')
+
+    #Zoom into min 10 - 20 on the graph
+    #plt.xlim(40, 50)
+    #plt.ylim(490, 550)
+
+    #Show the plot
+    plt.show()
+
+    import inquirer
+    questions = [
+        inquirer.List('Save',
+                        message = "Would you like to save this graph? (saves as a .svg file)",
+                        choices = ['Yes', 'No'],
+        ),
+    ]
+    answers = inquirer.prompt(questions)
+    if answers['Save'] == 'Yes':
+        plt.savefig('X Coordinate with Rewards Over Time.svg', format='svg', dpi=1200)
+    else:
+        pass

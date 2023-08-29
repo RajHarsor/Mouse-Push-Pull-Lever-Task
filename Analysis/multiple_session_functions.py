@@ -7,6 +7,7 @@ def multi_session_spreadsheet_analysis():
 
     # Define the partial search term
     partial_search_term1 = "Trials"
+    partial_search_term2 = input("Enter the partial search term for the files you want to analyze (This can be the name of a mouse in the directory or a date in the directory). Leaving this blank will analyze all files in the directory: ")
 
     # Initialize a list to store matching file paths
     matching_files = []
@@ -15,8 +16,12 @@ def multi_session_spreadsheet_analysis():
     for root, _, files in os.walk(directory_path):
         for file in files:
             file_name = file.lower()  # Convert to lowercase for case-insensitive search
-            if partial_search_term1.lower() in file_name:
-                matching_files.append(os.path.join(root, file))
+            if len(partial_search_term2) == 0:
+                if partial_search_term1.lower() in file_name:
+                 matching_files.append(os.path.join(root, file))
+            else:
+                if partial_search_term1.lower() in file_name and partial_search_term2.lower() in file_name:
+                    matching_files.append(os.path.join(root, file))
 
     # Create individual numbered dataframes from matching files
     dfs = []
