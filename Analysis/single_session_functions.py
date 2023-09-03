@@ -334,3 +334,23 @@ def XCoordsWithRewardsOverTime():
         plt.savefig('X Coordinate with Rewards Over Time.svg', format='svg', dpi=1200)
     else:
         pass
+    
+def PieGraphTime():
+    #Import matplotlib
+    import matplotlib.pyplot as plt
+
+    global dfCoords
+    #Calculate the difference in time in us between each subsequent row in the dataframe
+    dfCoords['Time (us) Difference'] = dfCoords['Time (us)'].diff()
+
+    #Make new dataframe with information
+    phase_times = dfCoords.groupby("Phase")["Time (us) Difference"].sum().reset_index()
+
+    #Initialize the figure
+    fig5, ax = plt.subplots()
+
+    #Make the pie graph
+    ax.pie(phase_times['Time (us) Difference'], labels=phase_times['Phase'], autopct='%1.1f%%', pctdistance= 1.1, labeldistance= 1.3, startangle=90, counterclock=False)
+
+    # Show the plot
+    plt.show()
