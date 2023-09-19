@@ -15,8 +15,20 @@
 
 unsigned int x; // Variable to store the value read from the X axis of the Joystick
 unsigned int y; // Variable to store the value read from the Y axis of the Joystick
-unsigned long timestamp = micros(); // Variable to store the time at which the values were read
+unsigned long long timestamp = millis(); // Variable to store the time at which the values were read
 
+
+// Lick Sensor Stuffs
+#include <Wire.h>
+#include "Adafruit_MPR121.h"
+
+#ifndef _BV
+#define _BV(bit) (1 << (bit))
+#endif
+
+Adafruit_MPR121 cap = Adafruit_MPR121();
+uint16_t currtouched = 0;
+int i = 0;
 
 //
 void writePins(int pin) // Function to set all pins to low at the beginning of each loop
@@ -41,10 +53,17 @@ void setup() {
   pinMode(PUSH_PIN, OUTPUT); // Sets the Push pin as an output, tells the Behavior Teensy that when the arm is in the push position
   pinMode(PULL_PIN, OUTPUT); // Sets the Pull pin as an output, tells the Behavior Teensy that when the arm is in the pull position
   pinMode(LED_PIN, OUTPUT); // Sets the LED pin as an output is lit when the mouse is in the rest position
+  while (!Serial) {
+    delay (10);
+  if (!cap.begin(0x5A)) {
+    Serial.println("MPR121 not found, check wiring?");
+    exit(1);
+  }
+  }
 }
 
 void loop() {
-  timestamp = micros(); // Stores the time at which the values were read
+  timestamp = millis(); // Stores the time at which the values were read
   x = analogRead(A0); // Replace with the pin connected to the joystick X axis
   y = map(analogRead(A1), 0, 1023, 1023, 0); // Replace with the pin connected to the joystick Y axis
 
@@ -74,21 +93,27 @@ void loop() {
 
   if(digitalRead(29) == HIGH)
   {
-    Serial.println("Stage 1: Rest ;");
+    Serial.print("Stage 1: Rest ;");
   }
   else if(digitalRead(30) == HIGH)
   {
-    Serial.println("Stage 2: Push/Pull ;");
+    Serial.print("Stage 2: Push/Pull ;");
   }
   else if (digitalRead(31) == HIGH) {
-    Serial.println("Stage 3: Water Retrival ;");
+    Serial.print("Stage 3: Water Retrival ;");
   }
   else if (digitalRead(32) == HIGH) {
-    Serial.println("Stage 4: ISI ;");
+    Serial.print("Stage 4: ISI ;");
   }
   else 
   {
-    Serial.println("None ;");
+    Serial.print("None ;");
+  }
+  currtouched = cap.touched();
+  if ((currtouched & _BV(1))){
+    Serial.println("Lick ;");
+  } else {
+    Serial.println("No Lick ;");
   }
   delay(1);
 }
