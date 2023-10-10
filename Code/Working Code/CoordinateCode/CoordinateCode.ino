@@ -7,10 +7,10 @@
 #define Y_COORD A1
 
 //Threshold values
-#define PUSH 570 // Set the push threshold value to a value greater than the REST_UPPERBOUND value
-#define PULL 515 // Set the pull threshold value to a value less than the REST_LOWERBOUND value
-#define REST_LOWERBOUND 525
-#define REST_UPPERBOUND 535
+int PUSH; // Set the push threshold value to a value greater than the REST_UPPERBOUND value
+int PULL; // Set the pull threshold value to a value less than the REST_LOWERBOUND value
+int REST_LOWERBOUND;
+int REST_UPPERBOUND;
 
 
 unsigned int x; // Variable to store the value read from the X axis of the Joystick
@@ -46,6 +46,24 @@ void writePins(int pin) // Function to set all pins to low at the beginning of e
   }
 }
 
+void parseInput() {
+  Serial.println("Enter the PUSH threshold, PULL threshold, REST LOWERBOUND threshold, and the REST UPPERBOUND threshold seperated by commas - PUSH, PULL, REST LOWERBOUND, REST UPPERBOUND (e.g. '520, 490, 500, 510')");
+  Serial.println("ENTER VALUES HERE AFTER INPUTTING ISI DELAY VALUES");
+
+  while (!Serial.available()) {
+
+  }
+
+  String input = Serial.readStringUntil('\n');
+  int numValues = sscanf(input.c_str(), "%d, %d, %d, %d", &PUSH, &PULL, &REST_LOWERBOUND, &REST_UPPERBOUND);
+
+  if (numValues == 4) {
+    Serial.println("Successfully input thresholds!");
+  } else {
+    Serial.println("Invalid input. Please enter the values again");
+  }
+  }
+
 void setup() {
 
   Serial.begin(115200);
@@ -60,6 +78,7 @@ void setup() {
     exit(1);
   }
   }
+  parseInput();
 }
 
 void loop() {
