@@ -5,8 +5,8 @@
 
 /// Behavioral Testing Configuration ///
 int totalTrials = 1000000;  // DO NOT TOUCH THIS
-int isiDelayLowerRange = 0; // Enter ISI delay lower Value in ms
-int isiDelayUpperRange = 0; // Enter ISI delay upper Value in ms
+int isiDelayLowerRange; // Enter ISI delay lower Value in ms
+int isiDelayUpperRange; // Enter ISI delay upper Value in ms
 int timeOutTime = 540000000000;     // Enter the time out time
 int trialNumber = 0;  // DO NOT TOUCH THIS
 const int ArraySize = 6; // Make sure this is an even number
@@ -139,6 +139,25 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
   ArrayCount2 = 0; // Reset the number of 2s in the array to 0
 }
 
+void parseInput() {
+  Serial.println("Enter the ISI Delay Lower Range value and the ISI Delay Upper Range Value seperated by commas in ms - isiDelayLower, isiDelayLower (e.g. '1000, 3000')");
+  Serial.println("ENTER VALUES HERE BEFORE THE COORDINATE THRESHOLDS");
+
+  while (!Serial.available()) {
+
+  }
+
+  String input = Serial.readStringUntil('\n');
+  int numValues = sscanf(input.c_str(), "%d, %d", &isiDelayLowerRange, &isiDelayUpperRange);
+
+  if (numValues == 2) {
+    Serial.println("Successfully input thresholds!");
+  } else {
+    Serial.println("Invalid input. Please enter the values again");
+  }
+  }
+
+
 void setup() {
 
   Serial.begin(115200);
@@ -155,6 +174,7 @@ void setup() {
   pinMode(PUSH_PIN, INPUT); // Sets the push pin as an input, if the mouse is in the push coordinate range, the coordinate Teensy will set this pin high to tell the Behavior Teensy
   Entropy.Initialize(); // Probably useless
   randomSeed(analogRead(9)); // Needed for random number generator for ISI Delay
+  parseInput();
 }
 
 void loop() {
