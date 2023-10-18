@@ -112,17 +112,17 @@ void loop() {
 
   if(digitalRead(29) == HIGH)
   {
-    Serial.print("Stage 1: Rest ;");
+    Serial.print("Stage 1: Rest ,");
   }
   else if(digitalRead(30) == HIGH)
   {
-    Serial.print("Stage 2: Push/Pull ;");
+    Serial.print("Stage 2: Push/Pull ,");
   }
   else if (digitalRead(31) == HIGH) {
-    Serial.print("Stage 3: Water Retrival ;");
+    Serial.print("Stage 3: Water Retrival ,");
   }
   else if (digitalRead(32) == HIGH) {
-    Serial.print("Stage 4: ISI ;");
+    Serial.print("Stage 4: ISI ,");
   }
   else 
   {
@@ -130,9 +130,9 @@ void loop() {
   }
   currtouched = cap.touched();
   if ((currtouched & _BV(1))){
-    Serial.println("Lick ;");
+    Serial.println(" Lick ;");
   } else {
-    Serial.println("No Lick ;");
+    Serial.println(" No Lick ;");
   }
   delay(1);
 }
