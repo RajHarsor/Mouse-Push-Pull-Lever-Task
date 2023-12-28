@@ -177,7 +177,7 @@ fig3.update_layout(title='Smoothed Coordinates vs Time', xaxis_title='Time (min)
 fig3.show()
 """
 
-#%% Matplotlib Graph
+#%% Coordinates over Time Smoothed
 #Apply some smoothing to the X and Y coordinates using the Savitzky-Golay filter
 from scipy.signal import savgol_filter
 
