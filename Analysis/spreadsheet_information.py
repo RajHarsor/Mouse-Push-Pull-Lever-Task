@@ -2,7 +2,7 @@
 import pandas as pd
 
 #Import path for file
-pathTrial= input("Enter the path of the file containing the trial information: ")
+pathTrial = input("Enter the path of the file containing the trial information: ")
 
 #Take out the quotes from the path and don't replace them with anything
 pathTrial=pathTrial.replace('"','')

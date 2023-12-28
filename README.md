@@ -8,7 +8,8 @@
       - [1.2.1.2. Electronics](#1212-electronics)
       - [1.2.1.3. 3D Printed Parts (STL Files)](#1213-3d-printed-parts-stl-files)
     - [1.2.2. Prerequisite Software Downloads](#122-prerequisite-software-downloads)
-    - [1.2.3. Structure Assembly](#123-structure-assembly)
+    - [1.2.3. Circuit Building](#123-circuit-building)
+    - [1.2.4. Structure Assembly](#124-structure-assembly)
 
 
 ## 1.1. Task Design
@@ -82,7 +83,16 @@ To create the behavior box, there are some 3D printed parts that you will need. 
 | CoolTerm | https://freeware.the-meiers.org/  | 1. Go to the link and scroll down to download the software using the correct installer <br> 2. Once downloaded, open the program <br> 3. Open the .stc files [here] to open up the correct settings configuration |
 |PrusaSlicer|https://www.prusa3d.com/prusaslicer/|1. Go to the link and download the software using the correct installer <br> 2. Once downloaded, open the program <br> 3. Open up your STL files here to slice them and export them as GCODE files for 3D printing|
 
-### 1.2.3. Structure Assembly
+
+### 1.2.3. Circuit Building
+
+The circuit should be built on either a solderable breadboard or a custom circuit board. The circuit diagram is as follows:
+
+[TODO]: Add Circuit Diagram picture/Fritzing file
+
+Also, the custom PCB diagrams can be found [here] and can be ordered through Fritzing.
+
+### 1.2.4. Structure Assembly
 
 1. Print the 3D printed parts (STL files) using a 3D printer
    1. If you do not know how to use the 3D printer, please ask someone in the lab that does
@@ -92,6 +102,9 @@ To create the behavior box, there are some 3D printed parts that you will need. 
 5. Attach the serological pipette to long post (ThorLabs Part T10)
 6. Attach the gooseneck arm to hold the water spout for the mouse to drink from (In the future we might want to come up with a better way to do this since the gooseneck arm is not very flexible)
    1. To do this you can use any adhesives you think are necessary (most likely a combination of epoxy and tape)
+7. Cut a small metal tube that has a hole in the middle for the water spout to go through
+8. Attach the circuitry as shown in Figure 3
+9. 
 
 <br>
 
@@ -104,6 +117,8 @@ Side View
 ![Fig 1 Top View](https://github.com/RajHarsor/Mouse-Push-Pull-Lever-Task/blob/db186ccf6e29375ba84287408e04df02b40f9c6e/Instructions%20+%20README/Structure%20Assembly%20Top%20View.JPG)
 
 <ins> Fig 2 </ins>
+
+
 
 
 

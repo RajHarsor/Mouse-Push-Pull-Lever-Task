@@ -5,10 +5,11 @@
 
 /// Behavioral Testing Configuration ///
 int totalTrials = 1000000;  // DO NOT TOUCH THIS
-int isiDelayLowerRange = 0; // Enter ISI delay lower Value in ms
-int isiDelayUpperRange = 0; // Enter ISI delay upper Value in ms
+int isiDelayLowerRange; // Enter ISI delay lower Value in ms
+int isiDelayUpperRange; // Enter ISI delay upper Value in ms
 int timeOutTime = 540000000000;     // Enter the time out time
 int trialNumber = 0;  // DO NOT TOUCH THIS
+const int ArraySize = 6; // Make sure this is an even number
 
 
 // Pin Set-Ups //
@@ -46,7 +47,7 @@ int mouse_failed; // Different conditions the mouse can go into, might want to r
 int positionA = 0.0;  // Push Counter;
 int positionB = 0.0;  // Pull Counter;
 
-int OpenTimeArray[10];  // initialize a blank array with 10 slots
+int OpenTimeArray[ArraySize];  // initialize a blank array with 10 slots
 int currentIndex = 0;  // initialize the current index of the array to 0
 int ArrayCount1 = 0; // initialize the number of 1's in the array to 0
 int ArrayCount2 = 0; // initialize the number of 2's in the array to 0
@@ -54,7 +55,7 @@ float OpenTime; // variable to store the solenoid open time
 
 //TODO Make this into a global variable in the configuration where people can edit how big the array is
 void solenoidOpenTime() {  /// function to determine the solenoid open time
-  if (currentIndex < 10) {    // if there aren't 10 integers in the array, add to it until there are 10
+  if (currentIndex < ArraySize) {    // if there aren't 10 integers in the array, add to it until there are 10
     if (mouse_failed == 0) {  // if a mouse did a push add a 1 to the array
       OpenTimeArray[currentIndex] = 1;
       currentIndex++;
@@ -64,7 +65,7 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
       currentIndex++;
     }
   } else {                          // if the array is full
-    for (int i = 8; i >= 0; i--) {  // shift all the values in the array down one
+    for (int i = ArraySize - 2; i >= 0; i--) {  // shift all the values in the array down one
       OpenTimeArray[i + 1] = OpenTimeArray[i];
     }
     if (mouse_failed == 0) { // if a mouse did a push add a 1 to the array at position 0
@@ -75,14 +76,14 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
     }
   }
   Serial.print("[");  // print the current array of pushes and pulls
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < ArraySize; i++) {
     Serial.print(OpenTimeArray[i]);
     Serial.print(" ");
   }
   Serial.print("]");
   Serial.print(",");
   Serial.print(" ");
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < ArraySize; i++) {
     if (OpenTimeArray[i] == 1) {  // Count the number of 1s in the array (pushes)
       ArrayCount1 = ArrayCount1 + 1;
     }
@@ -104,6 +105,11 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
   Serial.print(",");
 
   if (mouse_failed == 0) {  // Push Equation
+    if (ArrayCount1 == ArraySize or ArrayCount2 == ArraySize) {
+      OpenTime = 0;
+      Serial.print(OpenTime);
+      Serial.print(",")
+    } else {
     // OpenTime = -7.83 * (ArrayCount1 + 1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2 + 1), 2) - 18.44 * (ArrayCount1 + 1 - ArrayCount2)/(ArrayCount1 + ArrayCount2 + 1) + 48.28;
     OpenTime = -7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2), 2) - 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2) + 48.28;
     // Serial.print("Solenoid Open Time = ");
@@ -113,9 +119,15 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
     while (timerMillis <= OpenTime) {
       continue;
     }
+    }
   }
 
   if (mouse_failed == 2) {  // Pull Equation
+    if (ArrayCount1 == ArraySize or ArrayCount2 == ArraySize) {
+      OpenTime = 0;
+      Serial.print(OpenTime);
+      Serial.print(",")
+    } else {
     // OpenTime = -7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2 + 1),2) + 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2 + 1) + 48.28;
     OpenTime = -7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2), 2) + 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2) + 48.28;
     // Serial.print("Solenoid Open Time = ");
@@ -126,9 +138,29 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
       continue;
     }
   }
+  }
   ArrayCount1 = 0; // Reset the number of 1s in the array to 0
   ArrayCount2 = 0; // Reset the number of 2s in the array to 0
 }
+
+void parseInput() {
+  Serial.println("Enter the ISI Delay Lower Range value and the ISI Delay Upper Range Value seperated by commas in ms - isiDelayLower, isiDelayLower (e.g. '1000, 3000')");
+  Serial.println("ENTER VALUES HERE BEFORE THE COORDINATE THRESHOLDS");
+
+  while (!Serial.available()) {
+
+  }
+
+  String input = Serial.readStringUntil('\n');
+  int numValues = sscanf(input.c_str(), "%d, %d", &isiDelayLowerRange, &isiDelayUpperRange);
+
+  if (numValues == 2) {
+    Serial.println("Successfully input thresholds!");
+  } else {
+    Serial.println("Invalid input. Please enter the values again");
+  }
+  }
+
 
 void setup() {
 
@@ -146,6 +178,7 @@ void setup() {
   pinMode(PUSH_PIN, INPUT); // Sets the push pin as an input, if the mouse is in the push coordinate range, the coordinate Teensy will set this pin high to tell the Behavior Teensy
   Entropy.Initialize(); // Probably useless
   randomSeed(analogRead(9)); // Needed for random number generator for ISI Delay
+  parseInput();
 }
 
 void loop() {
