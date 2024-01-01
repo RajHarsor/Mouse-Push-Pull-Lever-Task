@@ -1,3 +1,9 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import scipy.stats as stats
+import numpy as np
+
 '''
 The first thing that should be done when using these functions is to import them into your script.
 Following, you will need to read the water log data into a dataframe using the fuction read_waterlog_data.
@@ -9,6 +15,7 @@ def read_waterlog_data(path, sheet_name):
     path: path to the excel file containing the water log data
     sheet_name: name of the sheet within the excel file that contains the water log data
     '''
+    import pandas as pd
     df = pd.read_excel(path, sheet_name=sheet_name)
     if 'Reverse' in df.columns:
         df = df[['Date', 'Animal', 'Program', 'Days on Rig', 'Time on Rig (min)', 'Forward', 'Reverse', 'Total Trials', 'Avg Rxn Time (ms)']]
@@ -18,19 +25,26 @@ def read_waterlog_data(path, sheet_name):
         df = df[['Date', 'Animal', 'Program', 'Days on Rig', 'Time on Rig (min)', 'Push', 'Pull', 'Total Trials', 'Avg Rxn Time (ms)']]
     else:
         pass
-    df = df.rename(columns={'Forward' : 'Movement A'})
+    if 'Forward' in df.columns:
+        df = df.rename(columns={'Forward' : 'Movement A'})
+    if 'Push' in df.columns:
+        df = df.rename(columns={'Push' : 'Movement A'})
     if 'Reverse' in df.columns:
         df = df.rename(columns={'Reverse' : 'Movement B'})
-    elif 'Down' in df.columns:
+    if 'Down' in df.columns:
         df = df.rename(columns={'Down' : 'Movement B'})
-    else:
-        pass
+    if 'Pull' in df.columns:
+        df = df.rename(columns={'Pull' : 'Movement B'})
     #df['Days on Rig'] = df['Days on Rig'].astype(int)
     df = df.dropna(subset = ['Days on Rig'])
     if df['Days on Rig'].max() > 9:
         df = df[df['Days on Rig'] < 10]
     else:
         pass
+    #Calculate movement A divided by tiotal trials
+    df['Movement A %'] = df['Movement A'] / df['Total Trials']
+    #Calculate Z score for movement A %
+    df['Movement A % Z Score'] = stats.zscore(np.array(df['Movement A %'], dtype = np.float64), nan_policy='omit')
     return df
 
 '''
