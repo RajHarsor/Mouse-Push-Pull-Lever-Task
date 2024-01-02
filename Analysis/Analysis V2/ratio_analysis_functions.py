@@ -1,5 +1,6 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
+import pandas as pd
 
 #Line plot of movement A ratio over days on rig for each mouse in the cohort
 def ratios_line_plot(data, benchmark, title):
@@ -33,3 +34,26 @@ def ratios_line_plot_Z(data, title):
     plt.suptitle(title, fontsize=16, y=1.05)
     sns.despine()
     plt.show()
+
+#Calculates the average ratio, standard deviation, and the percentage of days between 0.25 and 0.75 for each day in the cohort
+def ratio_statistics(data):
+    '''
+    args:
+    data = dataframe containing the water log data
+    '''
+    #Calculate the average ratio per day per mouse
+    ratio_mean = data.groupby(['Days on Rig'])['Movement A %'].mean()
+    ratio_std = data.groupby(['Days on Rig'])['Movement A %'].std()
+    #Calculate how many days in the cohort had above between 0.25 and 0.75
+    ratio_between_25_75 = data[(data['Movement A %'] > 0.25) & (data['Movement A %'] < 0.75)].groupby(['Days on Rig'])['Movement A %'].count()
+    #Divide the number of days between 0.25 and 0.75 by the total number of days to get the percentage of days between 0.25 and 0.75
+    ratio_between_25_75_percent = ratio_between_25_75 / data.groupby(['Days on Rig'])['Movement A %'].count()
+    #Calculate the total nyumber of data points per day
+    ratio_count = data.groupby(['Days on Rig'])['Movement A %'].count()
+    #Put the data into a dataframe
+    ratio_stats = pd.DataFrame({'# of sessions' : ratio_count,'Mean Ratio': ratio_mean, 'Std': ratio_std, '# of sessions between 0.25 and 0.75': ratio_between_25_75, '# of sessions between 0.25 and 0.75 %': ratio_between_25_75_percent})
+    #Round the numbers
+    ratio_stats = ratio_stats.round(2)
+    #Export the data to a csv file
+    ratio_stats.to_csv('ratio_stats.csv')
+    return ratio_stats
