@@ -1,7 +1,7 @@
 //Pins
 #define REST_PIN 33
 #define PUSH_PIN 34
-#define PULL_PIN 35
+#define DOWN_PIN 35
 #define LED_PIN 0
 #define X_COORD A0
 #define Y_COORD A1
@@ -9,10 +9,10 @@
 //Threshold Values
 int PUSH;
 int DOWN;
-int REST_LOWERBOUNDX;
-int REST_UPPERBOUNDX;
-int REST_LOWERBOUNDY;
-int REST_UPPERBOUNDY;
+int REST_LOWERBOUND_X;
+int REST_UPPERBOUND_X;
+int REST_LOWERBOUND_Y;
+int REST_UPPERBOUND_Y;
 
 unsigned int x; // Variable to store the value read from the X axis of the Joystick
 unsigned int y; // Variable to store the value read from the Y axis of the Joystick
@@ -32,7 +32,7 @@ int i = 0;
 
 void writePins(int pin) // Function to set all pins to low at the beginning of each loop
 {
-    for(int i=REST_PIN; i<=PULL_PIN; i++)
+    for(int i=REST_PIN; i<=DOWN_PIN; i++)
     {
     if(i == pin)
     {
@@ -51,7 +51,7 @@ void parseInput() {
     }
 
     String input = Serial.readStringUntil('\n');
-    int numValues = sscanf(input.c_str(), "%d, %d, %d, %d", &PUSH, &PULL, &REST_LOWERBOUNDX, &REST_UPPERBOUNDX, &REST_LOWERBOUNDY, &REST_UPPERBOUNDY);
+    int numValues = sscanf(input.c_str(), "%d, %d, %d, %d", &PUSH, &DOWN, &REST_LOWERBOUND_X, &REST_UPPERBOUND_X, &REST_LOWERBOUND_Y, &REST_UPPERBOUND_Y);
 
     }
 
@@ -60,7 +60,7 @@ void setup() {
   Serial.begin(115200);
   pinMode(REST_PIN, OUTPUT); // Sets the Rest pin as an output, tells the Behavior Teensy that when the arm is in the rest position
   pinMode(PUSH_PIN, OUTPUT); // Sets the Push pin as an output, tells the Behavior Teensy that when the arm is in the push position
-  pinMode(PULL_PIN, OUTPUT); // Sets the Pull pin as an output, tells the Behavior Teensy that when the arm is in the pull position
+  pinMode(DOWN_PIN, OUTPUT); // Sets the Down pin as an output, tells the Behavior Teensy that when the arm is in the down position
   pinMode(LED_PIN, OUTPUT); // Sets the LED pin as an output is lit when the mouse is in the rest position
   while (!Serial) {
     delay (10);

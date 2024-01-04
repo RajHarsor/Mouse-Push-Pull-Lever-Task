@@ -1,6 +1,6 @@
 {
     "configuration": "usb=serial,speed=600,opt=o2std,keys=en-us",
     "board": "teensy:avr:teensy41",
-    "sketch": "Code/Working Code/BehaviorTaskCode/BehaviorTaskCode.ino",
+    "sketch": "Code/Push_Pull Code with Blocking/Pull Code (Blocking)/CoordinateCode/CoordinateCode.ino",
     "port": "/dev/tty.usbmodem141456001"
 }
