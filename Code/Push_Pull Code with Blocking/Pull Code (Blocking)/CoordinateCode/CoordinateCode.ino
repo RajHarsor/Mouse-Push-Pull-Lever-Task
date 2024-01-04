@@ -3,8 +3,8 @@ Day 1 = Push Day, make pull value extremely low
 Day 2 = Pull Day, make push value extremely high
 Day 3+ = Normal days, make normal parameter
 
-2 times per day training
-*/ 
+*/
+
 
 //Pins
 #define REST_PIN 33
@@ -55,9 +55,6 @@ void writePins(int pin) // Function to set all pins to low at the beginning of e
 }
 
 void parseInput() {
-  Serial.println("Enter the PUSH threshold, PULL threshold, REST LOWERBOUND threshold, and the REST UPPERBOUND threshold seperated by commas - PUSH, PULL, REST LOWERBOUND, REST UPPERBOUND (e.g. '520, 490, 500, 510')");
-  Serial.println("ENTER VALUES HERE AFTER INPUTTING ISI DELAY VALUES");
-
   while (!Serial.available()) {
 
   }
@@ -65,11 +62,6 @@ void parseInput() {
   String input = Serial.readStringUntil('\n');
   int numValues = sscanf(input.c_str(), "%d, %d, %d, %d", &PUSH, &PULL, &REST_LOWERBOUND, &REST_UPPERBOUND);
 
-  if (numValues == 4) {
-    Serial.println("Successfully input thresholds!");
-  } else {
-    Serial.println("Invalid input. Please enter the values again");
-  }
   }
 
 void setup() {
