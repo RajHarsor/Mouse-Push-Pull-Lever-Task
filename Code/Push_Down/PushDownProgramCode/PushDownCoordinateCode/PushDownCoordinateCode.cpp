@@ -1,11 +1,3 @@
-/**
-Day 1 = Push Day, make pull value extremely low
-Day 2 = Pull Day, make push value extremely high
-Day 3+ = Normal days, make normal parameter
-
-*/
-
-
 //Pins
 #define REST_PIN 33
 #define PUSH_PIN 34
@@ -14,17 +6,17 @@ Day 3+ = Normal days, make normal parameter
 #define X_COORD A0
 #define Y_COORD A1
 
-//Threshold values
-int PUSH; // Set the push threshold value to a value greater than the REST_UPPERBOUND value
-int PULL; // Set the pull threshold value to a value less than the REST_LOWERBOUND value
-int REST_LOWERBOUND;
-int REST_UPPERBOUND;
-
+//Threshold Values
+int PUSH;
+int DOWN;
+int REST_LOWERBOUNDX;
+int REST_UPPERBOUNDX;
+int REST_LOWERBOUNDY;
+int REST_UPPERBOUNDY;
 
 unsigned int x; // Variable to store the value read from the X axis of the Joystick
 unsigned int y; // Variable to store the value read from the Y axis of the Joystick
 unsigned long long timestamp = millis(); // Variable to store the time at which the values were read
-
 
 // Lick Sensor Stuffs
 #include <Wire.h>
@@ -38,31 +30,30 @@ Adafruit_MPR121 cap = Adafruit_MPR121();
 uint16_t currtouched = 0;
 int i = 0;
 
-//
 void writePins(int pin) // Function to set all pins to low at the beginning of each loop
 {
-  for(int i=REST_PIN; i<=PULL_PIN; i++)
-  {
+    for(int i=REST_PIN; i<=PULL_PIN; i++)
+    {
     if(i == pin)
     {
-      digitalWrite(i, HIGH);
+        digitalWrite(i, HIGH);
     }
     else
     {
-      digitalWrite(i, LOW);
+        digitalWrite(i, LOW);
     }
-  }
+    }
 }
 
 void parseInput() {
-  while (!Serial.available()) {
+    while (!Serial.available()) {
 
-  }
+    }
 
-  String input = Serial.readStringUntil('\n');
-  int numValues = sscanf(input.c_str(), "%d, %d, %d, %d", &PUSH, &PULL, &REST_LOWERBOUND, &REST_UPPERBOUND);
+    String input = Serial.readStringUntil('\n');
+    int numValues = sscanf(input.c_str(), "%d, %d, %d, %d", &PUSH, &PULL, &REST_LOWERBOUNDX, &REST_UPPERBOUNDX, &REST_LOWERBOUNDY, &REST_UPPERBOUNDY);
 
-  }
+    }
 
 void setup() {
 
@@ -82,18 +73,18 @@ void setup() {
 }
 
 void loop() {
-  timestamp = millis(); // Stores the time at which the values were read
-  x = analogRead(A0); // Replace with the pin connected to the joystick X axis
-  y = map(analogRead(A1), 0, 1023, 1023, 0); // Replace with the pin connected to the joystick Y axis
+    timestamp = millis(); // Stores the time at which the values were read
+    x = analogRead(A0); // Replace with the pin connected to the joystick X axis
+    y = map(analogRead(A1), 0, 1023, 1023, 0); // Replace with the pin connected to the joystick Y axis
 
-  Serial.print(x); // Prints the X value
-  Serial.print(" , ");
-  Serial.print(y); // Prints the Y value
-  Serial.print(" , ");
-  Serial.print(timestamp); // Prints the time at which the values were read in microseconds
-  Serial.print(" , ");
+    Serial.print(x); // Prints the X value
+    Serial.print(" , ");
+    Serial.print(y); // Prints the Y value
+    Serial.print(" , ");
+    Serial.print(timestamp); // Prints the time at which the values were read in microseconds
+    Serial.print(" , ");
 
-  if(x >= REST_LOWERBOUND && x <= REST_UPPERBOUND)
+    if(x >= REST_LOWERBOUND_X && x <= REST_UPPERBOUND_X && y >= REST_LOWERBOUND_Y && y <= REST_UPPERBOUND_Y)
   {
     writePins(REST_PIN);
     digitalWrite(LED_PIN, HIGH);
@@ -104,29 +95,29 @@ void loop() {
     digitalWrite(LED_PIN, LOW);
 
   }
-  else if(x <= PULL)
+  else if(y <= DOWN)
   {
-    writePins(PULL_PIN);
+    writePins(DOWN_PIN);
     digitalWrite(LED_PIN, LOW);
   }
 
   if(digitalRead(29) == HIGH)
   {
-    Serial.print("Stage 1: Rest ,");
+    Serial.println("Stage 1: Rest ,");
   }
   else if(digitalRead(30) == HIGH)
   {
-    Serial.print("Stage 2: Push/Pull ,");
+    Serial.println("Stage 2: Push/Down ,");
   }
   else if (digitalRead(31) == HIGH) {
-    Serial.print("Stage 3: Water Retrival ,");
+    Serial.println("Stage 3: Water Retrival ,");
   }
   else if (digitalRead(32) == HIGH) {
-    Serial.print("Stage 4: ISI ,");
+    Serial.println("Stage 4: ISI ,");
   }
-  else 
+  else
   {
-    Serial.print("None ;");
+    Serial.println("None ,");
   }
   currtouched = cap.touched();
   if ((currtouched & _BV(1))){
