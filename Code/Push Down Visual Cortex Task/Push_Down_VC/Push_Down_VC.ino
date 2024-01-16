@@ -121,47 +121,77 @@ void parseInput() {
 // Plus Sign //
 void lightArrayPlus() {
     for (int i = 2; i <= 44; i = i + 6) {
-    leds[i] = CRGB::White;
-    FastLED.show();
+        leds[i] = CRGB::White;
+        FastLED.show();
 }
 
-for (int i = 3; i <= 45; i = i + 6) {
-    leds[i] = CRGB::White;
-    FastLED.show();
-}
+    for (int i = 3; i <= 45; i = i + 6) {
+        leds[i] = CRGB::White;
+        FastLED.show();
+    }
 
-for (int i = 18; i <= 23; i++) {
-    leds[i] = CRGB::White;
-    FastLED.show();
-}
+    for (int i = 18; i <= 23; i++) {
+        leds[i] = CRGB::White;
+        FastLED.show();
+    }
 
-for (int i = 24; i <= 29; i++) {
-    leds[i] = CRGB::White;
-    FastLED.show();
+    for (int i = 24; i <= 29; i++) {
+        leds[i] = CRGB::White;
+        FastLED.show();
 }
 }
 
 // Vertical Stripes //
-void verticalStripes() { // please note this function does 3 stripes
+void verticalStripesMultiple() { // please note this function does 3 stripes
     for (int i = 0; i <= 42; i = i + 6) {
-    leds[i] = CRGB::White;
-    FastLED.show();
+        leds[i] = CRGB::White;
+        FastLED.show();
 }
 
-for (int i = 2; i <= 44; i = i + 6) {
-    leds[i] = CRGB::White;
-    FastLED.show();
+    for (int i = 2; i <= 44; i = i + 6) {
+        leds[i] = CRGB::White;
+        FastLED.show();
+    }
+
+    for (int i = 4; i <= 46; i = i + 6) {
+        leds[i] = CRGB::White;
+        FastLED.show();
+}
 }
 
-for (int i = 4; i <= 46; i = i + 6) {
-    leds[i] = CRGB::White;
-    FastLED.show();
-}
+void verticalStripesOne() { // please note this function does 1 stripe
+    for (int i = 2; i <= 44; i = i + 6) {
+        leds[i] = CRGB::White;
+        FastLED.show();
+    }
 }
 
-void verticalStripes1() { // please note this function does 1 stripe
-for (int i = 2; i <= 44; i = i + 6) {
-    leds[i] = CRGB::White;
-    FastLED.show();
+// Horizontal Stripes //
+
+void horizontalStripesMultiple() { // please note this function does 3 stripes
+    for (int i = 0; i <= 5; i++) {
+        leds[i] = CRGB::White;
+        FastLED.show();
+    }
+
+    for (int i = 12; i <= 17; i++) {
+        leds[i] = CRGB::White;
+        FastLED.show();
+    }
+
+    for (int i = 24; i <= 29; i++) {
+        leds[i] = CRGB::White;
+        FastLED.show();
+    }
+    for (int i = 36; i <= 41; i++) {
+        leds[i] = CRGB::White;
+        FastLED.show();
+    }
+}
+
+void verticalStripesOne() { // please note this function does 1 stripe
+    for (int i = 24; i <= 29; i++) {
+        leds[i] = CRGB::White;
+        FastLED.show();
 }
 }
