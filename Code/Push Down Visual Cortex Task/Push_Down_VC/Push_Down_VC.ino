@@ -105,7 +105,7 @@ void loop() {
 }
 
 
-
+/// Parse Input Function for user inputs ///
 void parseInput() {
     while (!Serial.available()) {
 
@@ -116,6 +116,9 @@ void parseInput() {
 
     }
 
+/// Light Array Functions ///
+
+// Plus Sign //
 void lightArrayPlus() {
     for (int i = 2; i <= 44; i = i + 6) {
     leds[i] = CRGB::White;
@@ -133,6 +136,31 @@ for (int i = 18; i <= 23; i++) {
 }
 
 for (int i = 24; i <= 29; i++) {
+    leds[i] = CRGB::White;
+    FastLED.show();
+}
+}
+
+// Vertical Stripes //
+void verticalStripes() { // please note this function does 3 stripes
+    for (int i = 0; i <= 42; i = i + 6) {
+    leds[i] = CRGB::White;
+    FastLED.show();
+}
+
+for (int i = 2; i <= 44; i = i + 6) {
+    leds[i] = CRGB::White;
+    FastLED.show();
+}
+
+for (int i = 4; i <= 46; i = i + 6) {
+    leds[i] = CRGB::White;
+    FastLED.show();
+}
+}
+
+void verticalStripes1() { // please note this function does 1 stripe
+for (int i = 2; i <= 44; i = i + 6) {
     leds[i] = CRGB::White;
     FastLED.show();
 }
