@@ -95,11 +95,31 @@ void loop() {
         }
     }
     digitalWrite(29, LOW); // Tells the coordinate Teensy that the current state is not the rest state anymore
-    digitalWrite(30, HIGH); // Tells the coordinate Teensy that the current state is the push/pull state (decision making state)
-    // Block 2 - Push/Pull State (light array + decision making)
+    digitalWrite(30, HIGH); // Tells the coordinate Teensy that the current state is the push/down state (decision making state)
+    // Block 2 - Push/Pull State (light array decision)
     int lightArrayRandomizer = random(0, 2); // Generates a random number between 0 and 1
     if (lightArrayRandomizer == 0) { // Vertical Stripes
-
+        verticalStripesOne(); // display one vertical stripe on the LED array
+    }
+    if (lightArrayRandomizer == 1) { // Horizontal Stripes
+        horizontalStripesOne(); // display one horizontal stripe on the LED array
+    }
+    // Block 3 - Mouse Decision Making
+    startTime = millis(); // Starts the reaction time timer
+    // Block 3A - Push State (Vertical Stripes)
+    if (digitalRead(PUSH_PIN) == HIGH && lightArrayRandomizer == 0) {
+        reactionTime = millis() - startTime; // Stops the reaction time timer
+        Serial.print(trialNumber); // Prints the trial number
+        Serial.print(" , ");
+        Serial.print(reactionTime); // Prints the reaction time
+        Serial.print(" , ");
+        Serial.print("Push , Correct"); // Prints the decision
+        digitalWrite(30, LOW);
+        digitalWrite(31, HIGH); // Tells the coordinate Teensy that the current state is that the solenoid is open
+        digitalWrite(Solenoid, HIGH); // Opens the solenoid
+        solenoidOpenTime(); // Runs the solenoid open time function
+        digitalWrite(Solenoid, LOW);
+        digitalWrite(31, LOW);
     }
 }
 }
@@ -115,6 +135,8 @@ void parseInput() {
     int numValues = sscanf(input.c_str(), "%d, %d", &isiDelayLowerRange, &isiDelayUpperRange);
 
     }
+
+/// Solenoid Open Time Function ///
 
 /// Light Array Functions ///
 
