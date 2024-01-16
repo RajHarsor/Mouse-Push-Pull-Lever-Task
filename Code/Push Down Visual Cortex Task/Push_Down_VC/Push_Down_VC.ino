@@ -8,7 +8,7 @@ int timeOutTime = 540000000000;     // Enter the time out time
 int trialNumber = 0;  // DO NOT TOUCH THIS
 // const int ArraySize = 6; // Make sure this is an even number
 
-/ Pin Set-Ups //
+/// Pin Set-Ups ///
 #define VRX_PIN A0  // Arduino pin connected to VRX pin (aka Analog Pin A0), this is the blue cable
 #define VRY_PIN A1  // Arduino pin connected to VRY pin (aka Analog Pin A1), this is the red cable
 #define Solenoid 4  // Water Solenoid will be connected to Digital Pin 4
@@ -18,7 +18,7 @@ int trialNumber = 0;  // DO NOT TOUCH THIS
 #define PULL_PIN 35 // Pull Pin will be connected to Digital Pin 35 on Behavior Teensy and Coordinate Teensy
 // TODO Add pin for the light array system (data pin)
 
-// Soundboard Set-up //
+/// Soundboard Set-up ///
 #include <Adafruit_Soundboard.h>
 
 // Choose any two pins that can be used with SoftwareSerial to RX & TX
@@ -31,11 +31,36 @@ int trialNumber = 0;  // DO NOT TOUCH THIS
 // Hardware Serial Communication Set Up
 Adafruit_Soundboard sfx = Adafruit_Soundboard(&Serial1, NULL, SFX_RST);
 
-////// Timer Variables //////
+/// Timer Variables ///
 #define timerMillis millis() - currentMillis
 unsigned long currentMillis = 0;
 unsigned long reactionTime;
 unsigned long startTime;
+
+/// Light Array Setup ///
+
+# include <FastLED.h>
+
+//Parameters
+#define NUM_LEDS 48 //number of LEDs total
+
+//Set up
+#define DATA_PIN 8
+#define CLOCK_PIN 14
+CRGB leds[NUM_LEDS]; //define the array of LEDs
+
+/* Array Set up (WS2012B)
+
+0  1  2  3  4  5
+6  7  8  9  10 11
+12 13 14 15 16 17
+18 19 20 21 22 23
+24 25 26 27 28 29
+30 31 32 33 34 35
+36 37 38 39 40 41
+42 43 44 45 46 47
+
+*/
 
 void setup() {
     Serial.begin(115200);
@@ -45,13 +70,14 @@ void setup() {
     pinMode(29, OUTPUT); // Sets pin 29 as an output, if this pin is high it prints on the Coordinate Teensy that the current state is the rest state
     pinMode(30, OUTPUT); // Sets pin 30 as an output, if this pin is high it prints on the Coordinate Teensy that the current state is the push/pull state
     pinMode(31, OUTPUT); // Sets pin 31 as an output, if this pin is high it prints on the Coordinate Teensy that the current state is that the solenoid is open
-    pinMode(32, OUTPUT); // Sets pin 32 as an output, if this pin is high it prints on the Coordinate Teensy that the current state is that the ISI delay is occuring
+    pinMode(32, OUTPUT); // Sets pin 32 as an output, if this pin is high it prints on the Coordinate Teensy that the current state is that the ISI delay is occurring
     pinMode(25, OUTPUT);
     pinMode(REST_PIN, INPUT); // Sets the rest pin as an input, if the mouse is in the rest coordinate range, the coordinate Teensy will set this pin high to tell the Behavior Teensy
     pinMode(PULL_PIN, INPUT); // Sets the pull pin as an input, if the mouse is in the pull coordinate range, the coordinate Teensy will set this pin high to tell the Behavior Teensy
     pinMode(PUSH_PIN, INPUT); // Sets the push pin as an input, if the mouse is in the push coordinate range, the coordinate Teensy will set this pin high to tell the Behavior Teensy
     Entropy.Initialize(); // Probably useless
     randomSeed(analogRead(9)); // Needed for random number generator for ISI Delay
+    FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS); // Sets up the light array
     parseInput();
 }
 
@@ -89,3 +115,25 @@ void parseInput() {
     int numValues = sscanf(input.c_str(), "%d, %d", &isiDelayLowerRange, &isiDelayUpperRange);
 
     }
+
+void lightArrayPlus() {
+    for (int i = 2; i <= 44; i = i + 6) {
+    leds[i] = CRGB::White;
+    FastLED.show();
+}
+
+for (int i = 3; i <= 45; i = i + 6) {
+    leds[i] = CRGB::White;
+    FastLED.show();
+}
+
+for (int i = 18; i <= 23; i++) {
+    leds[i] = CRGB::White;
+    FastLED.show();
+}
+
+for (int i = 24; i <= 29; i++) {
+    leds[i] = CRGB::White;
+    FastLED.show();
+}
+}
