@@ -106,10 +106,13 @@ void loop() {
     }
     // Block 3 - Mouse Decision Making
     startTime = millis(); // Starts the reaction time timer
-    // Block 3A - Push State (Vertical Stripes)
+    // Block 3A - Push, Vertical Stripes
+    // Block 3AA - Push State (Vertical Stripes) - Correct
     if (digitalRead(PUSH_PIN) == HIGH && lightArrayRandomizer == 0) {
         reactionTime = millis() - startTime; // Stops the reaction time timer
         Serial.print(trialNumber); // Prints the trial number
+        Serial.print(" , ");
+        Serial.print("Vertical Stripes")
         Serial.print(" , ");
         Serial.print(reactionTime); // Prints the reaction time
         Serial.print(" , ");
@@ -119,7 +122,29 @@ void loop() {
         digitalWrite(Solenoid, HIGH); // Opens the solenoid
         solenoidOpenTime(); // Runs the solenoid open time function
         digitalWrite(Solenoid, LOW);
-        digitalWrite(31, LOW);
+        digitalWrite(31, LOW); // Tells the coordinate Teensy that the current state is not that the solenoid is open
+    }
+    // Block 3AB - Push State (Vertical Stripes) - Incorrect
+    if (digitalRead(PULL_PIN) == HIGH && lightArrayRandomizer == 0) {
+        reactionTime = millis() - startTime; // Stops the reaction time timer
+        Serial.print(trialNumber); // Prints the trial number
+        Serial.print(" , ");
+        Serial.print("Vertical Stripes")
+        Serial.print(" , ");
+        Serial.print(reactionTime); // Prints the reaction time
+        Serial.print(" , ");
+        Serial.print("Pull , Incorrect"); // Prints the decision
+        digitalWrite(30, LOW);
+        digitalWrite(31, HIGH); // Tells the coordinate Teensy that the current state is that the solenoid is open
+        digitalWrite(Solenoid, HIGH); // Opens the solenoid
+        solenoidOpenTime(); // Runs the solenoid open time function
+        digitalWrite(Solenoid, LOW);
+        digitalWrite(31, LOW); // Tells the coordinate Teensy that the current state is not that the solenoid is open
+    }
+    // Block 3B - Pull, Horizontal Stripes
+    // Block 3BA - Pull State (Horizontal Stripes) - Correct
+    if (digitalRead(PULL_PIN) == HIGH && lightArrayRandomizer == 1) {
+        
     }
 }
 }
