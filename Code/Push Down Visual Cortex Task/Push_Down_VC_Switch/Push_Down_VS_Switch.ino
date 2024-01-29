@@ -46,6 +46,7 @@ unsigned long startTime;
 
 //Parameters
 #define NUM_LEDS 48  //number of LEDs total
+#define BRIGHTNESS  64
 
 //Set up
 #define DATA_PIN 8
@@ -81,6 +82,7 @@ void setup() {
   pinMode(PUSH_PIN, INPUT);                             // Sets the push pin as an input, if the mouse is in the push coordinate range, the coordinate Teensy will set this pin high to tell the Behavior Teensy                          // Probably useless
   randomSeed(analogRead(9));                            // Needed for random number generator for ISI Delay
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);  // Sets up the light array
+  FastLED.setBrightness(BRIGHTNESS);
   Serial.print("Behavior");
   parseInput();
 }
