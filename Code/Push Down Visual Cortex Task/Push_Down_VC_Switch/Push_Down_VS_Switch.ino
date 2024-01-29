@@ -46,7 +46,7 @@ unsigned long startTime;
 
 //Parameters
 #define NUM_LEDS 48  //number of LEDs total
-#define BRIGHTNESS  64
+#define BRIGHTNESS 64
 
 //Set up
 #define DATA_PIN 8
