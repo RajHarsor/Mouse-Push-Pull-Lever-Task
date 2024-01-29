@@ -144,6 +144,7 @@ void loop() {
     // Block 3B - Pull, Horizontal Stripes
     // Block 3BA - Pull State (Horizontal Stripes) - Correct
     if (digitalRead(PULL_PIN) == HIGH && lightArrayRandomizer == 1) {
+      
         
     }
 }
