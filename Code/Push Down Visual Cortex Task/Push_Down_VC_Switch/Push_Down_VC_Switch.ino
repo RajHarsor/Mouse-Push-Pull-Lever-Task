@@ -296,7 +296,7 @@ void verticalCorrect() {
   digitalWrite(31, LOW);  // Tells the coordinate Teensy that the current state is not that the solenoid is open
 }
 
-// Vertical Wrong (Mouse does down when vertical stripes are displayed) //
+// Vertical Wrong (Mouse does pull when vertical stripes are displayed) //
 
 void verticalWrong() {
   reactionTime = millis() - startTime;  // Stops the reaction time timer
@@ -306,7 +306,7 @@ void verticalWrong() {
   Serial.print(" , ");
   Serial.print(reactionTime);  // Prints the reaction time
   Serial.print(" , ");
-  Serial.print("Down , Incorrect");  // Prints the decision
+  Serial.print("Pull , Incorrect");  // Prints the decision
   digitalWrite(30, LOW);
   digitalWrite(31, HIGH);        // Tells the coordinate Teensy that the current state is that the solenoid is open
   digitalWrite(Solenoid, HIGH);  // Opens the solenoid
@@ -315,7 +315,7 @@ void verticalWrong() {
   digitalWrite(31, LOW);  // Tells the coordinate Teensy that the current state is not that the solenoid is open
 }
 
-// Horizontal Correct (Mouse does down when horizontal stripes are displayed) //
+// Horizontal Correct (Mouse does pull when horizontal stripes are displayed) //
 
 void horizontalCorrect() {
   reactionTime = millis() - startTime;  // Stops the reaction time timer
@@ -325,7 +325,7 @@ void horizontalCorrect() {
   Serial.print(" , ");
   Serial.print(reactionTime);  // Prints the reaction time
   Serial.print(" , ");
-  Serial.print("Down , Correct");  // Prints the decision
+  Serial.print("Pull , Correct");  // Prints the decision
   digitalWrite(30, LOW);
   digitalWrite(31, HIGH);        // Tells the coordinate Teensy that the current state is that the solenoid is open
   digitalWrite(Solenoid, HIGH);  // Opens the solenoid
