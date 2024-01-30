@@ -4,12 +4,13 @@
 int totalTrials = 1000000;       // DO NOT TOUCH THIS
 int isiDelayLowerRange;          // Enter ISI delay lower Value in ms
 int isiDelayUpperRange;          // Enter ISI delay upper Value in ms
-int timeOutTime = 540000000000;  // Enter the time out time
+int timeOutTime = 10000;  // Enter the time out time
 int trialNumber = 0;             // DO NOT TOUCH THIS
 int decision;                    // decision parameter
 // const int ArraySize = 6; // Make sure this is an even number
 int solenoidDelayRight = 44;  // Enter the solenoid open time in ms
 int solenoidDelayWrong = 0;
+int lightArrayRandomizer;
 
 /// Pin Set-Ups ///
 #define VRX_PIN A0   // Arduino pin connected to VRX pin (aka Analog Pin A0), this is the blue cable
@@ -111,7 +112,8 @@ void loop() {
       horizontalStripesOne();         // display one horizontal stripe on the LED array
     }
     // Block 3 Mouse Decision Making
-    startTime = millis();
+    currentMillis = millis(); // timer for timeout
+    startTime = millis(); // timer for reaction time
     while (timerMillis <= timeOutTime) {
       if (digitalRead(PUSH_PIN) == HIGH && lightArrayRandomizer == 0) {
         decision = 1;
@@ -143,6 +145,8 @@ void loop() {
       case 4:
         horizontalCorrect();
         break;
+      case 0:
+        timeout();
     }
     lightsOff();
     digitalWrite(32, HIGH);  // Tells the coordinate teensy the current state is that the ISI delay is occurring
@@ -309,9 +313,8 @@ void verticalWrong() {
   Serial.print("Pull , Incorrect");  // Prints the decision
   digitalWrite(30, LOW);
   digitalWrite(31, HIGH);        // Tells the coordinate Teensy that the current state is that the solenoid is open
-  digitalWrite(Solenoid, HIGH);  // Opens the solenoid
-  delay(solenoidDelayWrong);
-  digitalWrite(Solenoid, LOW);
+  sfx.playTrack("T04     WAV");
+  delay(3000);
   digitalWrite(31, LOW);  // Tells the coordinate Teensy that the current state is not that the solenoid is open
 }
 
@@ -347,8 +350,28 @@ void horizontalWrong() {
   Serial.print("Push , Incorrect");  // Prints the decision
   digitalWrite(30, LOW);
   digitalWrite(31, HIGH);        // Tells the coordinate Teensy that the current state is that the solenoid is open
-  digitalWrite(Solenoid, HIGH);  // Opens the solenoid
-  delay(solenoidDelayWrong);     // Runs the solenoid open time function
-  digitalWrite(Solenoid, LOW);
+  sfx.playTrack("T04     WAV");
+  delay(3000);
   digitalWrite(31, LOW);  // Tells the coordinate Teensy that the current state is not that the solenoid is open
+}
+
+void timeout() {
+  reactionTime = millis() - startTime;  // Stops the reaction time timer
+  Serial.print(trialNumber);            // Prints the trial number
+  Serial.print(" , ");
+  if (lightArrayRandomizer == 0) {
+    Serial.print("Vertical Stripes");
+  }
+  if (lightArrayRandomizer == 1) {
+    Serial.print("Horizontal Stripes");
+  }
+  Serial.print(" , ");
+  Serial.print(reactionTime);
+  Serial.print(" , ");
+  Serial.print("Timeout, Incorrect");
+  digitalWrite(30, LOW);
+  digitalWrite(31, HIGH);
+  sfx.playTrack("T04     WAV");
+  delay(3000);
+  digitalWrite(31, LOW);
 }
