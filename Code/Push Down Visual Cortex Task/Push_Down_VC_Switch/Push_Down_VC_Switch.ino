@@ -10,6 +10,7 @@ int decision;                    // decision parameter
 // const int ArraySize = 6; // Make sure this is an even number
 int solenoidDelayRight = 44;  // Enter the solenoid open time in ms
 int solenoidDelayWrong = 0;
+int isiDelay = random(isiDelayLowerRange, isiDelayUpperRange + 1);  // Generates a random number between the lower and upper range of the ISI delay
 int lightArrayRandomizer;
 
 /// Pin Set-Ups ///
@@ -151,7 +152,6 @@ void loop() {
     lightsOff();
     digitalWrite(32, HIGH);  // Tells the coordinate teensy the current state is that the ISI delay is occurring
     currentMillis = millis();
-    int isiDelay = random(isiDelayLowerRange, isiDelayUpperRange + 1);  // Generates a random number between the lower and upper range of the ISI delay
     Serial.print(" , ");
     Serial.print(isiDelay);
     Serial.println(" ; ");
@@ -313,6 +313,7 @@ void verticalWrong() {
   Serial.print("Pull , Incorrect");  // Prints the decision
   digitalWrite(30, LOW);
   digitalWrite(31, HIGH);        // Tells the coordinate Teensy that the current state is that the solenoid is open
+  lightsOff();
   sfx.playTrack("T04     WAV");
   delay(3000);
   digitalWrite(31, LOW);  // Tells the coordinate Teensy that the current state is not that the solenoid is open
@@ -350,6 +351,7 @@ void horizontalWrong() {
   Serial.print("Push , Incorrect");  // Prints the decision
   digitalWrite(30, LOW);
   digitalWrite(31, HIGH);        // Tells the coordinate Teensy that the current state is that the solenoid is open
+  lightsOff();
   sfx.playTrack("T04     WAV");
   delay(3000);
   digitalWrite(31, LOW);  // Tells the coordinate Teensy that the current state is not that the solenoid is open
@@ -371,6 +373,7 @@ void timeout() {
   Serial.print("Timeout, Incorrect");
   digitalWrite(30, LOW);
   digitalWrite(31, HIGH);
+  lightsOff();
   sfx.playTrack("T04     WAV");
   delay(3000);
   digitalWrite(31, LOW);
