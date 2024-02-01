@@ -169,7 +169,7 @@ void parseInput() {
   }
 
   String input = Serial.readStringUntil('\n');
-  int numValues = sscanf(input.c_str(), "%d, %d", &isiDelayLowerRange, &isiDelayUpperRange);
+  int numValues = sscanf(input.c_str(), "%d, %d, %d", &isiDelayLowerRange, &isiDelayUpperRange, timeOutTime);
 }
 
 /// Solenoid Open Time Function ///
