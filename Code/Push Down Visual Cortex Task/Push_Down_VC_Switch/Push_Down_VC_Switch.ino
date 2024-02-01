@@ -4,13 +4,11 @@
 int totalTrials = 1000000;       // DO NOT TOUCH THIS
 int isiDelayLowerRange;          // Enter ISI delay lower Value in ms
 int isiDelayUpperRange;          // Enter ISI delay upper Value in ms
-int timeOutTime = 10000;  // Enter the time out time
+int timeOutTime;  // Enter the time out time
 int trialNumber = 0;             // DO NOT TOUCH THIS
 int decision;                    // decision parameter
 // const int ArraySize = 6; // Make sure this is an even number
 int solenoidDelayRight = 44;  // Enter the solenoid open time in ms
-int solenoidDelayWrong = 0;
-int isiDelay = random(isiDelayLowerRange, isiDelayUpperRange + 1);  // Generates a random number between the lower and upper range of the ISI delay
 int lightArrayRandomizer;
 
 /// Pin Set-Ups ///
@@ -151,6 +149,7 @@ void loop() {
     }
     lightsOff();
     digitalWrite(32, HIGH);  // Tells the coordinate teensy the current state is that the ISI delay is occurring
+    int isiDelay = random(isiDelayLowerRange, isiDelayUpperRange + 1);  // Generates a random number between the lower and upper range of the ISI delay
     currentMillis = millis();
     Serial.print(" , ");
     Serial.print(isiDelay);
@@ -219,8 +218,8 @@ void verticalStripesMultiple() {  // please note this function does 3 stripes
 }
 
 void verticalStripesOne() {  // please note this function does 1 stripe
-  for (int i = 2; i <= 44; i = i + 6) {
-    leds[i] = CRGB::White;
+  for (int i = 8; i <= 32; i = i + 6) {
+    leds[i] = CRGB::Blue;
     FastLED.show();
   }
 }
@@ -249,8 +248,8 @@ void horizontalStripesMultiple() {  // please note this function does 3 stripes
 }
 
 void horizontalStripesOne() {  // please note this function does 1 stripe
-  for (int i = 24; i <= 29; i++) {
-    leds[i] = CRGB::White;
+  for (int i = 18; i <= 22; i++) {
+    leds[i] = CRGB::Blue;
     FastLED.show();
   }
 }
@@ -345,7 +344,7 @@ void horizontalWrong() {
   Serial.print(trialNumber);            // Prints the trial number
   Serial.print(" , ");
   Serial.print(reactionTime);  // Prints the reaction time
-  Serial.print(" , ")
+  Serial.print(" , ");
   Serial.print("Horizontal Stripes");
   Serial.print(" , ");
   Serial.print("Push , Incorrect");  // Prints the decision
@@ -369,7 +368,7 @@ void timeout() {
   if (lightArrayRandomizer == 1) {
     Serial.print("Horizontal Stripes");
   }
-  Serial.print(" , ")
+  Serial.print(" , ");
   Serial.print("Timeout, Incorrect");
   digitalWrite(30, LOW);
   digitalWrite(31, HIGH);
