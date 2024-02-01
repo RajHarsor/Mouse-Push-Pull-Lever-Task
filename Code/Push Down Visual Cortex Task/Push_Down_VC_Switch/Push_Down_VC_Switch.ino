@@ -86,6 +86,7 @@ void setup() {
   FastLED.setBrightness(BRIGHTNESS);
   Serial.print("Behavior");
   parseInput();
+  // Serial.println("Input parsed");
 }
 
 void loop() {
@@ -93,6 +94,7 @@ void loop() {
     // Block 1 - Rest State (wait for 50 ms in the rest position)
     currentMillis = millis();  // starts the timber
     digitalWrite(29, HIGH);    //Tells the coordinate Teensy that the current state is the rest state
+    // Serial.println("In Rest");
     while (timerMillis <= 50) {
       if (digitalRead(REST_PIN) == HIGH) {
         continue;
@@ -170,7 +172,7 @@ void parseInput() {
   }
 
   String input = Serial.readStringUntil('\n');
-  int numValues = sscanf(input.c_str(), "%d, %d, %d", &isiDelayLowerRange, &isiDelayUpperRange, timeOutTime);
+  int numValues = sscanf(input.c_str(), "%d, %d, %d", &isiDelayLowerRange, &isiDelayUpperRange, &timeOutTime);
 }
 
 /// Solenoid Open Time Function ///
@@ -312,11 +314,11 @@ void verticalWrong() {
   Serial.print(" , ");
   Serial.print("Pull , Incorrect");  // Prints the decision
   digitalWrite(30, LOW);
-  digitalWrite(32, HIGH);        // Tells the coordinate Teensy that the current state is that the solenoid is open
+  digitalWrite(28, HIGH);        // Tells the coordinate Teensy that the current state is that the solenoid is open
   lightsOff();
   sfx.playTrack("T04     WAV");
   delay(3000);
-  digitalWrite(32, LOW);  // Tells the coordinate Teensy that the current state is not that the solenoid is open
+  digitalWrite(28, LOW);  // Tells the coordinate Teensy that the current state is not that the solenoid is open
 }
 
 // Horizontal Correct (Mouse does pull when horizontal stripes are displayed) //
@@ -350,11 +352,11 @@ void horizontalWrong() {
   Serial.print(" , ");
   Serial.print("Push , Incorrect");  // Prints the decision
   digitalWrite(30, LOW);
-  digitalWrite(32, HIGH);        // Tells the coordinate Teensy that the current state is that the solenoid is open
+  digitalWrite(28, HIGH);        // Tells the coordinate Teensy that the current state is that the solenoid is open
   lightsOff();
   sfx.playTrack("T04     WAV");
   delay(3000);
-  digitalWrite(32, LOW);  // Tells the coordinate Teensy that the current state is not that the solenoid is open
+  digitalWrite(28, LOW);  // Tells the coordinate Teensy that the current state is not that the solenoid is open
 }
 
 void timeout() {
@@ -372,9 +374,9 @@ void timeout() {
   Serial.print(" , ");
   Serial.print("Timeout, Incorrect");
   digitalWrite(30, LOW);
-  digitalWrite(32, HIGH);
+  digitalWrite(28, HIGH);
   lightsOff();
   sfx.playTrack("T04     WAV");
   delay(3000);
-  digitalWrite(32, LOW);
+  digitalWrite(28, LOW);
 }
