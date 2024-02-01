@@ -76,6 +76,7 @@ void setup() {
   pinMode(30, OUTPUT);        // Sets pin 30 as an output, if this pin is high it prints on the Coordinate Teensy that the current state is the push/pull state
   pinMode(31, OUTPUT);        // Sets pin 31 as an output, if this pin is high it prints on the Coordinate Teensy that the current state is that the solenoid is open
   pinMode(32, OUTPUT);        // Sets pin 32 as an output, if this pin is high it prints on the Coordinate Teensy that the current state is that the ISI delay is occurring
+  pinMode(28, OUTPUT);        // Set pin 28 as an output, if this pin is high it prints on the Coordinate Teensy that the current state is punishment
   pinMode(25, OUTPUT);
   pinMode(REST_PIN, INPUT);                             // Sets the rest pin as an input, if the mouse is in the rest coordinate range, the coordinate Teensy will set this pin high to tell the Behavior Teensy
   pinMode(PULL_PIN, INPUT);                             // Sets the pull pin as an input, if the mouse is in the pull coordinate range, the coordinate Teensy will set this pin high to tell the Behavior Teensy
@@ -311,11 +312,11 @@ void verticalWrong() {
   Serial.print(" , ");
   Serial.print("Pull , Incorrect");  // Prints the decision
   digitalWrite(30, LOW);
-  digitalWrite(31, HIGH);        // Tells the coordinate Teensy that the current state is that the solenoid is open
+  digitalWrite(32, HIGH);        // Tells the coordinate Teensy that the current state is that the solenoid is open
   lightsOff();
   sfx.playTrack("T04     WAV");
   delay(3000);
-  digitalWrite(31, LOW);  // Tells the coordinate Teensy that the current state is not that the solenoid is open
+  digitalWrite(32, LOW);  // Tells the coordinate Teensy that the current state is not that the solenoid is open
 }
 
 // Horizontal Correct (Mouse does pull when horizontal stripes are displayed) //
@@ -349,11 +350,11 @@ void horizontalWrong() {
   Serial.print(" , ");
   Serial.print("Push , Incorrect");  // Prints the decision
   digitalWrite(30, LOW);
-  digitalWrite(31, HIGH);        // Tells the coordinate Teensy that the current state is that the solenoid is open
+  digitalWrite(32, HIGH);        // Tells the coordinate Teensy that the current state is that the solenoid is open
   lightsOff();
   sfx.playTrack("T04     WAV");
   delay(3000);
-  digitalWrite(31, LOW);  // Tells the coordinate Teensy that the current state is not that the solenoid is open
+  digitalWrite(32, LOW);  // Tells the coordinate Teensy that the current state is not that the solenoid is open
 }
 
 void timeout() {
@@ -371,9 +372,9 @@ void timeout() {
   Serial.print(" , ");
   Serial.print("Timeout, Incorrect");
   digitalWrite(30, LOW);
-  digitalWrite(31, HIGH);
+  digitalWrite(32, HIGH);
   lightsOff();
   sfx.playTrack("T04     WAV");
   delay(3000);
-  digitalWrite(31, LOW);
+  digitalWrite(32, LOW);
 }
