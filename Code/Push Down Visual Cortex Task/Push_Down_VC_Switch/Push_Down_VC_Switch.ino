@@ -287,9 +287,9 @@ void verticalCorrect() {
   reactionTime = millis() - startTime;  // Stops the reaction time timer
   Serial.print(trialNumber);            // Prints the trial number
   Serial.print(" , ");
-  Serial.print("Vertical Stripes");
-  Serial.print(" , ");
   Serial.print(reactionTime);  // Prints the reaction time
+  Serial.print(" , ");
+  Serial.print("Vertical Stripes");
   Serial.print(" , ");
   Serial.print("Push , Correct");  // Prints the decision
   digitalWrite(30, LOW);
@@ -306,9 +306,9 @@ void verticalWrong() {
   reactionTime = millis() - startTime;  // Stops the reaction time timer
   Serial.print(trialNumber);            // Prints the trial number
   Serial.print(" , ");
-  Serial.print("Vertical Stripes");
-  Serial.print(" , ");
   Serial.print(reactionTime);  // Prints the reaction time
+  Serial.print(" , ");
+  Serial.print("Vertical Stripes");
   Serial.print(" , ");
   Serial.print("Pull , Incorrect");  // Prints the decision
   digitalWrite(30, LOW);
@@ -325,9 +325,9 @@ void horizontalCorrect() {
   reactionTime = millis() - startTime;  // Stops the reaction time timer
   Serial.print(trialNumber);            // Prints the trial number
   Serial.print(" , ");
-  Serial.print("Horizontal Stripes");
-  Serial.print(" , ");
   Serial.print(reactionTime);  // Prints the reaction time
+  Serial.print(" , ");
+  Serial.print("Horizontal Stripes");
   Serial.print(" , ");
   Serial.print("Pull , Correct");  // Prints the decision
   digitalWrite(30, LOW);
@@ -344,9 +344,9 @@ void horizontalWrong() {
   reactionTime = millis() - startTime;  // Stops the reaction time timer
   Serial.print(trialNumber);            // Prints the trial number
   Serial.print(" , ");
-  Serial.print("Horizontal Stripes");
-  Serial.print(" , ");
   Serial.print(reactionTime);  // Prints the reaction time
+  Serial.print(" , ")
+  Serial.print("Horizontal Stripes");
   Serial.print(" , ");
   Serial.print("Push , Incorrect");  // Prints the decision
   digitalWrite(30, LOW);
@@ -361,15 +361,15 @@ void timeout() {
   reactionTime = millis() - startTime;  // Stops the reaction time timer
   Serial.print(trialNumber);            // Prints the trial number
   Serial.print(" , ");
+  Serial.print(reactionTime);
+  Serial.print(" , ");
   if (lightArrayRandomizer == 0) {
     Serial.print("Vertical Stripes");
   }
   if (lightArrayRandomizer == 1) {
     Serial.print("Horizontal Stripes");
   }
-  Serial.print(" , ");
-  Serial.print(reactionTime);
-  Serial.print(" , ");
+  Serial.print(" , ")
   Serial.print("Timeout, Incorrect");
   digitalWrite(30, LOW);
   digitalWrite(31, HIGH);
