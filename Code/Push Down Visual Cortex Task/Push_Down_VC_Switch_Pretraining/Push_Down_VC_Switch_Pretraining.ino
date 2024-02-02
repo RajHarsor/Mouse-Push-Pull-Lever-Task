@@ -106,27 +106,15 @@ void loop() {
     digitalWrite(29, LOW);   // Tells the coordinate Teensy that the current state is not the rest state anymore
     digitalWrite(30, HIGH);  // Tells the coordinate Teensy that the current state is the push/down state (decision making state)
     // Block 2 - Push/Pull State (light array decision)
-    int lightArrayRandomizer = random(0, 2);  // Generates a random number between 0 and 1
-    if (lightArrayRandomizer == 0) {          // Vertical Stripes
-      lightArrayPlus();                   // display one vertical stripe on the LED array
-    }
-    if (lightArrayRandomizer == 1) {  // Horizontal Stripes
-      lightArrayPlus();         // display one horizontal stripe on the LED array
-    }
+    lightArrayPlus();
     // Block 3 Mouse Decision Making
     currentMillis = millis(); // timer for timeout
     startTime = millis(); // timer for reaction time
     while (timerMillis <= timeOutTime) {
-      if (digitalRead(PUSH_PIN) == HIGH && lightArrayRandomizer == 0) {
+      if (digitalRead(PUSH_PIN) == HIGH) {
         decision = 1;
         break;
-      } else if (digitalRead(PULL_PIN) == HIGH && lightArrayRandomizer == 0) {
-        decision = 2;
-        break;
-      } else if (digitalRead(PUSH_PIN) == HIGH && lightArrayRandomizer == 1) {
-        decision = 1;
-        break;
-      } else if (digitalRead(PULL_PIN) == HIGH && lightArrayRandomizer == 1) {
+      } else if (digitalRead(PULL_PIN) == HIGH) {
         decision = 2;
         break;
       } else {
@@ -140,12 +128,6 @@ void loop() {
         break;
       case 2:
         plusCorrectPull();
-        break;
-      case 3:
-        horizontalWrong();
-        break;
-      case 4:
-        horizontalCorrect();
         break;
       case 0:
         timeout();
@@ -181,25 +163,16 @@ void parseInput() {
 
 // Plus Sign //
 void lightArrayPlus() {
-  for (int i = 2; i <= 44; i = i + 6) {
-    leds[i] = CRGB::White;
+  for (int i = 8; i <= 32; i = i + 6) {
+    leds[i] = CRGB::Blue;
     FastLED.show();
   }
 
-  for (int i = 3; i <= 45; i = i + 6) {
-    leds[i] = CRGB::White;
+  for (int i = 18; i <= 22; i++) {
+    leds[i] = CRGB::Blue;
     FastLED.show();
   }
 
-  for (int i = 18; i <= 23; i++) {
-    leds[i] = CRGB::White;
-    FastLED.show();
-  }
-
-  for (int i = 24; i <= 29; i++) {
-    leds[i] = CRGB::White;
-    FastLED.show();
-  }
 }
 
 // Vertical Stripes //
@@ -399,12 +372,7 @@ void timeout() {
   Serial.print(" , ");
   Serial.print(reactionTime);
   Serial.print(" , ");
-  if (lightArrayRandomizer == 0) {
-    Serial.print("Plus");
-  }
-  if (lightArrayRandomizer == 1) {
-    Serial.print("Plus");
-  }
+  Serial.print("Plus");
   Serial.print(" , ");
   Serial.print("Timeout, Incorrect");
   digitalWrite(30, LOW);
