@@ -1,6 +1,6 @@
 {
     "configuration": "usb=serial,speed=600,opt=o2std,keys=en-us",
     "board": "teensy:avr:teensy41",
-    "sketch": "Code/Push_Pull Code with Blocking/Pull Code (Blocking)/CoordinateCode/CoordinateCode.ino",
+    "sketch": "Code/Push Down Visual Cortex Task/Push_Down_VC_Switch_Pretraining/Push_Down_VC_Switch_Pretraining.ino",
     "port": "/dev/tty.usbmodem141456001"
 }
