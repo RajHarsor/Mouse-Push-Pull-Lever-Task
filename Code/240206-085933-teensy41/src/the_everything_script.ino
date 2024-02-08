@@ -18,7 +18,7 @@
 /* #endregion */
 
 //Parameters
-#define NUM_LEDS 48;  //number of LEDs total
+#define NUM_LEDS 48  //number of LEDs total
 #define BRIGHTNESS 5
 
 // Set up
@@ -147,9 +147,12 @@ void loop() {
     startTime = millis();
     while (timerMillis <= timeOutTime) {
       if (digitalRead(PUSH_PIN) == HIGH) {
-        decision = 1; // push
-        } else if (digitalRead(PULL_PIN) == HIGH) {
+          decision = 1; // push
+          break;
+        }
+      if (digitalRead(PULL_PIN) == HIGH) {
           decision = 2; // pull
+          break;
         } else {
           decision = 0; // punishment
         }
@@ -169,6 +172,7 @@ void loop() {
             digitalWrite(Solenoid, LOW);
             digitalWrite(31, LOW);
             break;
+          }
           if (decision == 2) {
             digitalWrite(31, HIGH);
             positionB++;
@@ -178,16 +182,14 @@ void loop() {
             digitalWrite(31, LOW);
             break;
           }
-          break;
         case 2:
           if (decision == 1 && lightDecision == 1) {
-            correctSOpen();
+              correctSOpen();
             } else if (decision == 2 && lightDecision == 2) {
               correctSOpen();
             } else {
               decision = 0;
             }
-          }
           break;
         case 3:
           if (decision == 1 && lightDecision == 1) {
@@ -212,9 +214,10 @@ void loop() {
     if (decision == 0) {
       digitalWrite(28, HIGH);
       sfx.playTrack("T04     WAV");
-      delay(punishmentTime + 120);
-      digitalWrite(28, LOW);
+      delay(120 + punishmentTime);
+      sfx.stop();
     }
+    digitalWrite(28, LOW);
     // ISI Delay block //
     digitalWrite(32, HIGH);  // Tells the coordinate Teensy that the current state is that the ISI delay is occurring
     int isiDelay = random(isiDelayLowerRange, isiDelayUpperRange + 1);
@@ -241,7 +244,10 @@ void loop() {
       Serial.print("Timeout");
     }
     Serial.print(" , ");
-    if (decision == 1 && lightDecision == 1) {
+    if (decision == 1 || decision == 2 && lightDecision == 0) {
+      Serial.print("Correct");
+      CorrectCounter++;
+    } else if (decision == 1 && lightDecision == 1) {
       Serial.print("Correct");
       CorrectCounter++;
     } else if (decision == 2 && lightDecision == 2) {
@@ -250,12 +256,28 @@ void loop() {
     } else {
       Serial.print("Incorrect");
     }
+    
     Serial.print(" , ");
     Serial.print (CorrectCounter);
     Serial.print(" / ");
     Serial.print(trialNumber);
     Serial.print(" , ");
+    if (visualStage == 1){
+      if (decision == 1 || decision == 2) {
+        Serial.print(OpenTime);
+      } else {
+        Serial.print("0");
+      }
+      Serial.print(" , ");
+      Serial.print(positionA);
+      Serial.print(" / ");
+      Serial.print(positionB);
+      Serial.print(" , ");
+    } else {
+      Serial.print(SOpenTime);
+    }
     Serial.print(isiDelay);
+    Serial.println(" ; ");
     trialNumber++;
 }
 

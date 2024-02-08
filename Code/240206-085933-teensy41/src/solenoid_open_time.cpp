@@ -5,7 +5,8 @@ int OpenTimeArray[ArraySize];  // initialize a blank array with 10 slots
 int currentIndex = 0;  // initialize the current index of the array to 0
 int ArrayCount1 = 0; // initialize the number of 1's in the array to 0
 int ArrayCount2 = 0; // initialize the number of 2's in the array to 0
-float OpenTime; // variable to store the solenoid open time
+int OpenTime; // variable to store the solenoid open time
+
 
 void solenoidOpenTime() {  /// function to determine the solenoid open time
   if (currentIndex < ArraySize) {    // if there aren't 10 integers in the array, add to it until there are 10
@@ -28,14 +29,14 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
       OpenTimeArray[0] = 2;
     }
   }
-  Serial.print("[");  // print the current array of pushes and pulls
+/*   Serial.print("[");  // print the current array of pushes and pulls
   for (int i = 0; i < ArraySize; i++) {
     Serial.print(OpenTimeArray[i]);
     Serial.print(" ");
   }
   Serial.print("]");
   Serial.print(" , ");
-  Serial.print(" ");
+  Serial.print(" "); */
   for (int i = 0; i < ArraySize; i++) {
     if (OpenTimeArray[i] == 1) {  // Count the number of 1s in the array (pushes)
       ArrayCount1 = ArrayCount1 + 1;
@@ -43,10 +44,54 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
     if (OpenTimeArray[i] == 2) {  // Count the number of 2s in the array (pulls)
       ArrayCount2 = ArrayCount2 + 1;
     }
-  }
+  } 
   // Serial.print("Current F/R Ratio = ");  // Print the current F/R ratio (pushes/pulls)
-  Serial.print(ArrayCount1);
+ /*  Serial.print(ArrayCount1);
   Serial.print(" / ");
   Serial.print(ArrayCount2);
   Serial.print(" , ");
+
+  Serial.print(positionA);
+  Serial.print(" / ");
+  Serial.print(positionB);
+  Serial.print(" , "); */
+
+  if (decision == 1) {  // Push Equation
+    if (ArrayCount1 == ArraySize or ArrayCount2 == ArraySize) {
+      OpenTime = 0;
+      /* Serial.print(OpenTime);
+      Serial.print(" , "); */
+    } else {
+    // OpenTime = -7.83 * (ArrayCount1 + 1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2 + 1), 2) - 18.44 * (ArrayCount1 + 1 - ArrayCount2)/(ArrayCount1 + ArrayCount2 + 1) + 48.28;
+    OpenTime = (-7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2), 2) - 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2) + 48.28);
+    // Serial.print("Solenoid Open Time = ");
+   /*  Serial.print(OpenTime);
+    Serial.print(" , "); */
+    // currentMillis = millis();
+    // while (timerMillis <= OpenTime) {
+    //   continue;
+    delay(OpenTime);
+    }
+    }
+
+  if (decision == 2) {  // Pull Equation
+    if (ArrayCount1 == ArraySize or ArrayCount2 == ArraySize) {
+      OpenTime = 0;
+      // Serial.print(OpenTime);
+     //  Serial.print(" , ");
+    } else {
+    // OpenTime = -7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2 + 1),2) + 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2 + 1) + 48.28;
+    OpenTime = (-7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2), 2) + 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2) + 48.28);
+    // Serial.print("Solenoid Open Time = ");
+    // Serial.print(OpenTime);
+    // Serial.print(" , ");
+    // currentMillis = millis();
+    // while (timerMillis <= OpenTime) {
+    //   continue;
+    // }
+    delay(OpenTime);
+    }
+  }
+  ArrayCount1 = 0; // Reset the number of 1s in the array to 0
+  ArrayCount2 = 0; // Reset the number of 2s in the array to 0
 }

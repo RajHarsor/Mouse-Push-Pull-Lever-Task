@@ -30,11 +30,11 @@ void parseVisualStage() {
 
   switch (visualStage) {
     case 1:
-      holdTime = 50 + (trialNumber * 0.5);
-      timeOutTime = 2000;
+      holdTime = 50;
+      timeOutTime = 10000;
       punishmentTime = 50;
-      isiDelayLowerRange = 250;
-      isiDelayUpperRange = 250;
+      isiDelayLowerRange = 3000;
+      isiDelayUpperRange = 3000;
       break;
     case 2:
       holdTime = 2000;
