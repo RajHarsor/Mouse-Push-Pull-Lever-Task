@@ -115,6 +115,18 @@ void loop() {
     // Rest position block
     currentMillis = millis();
     digitalWrite(29, HIGH);
+    // Dynamic hold time //
+    if (programType == 1) {
+      switch (visualStage) {
+        case 1:
+          if (holdTime < 250) {
+            holdTime = 50 + (2 * CorrectCounter);
+          } else {
+            holdTime = 250;
+          }
+          break;
+      }
+    }
     while (timerMillis <= holdTime) {
       if (digitalRead(REST_PIN) == HIGH) {
         continue;
@@ -126,6 +138,24 @@ void loop() {
     digitalWrite(29, LOW);   // Tells the coordinate Teensy that the current state is not the rest state anymore
     digitalWrite(30, HIGH);  // Tells the coordinate Teensy that the current state is the push/pull or push/down state
     // Light array decision block //
+    if (programType == 1) {
+      switch (visualStage) {
+        case 1:
+          break;
+        case 2:
+          if (plusPercentage != 10) {
+            plusPercentage = 50 - (CorrectCounter * 0.4);
+            lightsVerticalPercentage = 25 + (CorrectCounter * 0.2);
+            lightsHorizontalPercentage = 25 + (CorrectCounter * 0.2);
+          } else {
+            plusPercentage = 10;
+            lightsVerticalPercentage = 45;
+            lightsHorizontalPercentage = 45;
+          }
+          break;
+          }
+      }
+      // Push/Pull decision block //
     if (programType == 1) {
       switch (visualStage) {
         case 1:
@@ -187,6 +217,8 @@ void loop() {
               correctSOpen();
             } else if (decision == 2 && lightDecision == 2) {
               correctSOpen();
+            } else if ((decision == 1 || decision == 2) && lightDecision == 0) {
+              correctSOpen();
             } else {
               decision = 0;
             }
@@ -220,6 +252,17 @@ void loop() {
     digitalWrite(28, LOW);
     // ISI Delay block //
     digitalWrite(32, HIGH);  // Tells the coordinate Teensy that the current state is that the ISI delay is occurring
+    if (programType == 1) {
+      switch (visualStage) {
+        case 1:
+          if (isiDelayUpperRange < 2500) {
+            isiDelayUpperRange = isiDelayUpperRange + (CorrectCounter * 22);
+          }
+          break;
+        case 2:
+          break;
+      }
+    }
     int isiDelay = random(isiDelayLowerRange, isiDelayUpperRange + 1);
     delay(isiDelay);
     digitalWrite(32, LOW);  // Tells the coordinate Teensy that the current state is not the ISI delay state anymore
@@ -228,21 +271,23 @@ void loop() {
     Serial.print(" , ");
     Serial.print(reactionTime);
     Serial.print(" , ");
-    if (lightDecision == 0 ){
+    if (programType == 1) {
+      if (lightDecision == 0){
       Serial.print("Plus");
     } else if (lightDecision == 1) {
-      Serial.print("Verical");
+      Serial.print("Vertical");
     } else if (lightDecision == 2) {
       Serial.print("Horizontal");
     }
+    }
     Serial.print(" , ");
-    if (decision == 1) {
+    if (programType == 1) {if (decision == 1) {
       Serial.print("Push");
     } else if (decision == 2) {
       Serial.print("Pull");
     } else {
       Serial.print("Timeout");
-    }
+    }}
     Serial.print(" , ");
     if (decision == 1 || decision == 2 && lightDecision == 0) {
       Serial.print("Correct");
@@ -256,13 +301,12 @@ void loop() {
     } else {
       Serial.print("Incorrect");
     }
-    
     Serial.print(" , ");
     Serial.print (CorrectCounter);
     Serial.print(" / ");
     Serial.print(trialNumber);
     Serial.print(" , ");
-    if (visualStage == 1){
+    if (visualStage == 1) {
       if (decision == 1 || decision == 2) {
         Serial.print(OpenTime);
       } else {
@@ -273,12 +317,24 @@ void loop() {
       Serial.print(" / ");
       Serial.print(positionB);
       Serial.print(" , ");
-    } else {
+    } 
+    if (visualStage != 1 && decision != 0) {
       Serial.print(SOpenTime);
+    } else {
+      Serial.print("0");
     }
+    Serial.print(" , ");
     Serial.print(isiDelay);
     Serial.println(" ; ");
     trialNumber++;
+    // Debug // 
+    Serial.print(plusPercentage);
+    Serial.print(" , ");
+    Serial.print(lightsVerticalPercentage);
+    Serial.print(" , ");
+    Serial.print(lightsHorizontalPercentage);
+    Serial.print(" , ");
+    Serial.println(" ; ");
 }
 
 void correctSOpen() {

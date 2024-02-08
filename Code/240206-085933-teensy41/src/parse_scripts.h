@@ -15,6 +15,7 @@ extern int SOpenTime;
 extern int punishmentTime;
 extern int isiDelayLowerRange;
 extern int isiDelayUpperRange;
+extern int CorrectCounter;
 
 
 void parseProgramTypeInput();
