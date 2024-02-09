@@ -12,6 +12,7 @@ int SOpenTime;
 int punishmentTime;
 int isiDelayLowerRange;
 int isiDelayUpperRange;
+int holdTimePunishment;
 
 void parseProgramTypeInput() {
   while (!Serial.available()) {
@@ -48,26 +49,28 @@ void parseVisualStage() {
       isiDelayUpperRange = 2400;
       break;
     case 3:
-      holdTime = 3000;
+      holdTime = 500;
       plusPercentage = 10;
       lightsVerticalPercentage = 45;
       lightsHorizontalPercentage = 45;
       timeOutTime = 2000;
       SOpenTime = 52;
-      punishmentTime = 1000;
-      isiDelayLowerRange = 250;
-      isiDelayUpperRange = 250;
+      punishmentTime = 250;
+      isiDelayLowerRange = 1000;
+      isiDelayUpperRange = 3000;
+      holdTimePunishment = 100;
       break;
     case 4:
-      holdTime = 4000;
+      holdTime = 500;
       plusPercentage = 10;
       lightsVerticalPercentage = 45;
       lightsHorizontalPercentage = 45;
       timeOutTime = 1000;
       SOpenTime = 52;
       punishmentTime = 1000;
-      isiDelayLowerRange = 250;
-      isiDelayUpperRange = 250;
+      isiDelayLowerRange = 1000;
+      isiDelayUpperRange = 3000;
+      holdTimePunishment = 100;
       break;
   }
 }

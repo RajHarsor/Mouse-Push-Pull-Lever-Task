@@ -65,12 +65,15 @@ int decision;
 int positionA = 0;
 int positionB = 0;
 int CorrectCounter = 0;
+int SOpenTime1;
+int punishmentTime1;
+bool correct = false;
 
 /* #end region */
 
 /* #region Timer Variables */
 unsigned long currentMillis = 0;
-unsigned long reactionTime = 0;
+int reactionTime;
 #define timerMillis millis() - currentMillis
 unsigned long startTime;
 /* #end region */
@@ -119,11 +122,9 @@ void loop() {
     if (programType == 1) {
       switch (visualStage) {
         case 1:
-          if (holdTime < 250) {
-            holdTime = 50 + (2 * CorrectCounter);
-          } else {
-            holdTime = 250;
-          }
+          if (holdTime < 250 && correct == true) {
+            holdTime += 2;
+          } 
           break;
       }
     }
@@ -131,6 +132,24 @@ void loop() {
       if (digitalRead(REST_PIN) == HIGH) {
         continue;
       } else {
+        if (programType == 1) {
+          switch (visualStage) {
+            case 1:
+              break;
+            case 2:
+              break;
+            case 3:
+              sfx.playTrack("T04     WAV");
+              delay(120 + holdTimePunishment);
+              sfx.stop();
+              break;
+            case 4:
+              sfx.playTrack("T04     WAV");
+              delay(120 + holdTimePunishment);
+              sfx.stop();
+              break;
+          }
+        }
         currentMillis = millis();
         continue;
       }
@@ -143,14 +162,10 @@ void loop() {
         case 1:
           break;
         case 2:
-          if (plusPercentage != 10) {
+          if (plusPercentage > 10 && correct == true) {
             plusPercentage = 50 - (CorrectCounter * 0.4);
             lightsVerticalPercentage = 25 + (CorrectCounter * 0.2);
             lightsHorizontalPercentage = 25 + (CorrectCounter * 0.2);
-          } else {
-            plusPercentage = 10;
-            lightsVerticalPercentage = 45;
-            lightsHorizontalPercentage = 45;
           }
           break;
           }
@@ -173,6 +188,21 @@ void loop() {
           }
       }
       // Push/Pull decision block //
+      if (programType == 1) {
+        switch (visualStage){
+          case 1:
+            break;
+          case 2:
+            break;
+          case 3:
+            if (timeOutTime > 1000 && correct == true) {
+              timeOutTime = timeOutTime - 10;
+            } 
+            break;
+          case 4:
+            break;
+        }
+      }
     currentMillis = millis();
     startTime = millis();
     while (timerMillis <= timeOutTime) {
@@ -214,40 +244,64 @@ void loop() {
           }
         case 2:
           if (decision == 1 && lightDecision == 1) {
-              correctSOpen();
+              correctSOpen(SOpenTime);
             } else if (decision == 2 && lightDecision == 2) {
-              correctSOpen();
+              correctSOpen(SOpenTime);
             } else if ((decision == 1 || decision == 2) && lightDecision == 0) {
-              correctSOpen();
+              correctSOpen(SOpenTime);
             } else {
               decision = 0;
             }
           break;
         case 3:
           if (decision == 1 && lightDecision == 1) {
-            correctSOpen();
+              float ratio = (float)reactionTime / (float)timeOutTime;
+              SOpenTime1 = -37.5 * (ratio) + 55.75;
+              correctSOpen(SOpenTime1);
           } else if (decision == 2 && lightDecision == 2) {
-            correctSOpen();
+              float ratio = (float)reactionTime / (float)timeOutTime;
+              SOpenTime1 = -37.5 * (ratio) + 55.75;
+              correctSOpen(SOpenTime1);
+          } else if ((decision == 1 || decision == 2) && lightDecision == 0) {
+              float ratio = (float)reactionTime / (float)timeOutTime;
+              SOpenTime1 = -37.5 * (ratio) + 55.75;
+              correctSOpen(SOpenTime1);
           } else {
             decision = 0;
           }
           break;
         case 4:
           if (decision == 1 && lightDecision == 1) {
-            correctSOpen();
+            correctSOpen(SOpenTime);
           } else if (decision == 2 && lightDecision == 2) {
-            correctSOpen();
+            correctSOpen(SOpenTime);
+          } else if ((decision == 1 || decision == 2) && lightDecision == 0) {
+            correctSOpen(SOpenTime);
           } else {
             decision = 0;
           }
           break;
       }
     }
-    if (decision == 0) {
-      digitalWrite(28, HIGH);
-      sfx.playTrack("T04     WAV");
-      delay(120 + punishmentTime);
-      sfx.stop();
+    // Punishment block //
+    if (programType == 1 && decision == 0) {
+      switch (visualStage) {
+        case 1:
+          normalPunishment(punishmentTime);
+          break;
+        case 2:
+          normalPunishment(punishmentTime);
+          break;
+        case 3:
+          if (punishmentTime <= 1000 && correct == false) {
+            punishmentTime+= 10;
+          }
+          normalPunishment(punishmentTime);
+          break;
+        case 4:
+          normalPunishment(punishmentTime);
+          break;
+      }
     }
     digitalWrite(28, LOW);
     // ISI Delay block //
@@ -255,11 +309,15 @@ void loop() {
     if (programType == 1) {
       switch (visualStage) {
         case 1:
-          if (isiDelayUpperRange < 2500) {
-            isiDelayUpperRange = isiDelayUpperRange + (CorrectCounter * 22);
-          }
+          if (isiDelayUpperRange < 2500 && correct == true) {
+            isiDelayUpperRange += 22;
+          } 
           break;
         case 2:
+          break;
+        case 3:
+          break;
+        case 4:
           break;
       }
     }
@@ -267,81 +325,248 @@ void loop() {
     delay(isiDelay);
     digitalWrite(32, LOW);  // Tells the coordinate Teensy that the current state is not the ISI delay state anymore
     // Print the data and increment variables as needed //
-    Serial.print(trialNumber);
-    Serial.print(" , ");
-    Serial.print(reactionTime);
-    Serial.print(" , ");
     if (programType == 1) {
-      if (lightDecision == 0){
-      Serial.print("Plus");
-    } else if (lightDecision == 1) {
-      Serial.print("Vertical");
-    } else if (lightDecision == 2) {
-      Serial.print("Horizontal");
+      switch (visualStage) {
+        case 1:
+          Serial.print(trialNumber);
+          Serial.print(" , ");
+          Serial.print(reactionTime);
+          Serial.print(" , ");
+          printLightDecision();
+          Serial.print(" , ");
+          printDecision();
+          Serial.print(" , ");
+          printCorrectStatus();
+          Serial.print(" , ");
+          Serial.print (CorrectCounter);
+          Serial.print(" / ");
+          Serial.print(trialNumber);
+          Serial.print(" , ");
+          printOpenTime();
+          Serial.print(" , ");
+          Serial.print(positionA);
+          Serial.print(" / ");
+          Serial.print(positionB);
+          Serial.print(" , ");
+          Serial.print(isiDelay);
+          Serial.print(" , ");
+          // debug //
+          Serial.print( " // ");
+          Serial.print(" , ");
+          Serial.print(holdTime);
+          Serial.print(" , ");
+          Serial.print(timeOutTime);
+          Serial.print(" , ");
+          Serial.print(punishmentTime);
+          Serial.print(" , ");
+          Serial.print(isiDelayLowerRange);
+          Serial.print(" , ");
+          Serial.print(isiDelayUpperRange);
+          Serial.println(" ; ");
+          break;
+        case 2:
+          Serial.print(trialNumber);
+          Serial.print(" , ");
+          Serial.print(reactionTime);
+          Serial.print(" , ");
+          printLightDecision();
+          Serial.print(" , ");
+          printDecision();
+          Serial.print(" , ");
+          printCorrectStatus();
+          Serial.print(" , ");
+          Serial.print (CorrectCounter);
+          Serial.print(" / ");
+          Serial.print(trialNumber);
+          Serial.print(" , ");
+          printOpenTime();
+          Serial.print(" , ");
+          Serial.print(isiDelay);
+          // debug //
+          Serial.print( " // ");
+          Serial.print(" , ");
+          Serial.print(plusPercentage);
+          Serial.print(" , ");
+          Serial.print(lightsVerticalPercentage);
+          Serial.print(" , ");
+          Serial.print(lightsHorizontalPercentage);
+          Serial.print(" , ");
+          Serial.print(holdTime);
+          Serial.print(" , ");
+          Serial.print(timeOutTime);
+          Serial.print(" , ");
+          Serial.print(punishmentTime);
+          Serial.print(" , ");
+          Serial.print(isiDelayLowerRange);
+          Serial.print(" , ");
+          Serial.print(isiDelayUpperRange);
+          Serial.println(" ; ");
+          break;
+        case 3:
+          Serial.print(trialNumber);
+          Serial.print(" , ");
+          Serial.print(reactionTime);
+          Serial.print(" , ");
+          printLightDecision();
+          printDecision();
+          Serial.print(" , ");
+          Serial.print(" , ");
+          printCorrectStatus();
+          Serial.print(" , ");
+          Serial.print (CorrectCounter);
+          Serial.print(" / ");
+          Serial.print(trialNumber);
+          Serial.print(" , ");
+          printOpenTime();
+          Serial.print(" , ");
+          Serial.print(isiDelay);
+          // debug //
+          Serial.print( " // ");
+          Serial.print(" , ");
+          Serial.print(plusPercentage);
+          Serial.print(" , ");
+          Serial.print(lightsVerticalPercentage);
+          Serial.print(" , ");
+          Serial.print(lightsHorizontalPercentage);
+          Serial.print(" , ");
+          Serial.print(holdTime);
+          Serial.print(" , ");
+          Serial.print(timeOutTime);
+          Serial.print(" , ");
+          Serial.print(punishmentTime);
+          Serial.print(" , ");
+          Serial.print(isiDelayLowerRange);
+          Serial.print(" , ");
+          Serial.print(isiDelayUpperRange);
+          Serial.println(" ; ");
+          break;
+        case 4:
+          Serial.print(trialNumber);
+          Serial.print(" , ");
+          Serial.print(reactionTime);
+          Serial.print(" , ");
+          printLightDecision();
+          Serial.print(" , ");
+          printDecision();
+          Serial.print(" , ");
+          printCorrectStatus();
+          Serial.print(" , ");
+          Serial.print (CorrectCounter);
+          Serial.print(" / ");
+          Serial.print(trialNumber);
+          Serial.print(" , ");
+          printOpenTime();
+          Serial.print(" , ");
+          Serial.print(isiDelay);
+          // debug //
+          Serial.print( " // ");
+          Serial.print(" , ");
+          Serial.print(plusPercentage);
+          Serial.print(" , ");
+          Serial.print(lightsVerticalPercentage);
+          Serial.print(" , ");
+          Serial.print(lightsHorizontalPercentage);
+          Serial.print(" , ");
+          Serial.print(holdTime);
+          Serial.print(" , ");
+          Serial.print(timeOutTime);
+          Serial.print(" , ");
+          Serial.print(punishmentTime);
+          Serial.print(" , ");
+          Serial.print(isiDelayLowerRange);
+          Serial.print(" , ");
+          Serial.print(isiDelayUpperRange);
+          Serial.println(" ; ");
+          break;
+      }
     }
-    }
-    Serial.print(" , ");
-    if (programType == 1) {if (decision == 1) {
-      Serial.print("Push");
-    } else if (decision == 2) {
-      Serial.print("Pull");
-    } else {
-      Serial.print("Timeout");
-    }}
-    Serial.print(" , ");
-    if (decision == 1 || decision == 2 && lightDecision == 0) {
-      Serial.print("Correct");
-      CorrectCounter++;
-    } else if (decision == 1 && lightDecision == 1) {
-      Serial.print("Correct");
-      CorrectCounter++;
-    } else if (decision == 2 && lightDecision == 2) {
-      Serial.print("Correct");
-      CorrectCounter++;
-    } else {
-      Serial.print("Incorrect");
-    }
-    Serial.print(" , ");
-    Serial.print (CorrectCounter);
-    Serial.print(" / ");
-    Serial.print(trialNumber);
-    Serial.print(" , ");
-    if (visualStage == 1) {
+    trialNumber++;
+}
+
+void correctSOpen(int var) {
+  digitalWrite(31, HIGH);
+  digitalWrite(Solenoid, HIGH);
+  delay(var);
+  digitalWrite(Solenoid, LOW);
+  digitalWrite(31, LOW);
+}
+
+void normalPunishment(int punishmentTimeVar) {
+  digitalWrite(28, HIGH);
+  sfx.playTrack("T04     WAV");
+  delay(120 + punishmentTimeVar);
+  sfx.stop();
+  digitalWrite(28, LOW);
+}
+
+void printLightDecision() {
+  if (lightDecision == 0){
+    Serial.print("Plus");
+  } else if (lightDecision == 1) {
+    Serial.print("Vertical");
+  } else if (lightDecision == 2) {
+    Serial.print("Horizontal");
+  }
+}
+
+void printDecision() {
+  if (decision == 1) {
+    Serial.print("Push");
+  } else if (decision == 2) {
+    Serial.print("Pull");
+  } else {
+    Serial.print("timedOut");
+  }
+}
+
+void printCorrectStatus() {
+  if (decision == 1 || decision == 2 && lightDecision == 0) {
+    Serial.print("Correct");
+    correct = true;
+    CorrectCounter++;
+  } else if (decision == 1 && lightDecision == 1) {
+    Serial.print("Correct");
+    correct = true;
+    CorrectCounter++;
+  } else if (decision == 2 && lightDecision == 2) {
+    Serial.print("Correct");
+    correct = true;
+    CorrectCounter++;
+  } else {
+    Serial.print("Incorrect");
+    correct = false;
+  }
+}
+
+void printOpenTime() {
+  switch (visualStage) {
+    case 1:
       if (decision == 1 || decision == 2) {
         Serial.print(OpenTime);
       } else {
         Serial.print("0");
       }
-      Serial.print(" , ");
-      Serial.print(positionA);
-      Serial.print(" / ");
-      Serial.print(positionB);
-      Serial.print(" , ");
-    } 
-    if (visualStage != 1 && decision != 0) {
-      Serial.print(SOpenTime);
-    } else {
-      Serial.print("0");
-    }
-    Serial.print(" , ");
-    Serial.print(isiDelay);
-    Serial.println(" ; ");
-    trialNumber++;
-    // Debug // 
-    Serial.print(plusPercentage);
-    Serial.print(" , ");
-    Serial.print(lightsVerticalPercentage);
-    Serial.print(" , ");
-    Serial.print(lightsHorizontalPercentage);
-    Serial.print(" , ");
-    Serial.println(" ; ");
+      break;
+    case 2:
+      if (decision != 0) {
+        Serial.print(SOpenTime);
+      } else {
+        Serial.print("0");
+      }
+      break;
+    case 3:
+      if (decision != 0) {
+        Serial.print(SOpenTime1);
+      } else {
+        Serial.print("0");
+      }
+      break;
+    default:
+      if (decision != 0) {
+        Serial.print(SOpenTime);
+      } else {
+        Serial.print("0");
+      }
+      break;
+  }
 }
-
-void correctSOpen() {
-  digitalWrite(31, HIGH);
-  digitalWrite(Solenoid, HIGH);
-  delay(SOpenTime);
-  digitalWrite(Solenoid, LOW);
-  digitalWrite(31, LOW);
-}
-
