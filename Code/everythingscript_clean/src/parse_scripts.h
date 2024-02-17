@@ -23,6 +23,4 @@ void parseProgramTypeInput();
 
 void parseVisualStage();
 
-void executeLightArray();
-
 #endif

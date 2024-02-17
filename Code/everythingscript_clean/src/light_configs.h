@@ -5,6 +5,9 @@
 #include <FastLED.h>
 
 extern int lightDecision;
+extern int plusPercentage;
+extern int lightsVerticalPercentage;
+extern int lightsHorizontalPercentage;
 
 #ifndef NUM_LEDS
 #define NUM_LEDS 48  //number of LEDs total
@@ -15,6 +18,7 @@ extern CRGB leds[NUM_LEDS];  //define the array of LEDs
 void lightArrayPlus();
 void lightArrayVeritical();
 void lightArrayHorizontal();
+void executeLightArray();
 void lightsOff();
 
 #endif

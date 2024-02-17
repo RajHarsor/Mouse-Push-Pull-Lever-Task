@@ -53,3 +53,18 @@ void lightsOff() {
     FastLED.show();
     }
 }
+
+void executeLightArray() {
+  int totalPercentage = plusPercentage + lightsVerticalPercentage + lightsHorizontalPercentage;
+  int randomValue = random(totalPercentage);
+
+  if (randomValue <= plusPercentage) {
+    lightArrayPlus();
+  }
+  else if (randomValue <= plusPercentage + lightsVerticalPercentage) {
+    lightArrayVeritical();
+  }
+  else {
+    lightArrayHorizontal();
+  }
+}

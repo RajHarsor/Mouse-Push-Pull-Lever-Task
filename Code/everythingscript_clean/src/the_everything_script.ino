@@ -1,3 +1,4 @@
+/* #region DEPENDENCIES*/
 #include <Arduino.h>
 #include <vector>
 #include <string>
@@ -6,6 +7,8 @@
 #include "parse_scripts.h"
 #include "light_configs.h"
 #include "solenoid_open_time.h"
+
+/* #endregion */
 
 /* #region PIN SETUPS */
 #define VRX_PIN A0   // Arduino pin connected to VRX pin (aka Analog Pin A0), this is the blue cable
@@ -17,6 +20,7 @@
 #define PULL_PIN 35  // Pull Pin will be connected to Digital Pin 35 on Behavior Teensy and Coordinate Teensy
 /* #endregion */
 
+/* #region LED Array Set Up*/
 //Parameters
 #define NUM_LEDS 48  //number of LEDs total
 #define BRIGHTNESS 5
@@ -38,12 +42,11 @@ CRGB leds[NUM_LEDS];  //define the array of LEDs
 30 31 32 33 34 35
 36 37 38 39 40 41
 42 43 44 45 46 47
-
 */
 
 /* #endregion */
 
-/// Soundboard Set-up ///
+/* #region Soundboard setup*/
 #include <Adafruit_Soundboard.h>
 
 // Choose any two pins that can be used with SoftwareSerial to RX & TX
@@ -57,6 +60,7 @@ CRGB leds[NUM_LEDS];  //define the array of LEDs
 // Hardware Serial Communication Set Up
 Adafruit_Soundboard sfx = Adafruit_Soundboard(&Serial1, NULL, SFX_RST);
 
+/* #endregion */
 
 /* #region BEHAVIOR VARIBALES CONST */
 int totalTrials = 1000000;
@@ -76,7 +80,8 @@ unsigned long currentMillis = 0;
 int reactionTime;
 #define timerMillis millis() - currentMillis
 unsigned long startTime;
-/* #end region */
+
+/* #endregion */
 
 void setup() {
   /* #region Pins + Serial */
@@ -118,7 +123,7 @@ void loop() {
     // Rest position block
     currentMillis = millis();
     digitalWrite(29, HIGH);
-    // Dynamic hold time //
+    /* #region holdTime Modification */
     if (programType == 1) {
       switch (visualStage) {
         case 1:
@@ -128,10 +133,12 @@ void loop() {
           break;
       }
     }
+    /* #endregion */
     while (timerMillis <= holdTime) {
       if (digitalRead(REST_PIN) == HIGH) {
         continue;
       } else {
+        /* #region What happens if the mouse doesn't hold it for the designated time?*/
         if (programType == 1) {
           switch (visualStage) {
             case 1:
@@ -150,6 +157,7 @@ void loop() {
               break;
           }
         }
+        /* #endregion */
         currentMillis = millis();
         continue;
       }
@@ -197,7 +205,7 @@ void loop() {
           case 3:
             if (timeOutTime > 1000 && correct == true) {
               timeOutTime = timeOutTime - 10;
-            } 
+            }
             break;
           case 4:
             break;
