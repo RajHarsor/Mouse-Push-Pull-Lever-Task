@@ -10,6 +10,8 @@
 #include "hold_time_mod_visual.h"
 #include "hold_time_visual_punishment.h"
 #include "reaction_time_mod_visual.h"
+#include "WN_punishment.h"
+#include "punishment_time_visual_mod.h"
 
 /* #endregion */
 
@@ -217,17 +219,7 @@ void loop() {
     /* #endregion */
     // Punishment block //
     if (programType == 1 && decision == 0) {
-      switch (visualStage) {
-        case 1: case 2: case 4:
-          normalPunishment(punishmentTime);
-          break;
-        case 3:
-          if (punishmentTime <= 1000 && correct == false) {
-            punishmentTime+= 10;
-          }
-          normalPunishment(punishmentTime);
-          break;
-      }
+      punishmentVisualTaskChooser();
     }
     digitalWrite(28, LOW);
     // ISI Delay block //
@@ -420,13 +412,6 @@ void correctSOpen(int var) {
   digitalWrite(31, LOW);
 }
 
-void normalPunishment(int punishmentTimeVar) {
-  digitalWrite(28, HIGH);
-  sfx.playTrack("T04     WAV");
-  delay(120 + punishmentTimeVar);
-  sfx.stop();
-  digitalWrite(28, LOW);
-}
 
 void printLightDecision() {
   if (lightDecision == 0){
