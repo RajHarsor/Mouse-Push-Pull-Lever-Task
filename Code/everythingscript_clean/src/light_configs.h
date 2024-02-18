@@ -22,5 +22,6 @@ void lightArrayHorizontal();
 void executeLightArray();
 void lightsOff();
 void lightArrayModifier();
+void turnOnTheLights();
 
 #endif

@@ -133,20 +133,7 @@ void loop() {
       }
       // Push/Pull decision block //
     if (programType == 1) {
-      switch (visualStage) {
-        case 1:
-          lightArrayPlus();
-          break;
-        case 2:
-          executeLightArray();
-          break;
-        case 3:
-          executeLightArray();
-          break;
-        case 4:
-          executeLightArray();
-          break;
-          }
+      turnOnTheLights();
       }
       // Push/Pull decision block //
       if (programType == 1) {

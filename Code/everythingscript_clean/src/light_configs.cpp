@@ -86,3 +86,20 @@ void lightArrayModifier() {
       break;
       }
 }
+
+void turnOnTheLights() {
+  switch (visualStage) {
+    case 1:
+      lightArrayPlus();
+      break;
+    case 2:
+      executeLightArray();
+      break;
+    case 3:
+      executeLightArray();
+      break;
+    case 4:
+      executeLightArray();
+      break;
+      }
+}
