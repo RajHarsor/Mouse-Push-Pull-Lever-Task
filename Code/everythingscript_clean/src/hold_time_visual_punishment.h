@@ -16,7 +16,7 @@
 #define SFX_RST 19
 
 // Hardware Serial Communication Set Up
-Adafruit_Soundboard sfx = Adafruit_Soundboard(&Serial1, NULL, SFX_RST);
+extern Adafruit_Soundboard sfx;
 
 /* #endregion */
 

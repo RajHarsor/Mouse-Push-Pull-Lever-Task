@@ -1,5 +1,6 @@
 #include "hold_time_visual_punishment.h"
 
+Adafruit_Soundboard sfx = Adafruit_Soundboard(&Serial1, NULL, SFX_RST);
 
 void holdTimeVisualPunishment() {
     switch (visualStage) {
