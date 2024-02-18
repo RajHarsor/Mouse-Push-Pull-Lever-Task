@@ -12,6 +12,7 @@
 #include "reaction_time_mod_visual.h"
 #include "WN_punishment.h"
 #include "punishment_time_visual_mod.h"
+#include "isi_delay_mod_visual.h"
 
 /* #endregion */
 
@@ -225,19 +226,7 @@ void loop() {
     // ISI Delay block //
     digitalWrite(32, HIGH);  // Tells the coordinate Teensy that the current state is that the ISI delay is occurring
     if (programType == 1) {
-      switch (visualStage) {
-        case 1:
-          if (isiDelayUpperRange < 2500 && correct == true) {
-            isiDelayUpperRange += 22;
-          }
-          break;
-        case 2:
-          break;
-        case 3:
-          break;
-        case 4:
-          break;
-      }
+      isiDelayModVisual();
     }
     int isiDelay = random(isiDelayLowerRange, isiDelayUpperRange + 1);
     delay(isiDelay);
