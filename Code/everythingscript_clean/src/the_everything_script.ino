@@ -63,7 +63,6 @@ int positionA = 0;
 int positionB = 0;
 int CorrectCounter = 0;
 int SOpenTime1;
-int punishmentTime1;
 
 /* #end region */
 
@@ -233,164 +232,169 @@ void loop() {
     digitalWrite(32, LOW);  // Tells the coordinate Teensy that the current state is not the ISI delay state anymore
     // Print the data and increment variables as needed //
     if (programType == 1) {
-      switch (visualStage) {
-        case 1:
-          Serial.print(trialNumber);
-          Serial.print(" , ");
-          Serial.print(reactionTime);
-          Serial.print(" , ");
-          printLightDecision();
-          Serial.print(" , ");
-          printDecision();
-          Serial.print(" , ");
-          printCorrectStatus();
-          Serial.print(" , ");
-          Serial.print (CorrectCounter);
-          Serial.print(" / ");
-          Serial.print(trialNumber);
-          Serial.print(" , ");
-          printOpenTime();
-          Serial.print(" , ");
-          Serial.print(positionA);
-          Serial.print(" / ");
-          Serial.print(positionB);
-          Serial.print(" , ");
-          Serial.print(isiDelay);
-          Serial.print(" , ");
-          // debug //
-          Serial.print( " // ");
-          Serial.print(" , ");
-          Serial.print(holdTime);
-          Serial.print(" , ");
-          Serial.print(timeOutTime);
-          Serial.print(" , ");
-          Serial.print(punishmentTime);
-          Serial.print(" , ");
-          Serial.print(isiDelayLowerRange);
-          Serial.print(" , ");
-          Serial.print(isiDelayUpperRange);
-          Serial.println(" ; ");
-          break;
-        case 2:
-          Serial.print(trialNumber);
-          Serial.print(" , ");
-          Serial.print(reactionTime);
-          Serial.print(" , ");
-          printLightDecision();
-          Serial.print(" , ");
-          printDecision();
-          Serial.print(" , ");
-          printCorrectStatus();
-          Serial.print(" , ");
-          Serial.print (CorrectCounter);
-          Serial.print(" / ");
-          Serial.print(trialNumber);
-          Serial.print(" , ");
-          printOpenTime();
-          Serial.print(" , ");
-          Serial.print(isiDelay);
-          Serial.print(" , ");
-          // debug //
-          Serial.print( " // ");
-          Serial.print(" , ");
-          Serial.print(plusPercentage);
-          Serial.print(" , ");
-          Serial.print(lightsVerticalPercentage);
-          Serial.print(" , ");
-          Serial.print(lightsHorizontalPercentage);
-          Serial.print(" , ");
-          Serial.print(holdTime);
-          Serial.print(" , ");
-          Serial.print(timeOutTime);
-          Serial.print(" , ");
-          Serial.print(punishmentTime);
-          Serial.print(" , ");
-          Serial.print(isiDelayLowerRange);
-          Serial.print(" , ");
-          Serial.print(isiDelayUpperRange);
-          Serial.println(" ; ");
-          break;
-        case 3:
-          Serial.print(trialNumber);
-          Serial.print(" , ");
-          Serial.print(reactionTime);
-          Serial.print(" , ");
-          printLightDecision();
-          printDecision();
-          Serial.print(" , ");
-          Serial.print(" , ");
-          printCorrectStatus();
-          Serial.print(" , ");
-          Serial.print (CorrectCounter);
-          Serial.print(" / ");
-          Serial.print(trialNumber);
-          Serial.print(" , ");
-          printOpenTime();
-          Serial.print(" , ");
-          Serial.print(isiDelay);
-          Serial.print(" , ");
-          // debug //
-          Serial.print( " // ");
-          Serial.print(" , ");
-          Serial.print(plusPercentage);
-          Serial.print(" , ");
-          Serial.print(lightsVerticalPercentage);
-          Serial.print(" , ");
-          Serial.print(lightsHorizontalPercentage);
-          Serial.print(" , ");
-          Serial.print(holdTime);
-          Serial.print(" , ");
-          Serial.print(timeOutTime);
-          Serial.print(" , ");
-          Serial.print(punishmentTime);
-          Serial.print(" , ");
-          Serial.print(isiDelayLowerRange);
-          Serial.print(" , ");
-          Serial.print(isiDelayUpperRange);
-          Serial.println(" ; ");
-          break;
-        case 4:
-          Serial.print(trialNumber);
-          Serial.print(" , ");
-          Serial.print(reactionTime);
-          Serial.print(" , ");
-          printLightDecision();
-          Serial.print(" , ");
-          printDecision();
-          Serial.print(" , ");
-          printCorrectStatus();
-          Serial.print(" , ");
-          Serial.print (CorrectCounter);
-          Serial.print(" / ");
-          Serial.print(trialNumber);
-          Serial.print(" , ");
-          printOpenTime();
-          Serial.print(" , ");
-          Serial.print(isiDelay);
-          Serial.print(" , ");
-          // debug //
-          Serial.print( " // ");
-          Serial.print(" , ");
-          Serial.print(plusPercentage);
-          Serial.print(" , ");
-          Serial.print(lightsVerticalPercentage);
-          Serial.print(" , ");
-          Serial.print(lightsHorizontalPercentage);
-          Serial.print(" , ");
-          Serial.print(holdTime);
-          Serial.print(" , ");
-          Serial.print(timeOutTime);
-          Serial.print(" , ");
-          Serial.print(punishmentTime);
-          Serial.print(" , ");
-          Serial.print(isiDelayLowerRange);
-          Serial.print(" , ");
-          Serial.print(isiDelayUpperRange);
-          Serial.println(" ; ");
-          break;
-      }
+      printVisualInformation(isiDelay);
     }
     trialNumber++;
+}
+
+/* #region Visual Task Print Statements*/
+void printVisualInformation(int isiDelay) {
+  switch (visualStage) {
+    case 1:
+      Serial.print(trialNumber);
+      Serial.print(" , ");
+      Serial.print(reactionTime);
+      Serial.print(" , ");
+      printLightDecision();
+      Serial.print(" , ");
+      printDecision();
+      Serial.print(" , ");
+      printCorrectStatus();
+      Serial.print(" , ");
+      Serial.print (CorrectCounter);
+      Serial.print(" / ");
+      Serial.print(trialNumber);
+      Serial.print(" , ");
+      printOpenTime();
+      Serial.print(" , ");
+      Serial.print(positionA);
+      Serial.print(" / ");
+      Serial.print(positionB);
+      Serial.print(" , ");
+      Serial.print(isiDelay);
+      Serial.print(" , ");
+      // debug //
+      Serial.print( " // ");
+      Serial.print(" , ");
+      Serial.print(holdTime);
+      Serial.print(" , ");
+      Serial.print(timeOutTime);
+      Serial.print(" , ");
+      Serial.print(punishmentTime);
+      Serial.print(" , ");
+      Serial.print(isiDelayLowerRange);
+      Serial.print(" , ");
+      Serial.print(isiDelayUpperRange);
+      Serial.println(" ; ");
+      break;
+    case 2:
+      Serial.print(trialNumber);
+      Serial.print(" , ");
+      Serial.print(reactionTime);
+      Serial.print(" , ");
+      printLightDecision();
+      Serial.print(" , ");
+      printDecision();
+      Serial.print(" , ");
+      printCorrectStatus();
+      Serial.print(" , ");
+      Serial.print (CorrectCounter);
+      Serial.print(" / ");
+      Serial.print(trialNumber);
+      Serial.print(" , ");
+      printOpenTime();
+      Serial.print(" , ");
+      Serial.print(isiDelay);
+      Serial.print(" , ");
+      // debug //
+      Serial.print( " // ");
+      Serial.print(" , ");
+      Serial.print(plusPercentage);
+      Serial.print(" , ");
+      Serial.print(lightsVerticalPercentage);
+      Serial.print(" , ");
+      Serial.print(lightsHorizontalPercentage);
+      Serial.print(" , ");
+      Serial.print(holdTime);
+      Serial.print(" , ");
+      Serial.print(timeOutTime);
+      Serial.print(" , ");
+      Serial.print(punishmentTime);
+      Serial.print(" , ");
+      Serial.print(isiDelayLowerRange);
+      Serial.print(" , ");
+      Serial.print(isiDelayUpperRange);
+      Serial.println(" ; ");
+      break;
+    case 3:
+      Serial.print(trialNumber);
+      Serial.print(" , ");
+      Serial.print(reactionTime);
+      Serial.print(" , ");
+      printLightDecision();
+      printDecision();
+      Serial.print(" , ");
+      Serial.print(" , ");
+      printCorrectStatus();
+      Serial.print(" , ");
+      Serial.print (CorrectCounter);
+      Serial.print(" / ");
+      Serial.print(trialNumber);
+      Serial.print(" , ");
+      printOpenTime();
+      Serial.print(" , ");
+      Serial.print(isiDelay);
+      Serial.print(" , ");
+      // debug //
+      Serial.print( " // ");
+      Serial.print(" , ");
+      Serial.print(plusPercentage);
+      Serial.print(" , ");
+      Serial.print(lightsVerticalPercentage);
+      Serial.print(" , ");
+      Serial.print(lightsHorizontalPercentage);
+      Serial.print(" , ");
+      Serial.print(holdTime);
+      Serial.print(" , ");
+      Serial.print(timeOutTime);
+      Serial.print(" , ");
+      Serial.print(punishmentTime);
+      Serial.print(" , ");
+      Serial.print(isiDelayLowerRange);
+      Serial.print(" , ");
+      Serial.print(isiDelayUpperRange);
+      Serial.println(" ; ");
+      break;
+    case 4:
+      Serial.print(trialNumber);
+      Serial.print(" , ");
+      Serial.print(reactionTime);
+      Serial.print(" , ");
+      printLightDecision();
+      Serial.print(" , ");
+      printDecision();
+      Serial.print(" , ");
+      printCorrectStatus();
+      Serial.print(" , ");
+      Serial.print (CorrectCounter);
+      Serial.print(" / ");
+      Serial.print(trialNumber);
+      Serial.print(" , ");
+      printOpenTime();
+      Serial.print(" , ");
+      Serial.print(isiDelay);
+      Serial.print(" , ");
+      // debug //
+      Serial.print( " // ");
+      Serial.print(" , ");
+      Serial.print(plusPercentage);
+      Serial.print(" , ");
+      Serial.print(lightsVerticalPercentage);
+      Serial.print(" , ");
+      Serial.print(lightsHorizontalPercentage);
+      Serial.print(" , ");
+      Serial.print(holdTime);
+      Serial.print(" , ");
+      Serial.print(timeOutTime);
+      Serial.print(" , ");
+      Serial.print(punishmentTime);
+      Serial.print(" , ");
+      Serial.print(isiDelayLowerRange);
+      Serial.print(" , ");
+      Serial.print(isiDelayUpperRange);
+      Serial.println(" ; ");
+      break;
+  }
 }
 
 void correctSOpen(int var) {
@@ -473,3 +477,5 @@ void printOpenTime() {
       break;
   }
 }
+
+/* #endregion */
