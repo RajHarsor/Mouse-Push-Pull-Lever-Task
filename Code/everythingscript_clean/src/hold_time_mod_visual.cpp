@@ -1,4 +1,5 @@
 #include "parse_scripts.h"
+#include "hold_time_mod_visual.h"
 
 void holdTimeVisualTask() {
     switch (visualStage) {

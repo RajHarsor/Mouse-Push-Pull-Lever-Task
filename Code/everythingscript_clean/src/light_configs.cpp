@@ -68,3 +68,21 @@ void executeLightArray() {
     lightArrayHorizontal();
   }
 }
+
+void lightArrayModifier() {
+  switch (visualStage) {
+    case 1:
+      break;
+    case 2:
+      if (plusPercentage > 10 && correct == true) {
+        plusPercentage = 50 - (CorrectCounter * 0.4);
+        lightsVerticalPercentage = 25 + (CorrectCounter * 0.2);
+        lightsHorizontalPercentage = 25 + (CorrectCounter * 0.2);
+      }
+      break;
+    case 3:
+      break;
+    case 4:
+      break;
+      }
+}

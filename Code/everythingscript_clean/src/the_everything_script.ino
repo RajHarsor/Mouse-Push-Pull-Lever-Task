@@ -8,6 +8,7 @@
 #include "light_configs.h"
 #include "solenoid_open_time.h"
 #include "hold_time_mod_visual.h"
+#include "hold_time_visual_punishment.h"
 
 /* #endregion */
 
@@ -47,19 +48,6 @@ CRGB leds[NUM_LEDS];  //define the array of LEDs
 
 /* #endregion */
 
-/* #region Soundboard setup*/
-#include <Adafruit_Soundboard.h>
-
-// Choose any two pins that can be used with SoftwareSerial to RX & TX
-// #define SFX_TX 5
-// #define SFX_RX 6
-
-
-// Connect to the RST pin on the Sound Board
-#define SFX_RST 19
-
-// Hardware Serial Communication Set Up
-Adafruit_Soundboard sfx = Adafruit_Soundboard(&Serial1, NULL, SFX_RST);
 
 /* #endregion */
 
@@ -130,26 +118,9 @@ void loop() {
       if (digitalRead(REST_PIN) == HIGH) {
         continue;
       } else {
-        /* #region What happens if the mouse doesn't hold it for the designated time?*/
         if (programType == 1) {
-          switch (visualStage) {
-            case 1:
-              break;
-            case 2:
-              break;
-            case 3:
-              sfx.playTrack("T04     WAV");
-              delay(120 + holdTimePunishment);
-              sfx.stop();
-              break;
-            case 4:
-              sfx.playTrack("T04     WAV");
-              delay(120 + holdTimePunishment);
-              sfx.stop();
-              break;
-          }
+          holdTimeVisualPunishment();
         }
-        /* #endregion */
         currentMillis = millis();
         continue;
       }
@@ -158,17 +129,7 @@ void loop() {
     digitalWrite(30, HIGH);  // Tells the coordinate Teensy that the current state is the push/pull or push/down state
     // Light array decision block //
     if (programType == 1) {
-      switch (visualStage) {
-        case 1:
-          break;
-        case 2:
-          if (plusPercentage > 10 && correct == true) {
-            plusPercentage = 50 - (CorrectCounter * 0.4);
-            lightsVerticalPercentage = 25 + (CorrectCounter * 0.2);
-            lightsHorizontalPercentage = 25 + (CorrectCounter * 0.2);
-          }
-          break;
-          }
+      lightArrayModifier();
       }
       // Push/Pull decision block //
     if (programType == 1) {

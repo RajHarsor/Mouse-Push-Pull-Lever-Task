@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include <FastLED.h>
+#include "parse_scripts.h"
 
 extern int lightDecision;
 extern int plusPercentage;
@@ -20,5 +21,6 @@ void lightArrayVeritical();
 void lightArrayHorizontal();
 void executeLightArray();
 void lightsOff();
+void lightArrayModifier();
 
 #endif
