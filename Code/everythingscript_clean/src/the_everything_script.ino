@@ -9,6 +9,7 @@
 #include "solenoid_open_time.h"
 #include "hold_time_mod_visual.h"
 #include "hold_time_visual_punishment.h"
+#include "reaction_time_mod_visual.h"
 
 /* #endregion */
 
@@ -135,22 +136,9 @@ void loop() {
     if (programType == 1) {
       turnOnTheLights();
       }
-      // Push/Pull decision block //
-      if (programType == 1) {
-        switch (visualStage){
-          case 1:
-            break;
-          case 2:
-            break;
-          case 3:
-            if (timeOutTime > 1000 && correct == true) {
-              timeOutTime = timeOutTime - 10;
-            }
-            break;
-          case 4:
-            break;
-        }
-      }
+    if (programType == 1) {
+      reactionTimeWindowModVisual();
+    }
     currentMillis = millis();
     startTime = millis();
     while (timerMillis <= timeOutTime) {
