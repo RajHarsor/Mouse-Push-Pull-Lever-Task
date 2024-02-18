@@ -128,19 +128,13 @@ void loop() {
     }
     digitalWrite(29, LOW);   // Tells the coordinate Teensy that the current state is not the rest state anymore
     digitalWrite(30, HIGH);  // Tells the coordinate Teensy that the current state is the push/pull or push/down state
-    // Light array decision block //
     if (programType == 1) {
-      lightArrayModifier();
+      reactionTimeWindowModVisual(); // modify the reaction time window if necessary
+      lightArrayModifier(); // modify the percentages of light array options
+      turnOnTheLights(); // turn on the appropriate light array
       }
-      // Push/Pull decision block //
-    if (programType == 1) {
-      turnOnTheLights();
-      }
-    if (programType == 1) {
-      reactionTimeWindowModVisual();
-    }
-    currentMillis = millis();
-    startTime = millis();
+    currentMillis = millis(); // start the reaction time window timer
+    startTime = millis(); // start the reaction time timer
     while (timerMillis <= timeOutTime) {
       if (digitalRead(PUSH_PIN) == HIGH) {
           decision = 1; // push
@@ -153,10 +147,11 @@ void loop() {
           decision = 0; // punishment
         }
     }
-    reactionTime = millis() - startTime;
-    lightsOff();
+    reactionTime = millis() - startTime; // calculate the reaction time
+    lightsOff(); // turn off the lights - this can be in the motor task as well (doesn't hurt)
     digitalWrite(30, LOW);  // Tells the coordinate Teensy that the current state is not the push/pull or push/down state anymore
     // Decision Results block //
+    /* #region Visual Task Rewards */
     if (programType == 1) {
       switch (visualStage) {
         case 1:
@@ -219,22 +214,17 @@ void loop() {
           break;
       }
     }
+    /* #endregion */
     // Punishment block //
     if (programType == 1 && decision == 0) {
       switch (visualStage) {
-        case 1:
-          normalPunishment(punishmentTime);
-          break;
-        case 2:
+        case 1: case 2: case 4:
           normalPunishment(punishmentTime);
           break;
         case 3:
           if (punishmentTime <= 1000 && correct == false) {
             punishmentTime+= 10;
           }
-          normalPunishment(punishmentTime);
-          break;
-        case 4:
           normalPunishment(punishmentTime);
           break;
       }
@@ -247,7 +237,7 @@ void loop() {
         case 1:
           if (isiDelayUpperRange < 2500 && correct == true) {
             isiDelayUpperRange += 22;
-          } 
+          }
           break;
         case 2:
           break;
@@ -318,6 +308,7 @@ void loop() {
           printOpenTime();
           Serial.print(" , ");
           Serial.print(isiDelay);
+          Serial.print(" , ");
           // debug //
           Serial.print( " // ");
           Serial.print(" , ");
@@ -356,6 +347,7 @@ void loop() {
           printOpenTime();
           Serial.print(" , ");
           Serial.print(isiDelay);
+          Serial.print(" , ");
           // debug //
           Serial.print( " // ");
           Serial.print(" , ");
@@ -394,6 +386,7 @@ void loop() {
           printOpenTime();
           Serial.print(" , ");
           Serial.print(isiDelay);
+          Serial.print(" , ");
           // debug //
           Serial.print( " // ");
           Serial.print(" , ");

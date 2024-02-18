@@ -4,8 +4,6 @@
 extern int decision;
 extern int positionA;
 extern int positionB;
-extern unsigned long currentMillis;
-extern unsigned long timerMillis;
 extern int OpenTime;
 extern int ArrayCount1;
 extern int ArrayCount2;
