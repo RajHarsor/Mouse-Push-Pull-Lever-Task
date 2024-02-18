@@ -7,6 +7,7 @@
 #include "parse_scripts.h"
 #include "light_configs.h"
 #include "solenoid_open_time.h"
+#include "hold_time_mod_visual.h"
 
 /* #endregion */
 
@@ -71,7 +72,6 @@ int positionB = 0;
 int CorrectCounter = 0;
 int SOpenTime1;
 int punishmentTime1;
-bool correct = false;
 
 /* #end region */
 
@@ -123,17 +123,9 @@ void loop() {
     // Rest position block
     currentMillis = millis();
     digitalWrite(29, HIGH);
-    /* #region holdTime Modification */
     if (programType == 1) {
-      switch (visualStage) {
-        case 1:
-          if (holdTime < 250 && correct == true) {
-            holdTime += 2;
-          }
-          break;
-      }
+      holdTimeVisualTask();
     }
-    /* #endregion */
     while (timerMillis <= holdTime) {
       if (digitalRead(REST_PIN) == HIGH) {
         continue;

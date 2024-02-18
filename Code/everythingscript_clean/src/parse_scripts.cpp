@@ -13,6 +13,7 @@ int punishmentTime;
 int isiDelayLowerRange;
 int isiDelayUpperRange;
 int holdTimePunishment;
+bool correct = false;
 
 void parseProgramTypeInput() {
   while (!Serial.available()) {

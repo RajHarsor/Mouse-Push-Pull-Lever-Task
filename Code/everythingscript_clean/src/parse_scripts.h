@@ -17,6 +17,7 @@ extern int isiDelayLowerRange;
 extern int isiDelayUpperRange;
 extern int CorrectCounter;
 extern int holdTimePunishment;
+extern bool correct;
 
 
 void parseProgramTypeInput();
