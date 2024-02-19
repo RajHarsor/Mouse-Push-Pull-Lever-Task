@@ -105,7 +105,10 @@ void setup() {
       break;
     case 2:
       Serial.println("What type of Motor Task do you want to do?");
-      // TODO: finish case 2 //
+      Serial.println("Type 1 for Cue-Evoked Task (Preset)");
+      Serial.println("Type 2 for Cue-Evoked Task (Custom)");
+      Serial.println("Type 3 for Single Direction Optogenetic Task");
+      parseMotorTaskType();
       break;
   }
 }
@@ -217,6 +220,43 @@ void loop() {
       }
     }
     /* #endregion */
+    if (motorTaskType == 1) {
+      switch (CueEvokedTaskDay) {
+        case 1:
+          if (decision == 1) {
+            correctSOpen(SOpenTime);
+          } else {
+            decision == 0;
+          }
+          break;
+        case 2:
+          if (decision == 1) {
+            correctSOpen(SOpenTime);
+          } else {
+            decision == 0;
+          }
+          break;
+        case 3:
+          if (decision == 1) {
+            positionA++;
+            digitalWrite(31, HIGH);
+            digitalWrite(Solenoid, HIGH);
+            solenoidOpenTime();
+            digitalWrite(Solenoid, LOW);
+            digitalWrite(31, LOW);
+            break;
+          }
+          if (decision == 2) {
+            digitalWrite(31, HIGH);
+            positionB++;
+            digitalWrite(Solenoid, HIGH);
+            solenoidOpenTime();
+            digitalWrite(Solenoid, LOW);
+            digitalWrite(31, LOW);
+            break;
+          }
+      }
+    }
     // Punishment block //
     if (programType == 1 && decision == 0) {
       punishmentVisualTaskChooser();

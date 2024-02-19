@@ -5,6 +5,8 @@
 
 extern int programType;
 extern int visualStage;
+extern int motorTaskType;
+extern int CueEvokedTaskDay;
 extern int holdTime;
 extern int trialNumber;
 extern int plusPercentage;
@@ -23,5 +25,7 @@ extern bool correct;
 void parseProgramTypeInput();
 
 void parseVisualStage();
+
+void parseMotorTaskType();
 
 #endif

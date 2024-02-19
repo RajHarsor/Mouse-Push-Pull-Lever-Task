@@ -23,6 +23,62 @@ void parseProgramTypeInput() {
   int numValues = sscanf(input.c_str(), "%d", &programType);
 }
 
+void parseMotorTaskType() {
+  while (!Serial.available()) {
+  }
+
+  String input = Serial.readStringUntil('\n');
+  int numValues = sscanf(input.c_str(), "%d", &motorTaskType);
+  switch (motorTaskType) {
+    case 1:
+      Serial.println("What day is it?");
+      Serial.println("Type 1 if Push Only (Day 1)");
+      Serial.println("Type 2 if Pull Only (Day 2)");
+      Serial.println("Type 3 if Push and Pull (Day 3 - Dynamic Water)");
+      parseCueEvokedTaskDay();
+      break;
+    case 2:
+      Serial.println("Input the isiDelayLowerRange, isiDelayUpperRange, and punishmentLength");
+      // TODO Need to add another parse function for this
+      break;
+    case 3:
+      // TODO Do this whole section
+      break; 
+  }
+}
+
+void parseCueEvokedTaskDay() {
+  while (!Serial.available()) {
+  }
+
+  String input = Serial.readStringUntil('\n');
+  int numValues = sscanf(input.c_str(), "%d", &CueEvokedTaskDay);
+
+switch (CueEvokedTaskDay) {
+  case 1:
+    holdTime = 50;
+    timeOutTime = 2000;
+    SOpenTime = 44;
+    isiDelayLowerRange = 250;
+    isiDelayUpperRange = 1000;
+    break;
+  case 2:
+    holdTime = 50;
+    timeOutTime = 2000;
+    SOpenTime = 44;
+    isiDelayLowerRange = 1000;
+    isiDelayUpperRange = 2000;
+    break;
+  case 3:
+    holdTime = 50;
+    timeOutTime = 2000;
+    SOpenTime = 44;
+    isiDelayLowerRange = 1000;
+    isiDelayUpperRange = 3000;
+    break;
+}
+}
+
 void parseVisualStage() {
   while (!Serial.available()) {
   }
