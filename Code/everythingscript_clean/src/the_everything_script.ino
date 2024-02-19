@@ -13,6 +13,7 @@
 #include "WN_punishment.h"
 #include "punishment_time_visual_mod.h"
 #include "isi_delay_mod_visual.h"
+#include "cue_evoked_sound.h"
 
 /* #endregion */
 
@@ -139,7 +140,7 @@ void loop() {
       turnOnTheLights(); // turn on the appropriate light array
       }
     if (programType == 2) {
-      play12kHzSound();
+      play12kHzSound(soundCueDuration);
     }
     currentMillis = millis(); // start the reaction time window timer
     startTime = millis(); // start the reaction time timer

@@ -6,6 +6,7 @@
 extern int programType;
 extern int visualStage;
 extern int motorTaskType;
+extern int soundCueDuration;
 extern int CueEvokedTaskDay;
 extern int holdTime;
 extern int trialNumber;
@@ -27,5 +28,7 @@ void parseProgramTypeInput();
 void parseVisualStage();
 
 void parseMotorTaskType();
+
+void parseCueEvokedTaskDay();
 
 #endif

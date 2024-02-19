@@ -5,6 +5,8 @@ int programType;
 int visualStage;
 int holdTime;
 int plusPercentage;
+int motorTaskType;
+int CueEvokedTaskDay;
 int lightsVerticalPercentage;
 int lightsHorizontalPercentage;
 int timeOutTime;
@@ -13,6 +15,7 @@ int punishmentTime;
 int isiDelayLowerRange;
 int isiDelayUpperRange;
 int holdTimePunishment;
+int soundCueDuration;
 bool correct = false;
 
 void parseProgramTypeInput() {
@@ -54,32 +57,35 @@ void parseCueEvokedTaskDay() {
   String input = Serial.readStringUntil('\n');
   int numValues = sscanf(input.c_str(), "%d", &CueEvokedTaskDay);
 
-switch (CueEvokedTaskDay) {
-  case 1:
-    holdTime = 50;
-    timeOutTime = 2000;
-    SOpenTime = 44;
-    isiDelayLowerRange = 250;
-    isiDelayUpperRange = 1000;
-    punishmentTime = 50;
-    break;
-  case 2:
-    holdTime = 50;
-    timeOutTime = 2000;
-    SOpenTime = 44;
-    isiDelayLowerRange = 1000;
-    isiDelayUpperRange = 2000;
-    punishmentTime = 100;
-    break;
-  case 3:
-    holdTime = 50;
-    timeOutTime = 2000;
-    isiDelayLowerRange = 1000;
-    isiDelayUpperRange = 3000;
-    punishmentTime = 500;
-    break;
-}
-}
+  switch (CueEvokedTaskDay) {
+    case 1:
+      holdTime = 50;
+      soundCueDuration = 50;
+      timeOutTime = 2000;
+      SOpenTime = 44;
+      isiDelayLowerRange = 250;
+      isiDelayUpperRange = 1000;
+      punishmentTime = 50;
+      break;
+    case 2:
+      holdTime = 50;
+      soundCueDuration = 50;
+      timeOutTime = 2000;
+      SOpenTime = 44;
+      isiDelayLowerRange = 1000;
+      isiDelayUpperRange = 2000;
+      punishmentTime = 100;
+      break;
+    case 3:
+      holdTime = 50;
+      soundCueDuration = 50;
+      timeOutTime = 2000;
+      isiDelayLowerRange = 1000;
+      isiDelayUpperRange = 3000;
+      punishmentTime = 500;
+      break;
+  }
+  }
 
 void parseVisualStage() {
   while (!Serial.available()) {
