@@ -138,6 +138,9 @@ void loop() {
       lightArrayModifier(); // modify the percentages of light array options
       turnOnTheLights(); // turn on the appropriate light array
       }
+    if (programType == 2) {
+      play12kHzSound();
+    }
     currentMillis = millis(); // start the reaction time window timer
     startTime = millis(); // start the reaction time timer
     while (timerMillis <= timeOutTime) {
@@ -220,6 +223,7 @@ void loop() {
       }
     }
     /* #endregion */
+    /* #region Rewards for Cue Evoked Task */
     if (motorTaskType == 1) {
       switch (CueEvokedTaskDay) {
         case 1:
@@ -257,9 +261,13 @@ void loop() {
           }
       }
     }
+    /* #endregion */
     // Punishment block //
     if (programType == 1 && decision == 0) {
       punishmentVisualTaskChooser();
+    }
+    if (motorTaskType == 1 && decision == 0) {
+      wnPunishment(punishmentTime);
     }
     digitalWrite(28, LOW);
     // ISI Delay block //
@@ -274,8 +282,59 @@ void loop() {
     if (programType == 1) {
       printVisualInformation(isiDelay);
     }
+    if (motorTaskType == 1) {
+      printCueEvokedInformation(isiDelay);
+    }
     trialNumber++;
 }
+
+/* #region CueEvokedTaskInformation */
+void printCueEvokedInformation(int isiDelay) {
+  switch (CueEvokedTaskDay) {
+    case 1: case 2:
+      Serial.print(trialNumber);
+      Serial.print(" , ");
+      Serial.print(reactionTime);
+      Serial.print(" , ");
+      printDecision();
+      Serial.print(" , ");
+      printCorrectStatusMotor();
+      Serial.print(" , ");
+      Serial.print (CorrectCounter);
+      Serial.print(" / ");
+      Serial.print(trialNumber);
+      Serial.print(" , ");
+      Serial.print(SOpenTime);
+      Serial.print(" , ");
+      Serial.print(isiDelay);
+      Serial.print(" ; ");
+      break;
+    case 3:
+      Serial.print(trialNumber);
+      Serial.print(" , ");
+      Serial.print(reactionTime);
+      Serial.print(" , ");
+      printDecision();
+      Serial.print(" , ");
+      printCorrectStatusMotor();
+      Serial.print(" , ");
+      Serial.print (CorrectCounter);
+      Serial.print(" / ");
+      Serial.print(trialNumber);
+      Serial.print(" , ");
+      Serial.print(OpenTime);
+      Serial.print(" , ");
+      Serial.print(positionA);
+      Serial.print(" / ");
+      Serial.print(positionB);
+      Serial.print(" , ");
+      Serial.print(isiDelay);
+      Serial.print(" ; ");
+      break;
+  }
+}
+/* #endregion */
+
 
 /* #region Visual Task Print Statements*/
 void printVisualInformation(int isiDelay) {
@@ -485,6 +544,16 @@ void printCorrectStatus() {
   }
 }
 
+void printCorrectStatusMotor() {
+  if (decision == 1 || decision == 2) {
+    Serial.print("Correct");
+    correct = true;
+    CorrectCounter++;
+  } else {
+    Serial.print("Incorrect");
+    correct = false;
+  }
+}
 void printOpenTime() {
   switch (visualStage) {
     case 1:

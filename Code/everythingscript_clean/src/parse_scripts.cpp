@@ -61,6 +61,7 @@ switch (CueEvokedTaskDay) {
     SOpenTime = 44;
     isiDelayLowerRange = 250;
     isiDelayUpperRange = 1000;
+    punishmentTime = 50;
     break;
   case 2:
     holdTime = 50;
@@ -68,13 +69,14 @@ switch (CueEvokedTaskDay) {
     SOpenTime = 44;
     isiDelayLowerRange = 1000;
     isiDelayUpperRange = 2000;
+    punishmentTime = 100;
     break;
   case 3:
     holdTime = 50;
     timeOutTime = 2000;
-    SOpenTime = 44;
     isiDelayLowerRange = 1000;
     isiDelayUpperRange = 3000;
+    punishmentTime = 500;
     break;
 }
 }
