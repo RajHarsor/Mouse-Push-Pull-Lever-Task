@@ -3,7 +3,7 @@
 void punishmentVisualTaskChooser() {
     switch (visualStage) {
     case 1: case 2: case 4:
-        wnPunishment(punishmentTime);
+        // wnPunishment(punishmentTime);
         break;
     case 3:
         if (punishmentTime <= 1000 && correct == false) {
