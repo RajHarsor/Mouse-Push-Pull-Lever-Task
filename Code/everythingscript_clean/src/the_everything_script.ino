@@ -76,6 +76,7 @@ unsigned long startTime;
 /* #endregion */
 
 void setup() {
+  delay(2000);
   /* #region Pins + Serial */
   Serial.begin(115200);
   Serial1.begin(9600);
