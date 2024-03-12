@@ -108,7 +108,7 @@ void parseVisualStage() {
       lightsVerticalPercentage = 25;
       lightsHorizontalPercentage = 25;
       timeOutTime = 2000;
-      SOpenTime = 52;
+      SOpenTime = 96; // ~10 ul of water
       punishmentTime = 100;
       isiDelayLowerRange = 1600;
       isiDelayUpperRange = 2400;
