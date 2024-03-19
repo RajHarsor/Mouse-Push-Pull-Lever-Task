@@ -6,8 +6,8 @@ void isiDelayModVisual() {
                 if (isiDelayUpperRange < 2500 && correct == true) {
                     isiDelayUpperRange += 22;
             }
-            break;
+                break;
             case 2: case 3: case 4:
-            break;
+                break;
         }
     }

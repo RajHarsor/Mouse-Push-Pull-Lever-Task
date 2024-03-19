@@ -8,12 +8,7 @@ void holdTimeVisualPunishment() {
             break;
         case 2:
             break;
-        case 3:
-            sfx.playTrack("T04     WAV");
-            delay(120 + holdTimePunishment);
-            sfx.stop();
-            break;
-        case 4:
+        case 3: case 4:
             sfx.playTrack("T04     WAV");
             delay(120 + holdTimePunishment);
             sfx.stop();

@@ -71,7 +71,7 @@ void executeLightArray() {
 
 void lightArrayModifier() {
   switch (visualStage) {
-    case 1:
+    case 1: case 3: case 4:
       break;
     case 2:
       if (plusPercentage > 10 && correct == true) {
@@ -79,10 +79,6 @@ void lightArrayModifier() {
         lightsVerticalPercentage = 25 + (CorrectCounter * 0.2);
         lightsHorizontalPercentage = 25 + (CorrectCounter * 0.2);
       }
-      break;
-    case 3:
-      break;
-    case 4:
       break;
       }
 }
@@ -92,13 +88,7 @@ void turnOnTheLights() {
     case 1:
       lightArrayPlus();
       break;
-    case 2:
-      executeLightArray();
-      break;
-    case 3:
-      executeLightArray();
-      break;
-    case 4:
+    case 2: case 3: case 4:
       executeLightArray();
       break;
       }

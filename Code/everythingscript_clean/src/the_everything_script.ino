@@ -53,9 +53,6 @@ CRGB leds[NUM_LEDS];  //define the array of LEDs
 
 /* #endregion */
 
-
-/* #endregion */
-
 /* #region BEHAVIOR VARIBALES CONST */
 int totalTrials = 1000000;
 int trialNumber = 1;
@@ -65,7 +62,7 @@ int positionB = 0;
 int CorrectCounter = 0;
 int SOpenTime1;
 
-/* #end region */
+/* #endregion */
 
 /* #region Timer Variables */
 unsigned long currentMillis = 0;
@@ -97,7 +94,7 @@ void setup() {
   /* #endregion */
   Serial.println("What type of program would you like?");
   Serial.println("Type 1 for Visual Task");
-  Serial.println("Type 2 for Motor Task");
+  Serial.println("Type 2 for Auditory Task");
   parseProgramTypeInput();
   Serial.print(programType);
   switch (programType) {
