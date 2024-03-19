@@ -143,6 +143,9 @@ void loop() {
     if (programType == 2) {
       play12kHzSound(soundCueDuration);
     }
+    if (digitalRead(REST_PIN) != HIGH) {
+      loop();
+    }
     currentMillis = millis(); // start the reaction time window timer
     startTime = millis(); // start the reaction time timer
     while (timerMillis <= timeOutTime) {
@@ -522,7 +525,7 @@ void printDecision() {
     Serial.print("Push");
   } else if (decision == 2) {
     Serial.print("Pull");
-  } else {
+  } else if (decision == 0) {
     Serial.print("timedOut");
   }
 }
@@ -565,28 +568,13 @@ void printOpenTime() {
         Serial.print("0");
       }
       break;
-    case 2:
+    case 2: case 3: case 4:
       if (decision != 0) {
         Serial.print(SOpenTime);
       } else {
         Serial.print("0");
       }
       break;
-    case 3:
-      if (decision != 0) {
-        Serial.print(SOpenTime1);
-      } else {
-        Serial.print("0");
-      }
-      break;
-    default:
-      if (decision != 0) {
-        Serial.print(SOpenTime);
-      } else {
-        Serial.print("0");
-      }
-      break;
-  }
 }
 
 /* #endregion */
