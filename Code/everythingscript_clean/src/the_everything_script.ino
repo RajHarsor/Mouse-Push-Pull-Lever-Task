@@ -573,5 +573,6 @@ void printOpenTime() {
       }
       break;
 }
+}
 
 /* #endregion */
