@@ -35,11 +35,12 @@
 // Set up
 #define DATA_PIN 8
 #define CLOCK_PIN 14
-#define NUM_LEDS 48  //number of LEDs total
+//#define NUM_LEDS 48  //number of LEDs total
+#define NUM_LEDS 64 //for the 8x8 matrix
 
 CRGB leds[NUM_LEDS];  //define the array of LEDs
 
-/* Array Set up (WS2012B)
+/* Array Set up (WS2012B) 48 LEDs
 
 0  1  2  3  4  5
 6  7  8  9  10 11

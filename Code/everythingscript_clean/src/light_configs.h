@@ -11,7 +11,8 @@ extern int lightsVerticalPercentage;
 extern int lightsHorizontalPercentage;
 
 #ifndef NUM_LEDS
-#define NUM_LEDS 48  //number of LEDs total
+// #define NUM_LEDS 48  //number of LEDs total
+#define NUM_LEDS 64 //for the 8x8 matrix
 #endif
 
 extern CRGB leds[NUM_LEDS];  //define the array of LEDs
