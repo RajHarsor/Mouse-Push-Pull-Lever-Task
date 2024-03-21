@@ -18,6 +18,7 @@ extern int lightsHorizontalPercentage;
 extern CRGB leds[NUM_LEDS];  //define the array of LEDs
 
 void lightArrayPlus();
+void lightArrayPlus1();
 void lightArrayVeritical();
 void lightArrayHorizontal();
 void executeLightArray();

@@ -2,8 +2,10 @@
 #include <FastLED.h>
 
 int lightDecision;
+bool lightTreedixLEDs = false;
 
-void lightArrayPlus() {
+
+void lightArrayPlus() { // For the Treedix (6 x 8 matrix)
     for (int i = 8; i <= 32; i = i + 6) {
         leds[i] = CRGB::Blue;
         FastLED.show();
@@ -15,6 +17,18 @@ void lightArrayPlus() {
     }
     lightDecision = 0;
 }
+
+void lightArrayPlus1() { // For the NeoPixel 8x8 matrix
+  for (int i = 19; i <= 51; i = i + 8) {
+    leds[i] = CRGB::Blue;
+    FastLED.show();
+    }
+
+  for (int i = 33; i <= 37; i++) {
+    leds[i] = CRGB::Blue;
+    FastLED.show();
+  }
+  }
 
 void lightArrayVeritical() {  // please note this function does 1 stripe
     for (int i = 8; i <= 32; i = i + 6) {
@@ -33,22 +47,7 @@ void lightArrayHorizontal() {  // please note this function does 1 stripe
 }
 
 void lightsOff() {
-    for (int i = 2; i <= 44; i = i + 6) {
-    leds[i] = CRGB::Black;
-    FastLED.show();
-    }
-
-    for (int i = 3; i <= 45; i = i + 6) {
-    leds[i] = CRGB::Black;
-    FastLED.show();
-    }
-
-    for (int i = 18; i <= 23; i++) {
-    leds[i] = CRGB::Black;
-    FastLED.show();
-    }
-
-    for (int i = 24; i <= 29; i++) {
+    for (int i = 0; i <= 64; i++) {
     leds[i] = CRGB::Black;
     FastLED.show();
     }
@@ -86,10 +85,15 @@ void lightArrayModifier() {
 void turnOnTheLights() {
   switch (visualStage) {
     case 1:
-      lightArrayPlus();
+      if (lightTreedixLEDs == true) {
+        lightArrayPlus();
+      }
+      else {
+        lightArrayPlus1();
       break;
     case 2: case 3: case 4:
       executeLightArray();
       break;
       }
+}
 }
