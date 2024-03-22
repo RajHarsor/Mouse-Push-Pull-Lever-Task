@@ -61,6 +61,7 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
       OpenTime = 44;
       /* Serial.print(OpenTime);
       Serial.print(" , "); */
+      delay(OpenTime);
     } else {
     // OpenTime = -7.83 * (ArrayCount1 + 1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2 + 1), 2) - 18.44 * (ArrayCount1 + 1 - ArrayCount2)/(ArrayCount1 + ArrayCount2 + 1) + 48.28;
     OpenTime = ((-7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2), 2) - 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2) + 48.28)) * 2;
@@ -79,6 +80,7 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
       OpenTime = 44;
       // Serial.print(OpenTime);
      //  Serial.print(" , ");
+      delay(OpenTime);
     } else {
     // OpenTime = -7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2 + 1),2) + 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2 + 1) + 48.28;
     OpenTime = ((-7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2), 2) + 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2) + 48.28)) * 2;
