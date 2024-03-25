@@ -58,13 +58,13 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
 
   if (decision == 1) {  // Push Equation
     if (ArrayCount1 == ArraySize or ArrayCount2 == ArraySize) {
-      OpenTime = 44;
+      OpenTime = 104;
       /* Serial.print(OpenTime);
       Serial.print(" , "); */
       delay(OpenTime);
     } else {
-    // OpenTime = -7.83 * (ArrayCount1 + 1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2 + 1), 2) - 18.44 * (ArrayCount1 + 1 - ArrayCount2)/(ArrayCount1 + ArrayCount2 + 1) + 48.28;
-    OpenTime = ((-7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2), 2) - 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2) + 48.28)) * 2;
+    //OpenTime = ((-7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2), 2) - 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2) + 48.28)) * 2;
+    OpenTime = 104;
     // Serial.print("Solenoid Open Time = ");
    /*  Serial.print(OpenTime);
     Serial.print(" , "); */
@@ -77,13 +77,13 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
 
   if (decision == 2) {  // Pull Equation
     if (ArrayCount1 == ArraySize or ArrayCount2 == ArraySize) {
-      OpenTime = 44;
+      OpenTime = 104;
       // Serial.print(OpenTime);
      //  Serial.print(" , ");
       delay(OpenTime);
     } else {
-    // OpenTime = -7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2 + 1),2) + 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2 + 1) + 48.28;
-    OpenTime = ((-7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2), 2) + 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2) + 48.28)) * 2;
+      //OpenTime = ((-7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2), 2) + 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2) + 48.28)) * 2;
+      OpenTime = 104;
     // Serial.print("Solenoid Open Time = ");
     // Serial.print(OpenTime);
     // Serial.print(" , ");

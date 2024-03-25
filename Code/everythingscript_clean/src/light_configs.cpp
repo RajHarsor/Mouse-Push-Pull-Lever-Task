@@ -2,7 +2,7 @@
 #include <FastLED.h>
 
 int lightDecision;
-bool lightTreedixLEDs = false;
+bool lightTreedixLEDs = true;
 
 
 void lightArrayPlus() { // For the Treedix (6 x 8 matrix)
