@@ -1,0 +1,14 @@
+%% User Inputs
+rootdir = 'C:\Users\rdh92-adm\Box\Oldenburg-Shared\Behavioral Testing\Cohort 14';
+waterLogPath = "C:\Users\rdh92-adm\Box\Oldenburg-Shared\Water Log.xlsx";
+SheetName = "Cohort 14 - VC"; % Name of the sheet in the waterLog file
+
+%% Makes the Outfile 
+% Please note this takes a long time as there is a lot of data usually in
+% the directories
+
+multi_behavior_outfile = makeOutfile(rootdir, waterLogPath, SheetName);
+names = fieldnames(multi_behavior_outfile); 
+
+%% Correct Trials Over Days
+
