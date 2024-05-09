@@ -10,6 +10,10 @@ warning('off');
 [multi_behavior_outfile, names] = makeOutfile(rootdir, waterLogPath, SheetName);
 warning('on');
 
-%% Correct Trials Over Days
+%% Correct Trials Over Days (All)
+
+[correctTrialsArray] = correctTrialsFigAll(multi_behavior_outfile, names);
+
+%% Correct Pushes and Pulls Over Days 
 
 
