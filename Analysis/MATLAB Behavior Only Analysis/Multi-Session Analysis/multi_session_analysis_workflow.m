@@ -6,9 +6,12 @@ SheetName = "Cohort 14 - VC"; % Name of the sheet in the waterLog file
 %% Makes the Outfile 
 % Please note this takes a long time as there is a lot of data usually in
 % the directories
+warning('off');
+[multi_behavior_outfile, names] = makeOutfile(rootdir, waterLogPath, SheetName);
+warning('on');
 
-multi_behavior_outfile = makeOutfile(rootdir, waterLogPath, SheetName);
-names = fieldnames(multi_behavior_outfile); 
+%% Correct Trials Over Days (All)
 
-%% Correct Trials Over Days
+[correctTrialsArray] = correctTrialsFigAll(multi_behavior_outfile, names);
+
 
