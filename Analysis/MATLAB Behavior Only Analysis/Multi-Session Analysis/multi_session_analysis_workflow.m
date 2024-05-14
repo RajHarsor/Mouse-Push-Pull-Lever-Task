@@ -18,6 +18,8 @@ warning('on');
 
 [pushArray, pullArray] = pushPullBarPlot(multi_behavior_outfile, names);
 
-%% RT Over Days, All Correct Trials
+%% RT Over Days
 
-[correctRTArray, correctRTMeans] = histRTCorrectTrials(multi_behavior_outfile, names);
+[correctRTArray, correctRTMeans] = histRTCorrectTrials(multi_behavior_outfile, names, "all");
+[correctPushRTArray, correctPushRTMeans] = histRTCorrectTrials(multi_behavior_outfile, names, "push");
+[correctPullRTArray, correctPullRTMeans] = histRTCorrectTrials(multi_behavior_outfile, names, "pull");
