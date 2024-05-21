@@ -58,32 +58,33 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
 
   if (decision == 1) {  // Push Equation
     if (ArrayCount1 == ArraySize or ArrayCount2 == ArraySize) {
-      OpenTime = 44;
+      OpenTime = 104;
       /* Serial.print(OpenTime);
       Serial.print(" , "); */
       delay(OpenTime);
     } else {
-    // OpenTime = 104;
-    OpenTime = ((-7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2), 2) - 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2) + 48.28)) * 1.5;
+      OpenTime = 104;
+    // OpenTime = ((-7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2), 2) - 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2) + 48.28)) * 3;
     // Serial.print("Solenoid Open Time = ");
    /*  Serial.print(OpenTime);
     Serial.print(" , "); */
     // currentMillis = millis();
     // while (timerMillis <= OpenTime) {
     //   continue;
-    delay(OpenTime);
+      delay(OpenTime);
     }
     }
 
   if (decision == 2) {  // Pull Equation
     if (ArrayCount1 == ArraySize or ArrayCount2 == ArraySize) {
-      OpenTime = 44;
+      OpenTime = 0;
       // Serial.print(OpenTime);
      //  Serial.print(" , ");
       delay(OpenTime);
     } else {
+      OpenTime = 0;
       // OpenTime = 104;
-     OpenTime = ((-7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2), 2) + 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2) + 48.28)) * 1.5;
+     // OpenTime = ((-7.83 * (ArrayCount1 - ArrayCount2) / pow((ArrayCount1 + ArrayCount2), 2) + 18.44 * (ArrayCount1 - ArrayCount2) / (ArrayCount1 + ArrayCount2) + 48.28)) * 3;
     // Serial.print("Solenoid Open Time = ");
     // Serial.print(OpenTime);
     // Serial.print(" , ");
@@ -91,7 +92,7 @@ void solenoidOpenTime() {  /// function to determine the solenoid open time
     // while (timerMillis <= OpenTime) {
     //   continue;
     // }
-    delay(OpenTime);
+     delay(OpenTime);
     }
   }
   ArrayCount1 = 0; // Reset the number of 1s in the array to 0

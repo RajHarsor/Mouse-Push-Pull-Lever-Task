@@ -96,11 +96,11 @@ void parseVisualStage() {
 
   switch (visualStage) {
     case 1:
-      holdTime = 400; // this is a dynamic variable in the code
+      holdTime = 50; // this is a dynamic variable in the code
       timeOutTime = 1000;
       punishmentTime = 0;
-      isiDelayLowerRange = 1000;
-      isiDelayUpperRange = 3000;
+      isiDelayLowerRange = 250;
+      isiDelayUpperRange = 300;
       break;
     case 2:
       holdTime = 250;
